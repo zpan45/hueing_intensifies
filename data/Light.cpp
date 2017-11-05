@@ -99,7 +99,7 @@ Takes no parameters.
 Returns a schedule for when the Light should be turned on, an int.
 */
 int Light::getSchedule() {
-    return schedule
+    return schedule;
 }
 
 /*

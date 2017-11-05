@@ -74,6 +74,25 @@ string User::getLastName() {
 }
 
 /*
+getBridge()
+
+Accessor method for a specific Bridge for this User. Throws an out_of_range if attempting to access an element outside of the vector's bounds.
+
+Parameters:
+- int element: The integer position of the desired Bridge object in the bridges vector.
+
+Returns the desired Bridge object.
+*/
+Bridge User::getBridge(int element) {
+    try {
+        return bridges.at(element);
+    }
+    catch(const out_of_range& oor) {
+        cerr << element << " is out of range for this User" << endl;
+    }
+}
+
+/*
 setUsername()
 
 Setter for the username field.
@@ -121,6 +140,10 @@ void User::setPassword(string pass) {
     password = pass;
 }
 
+string User::constructGreetingString() {
+    return "Hello, \t" + username + " (" + firstName + " " + lastName + ")";
+}
+
 // --------------------------------------
 // PRIVATE METHODS
 // --------------------------------------
@@ -141,6 +164,40 @@ string User::hashPassword(string pass) {
     return pass;
 }
 
+/*
+addBridge()
+
+Method that assigns a given Bridge to the User by adding the Bridge object to the User class's bridges vector.
+
+Parameters:
+- Bridge b: A Bridge object to be assigned to the User.
+*/
+void User::addBridge(Bridge b) {
+    bridges.push_back(b);
+}
+
+/*
+removeBridge()
+
+Method to remove a Bridge at the given position from the User.
+
+Parameters:
+- int element: The integer position of the desired Bridge object in the bridges vector.
+
+Returns whether the removal was successful as a boolean.
+*/
+bool User::removeBridge(int element) {
+    // if the target Bridge is outside of the bounds of the bridges vector, return false
+    if( (element > bridges.size() ) || (element < 0) ) {
+        return false;
+    }
+    // else, remove the Bridge at the specified location
+    else {
+        bridges.erase(bridges.begin() + element);
+        return true;
+    }
+}
+
 int main(int argc, char **argv) {
     User u;
     u.setUsername("jfryer6");
@@ -148,7 +205,9 @@ int main(int argc, char **argv) {
     u.setFirstName("Jake");
     u.setLastName("Fryer");
     
-    cout << "Hello,\t" << u.getUsername() << " (" << u.getFirstName() << " " << u.getLastName() << ")" << endl;
+    //cout << "Hello,\t" << u.getUsername() << " (" << u.getFirstName() << " " << u.getLastName() << ")" << endl;
+    
+    cout << u.constructGreetingString() << endl;
     
     return 0;
 }
