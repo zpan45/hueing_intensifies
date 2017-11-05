@@ -21,7 +21,7 @@ Bridge()
 Default constructor for Bridge class. Initializes all fields to have no values.
 Takes no parameters.
 */
-Bridge() {
+Bridge::Bridge() {
     name = "";
     location = "";
     hostName = "";
@@ -44,7 +44,7 @@ Takes no parameters.
 
 Returns name as a string.
 */
-string getName() {
+string Bridge::getName() {
     return name;
 }
 
@@ -57,7 +57,7 @@ Takes no parameters.
 
 Returns location as a string.
 */
-string getLocation() {
+string Bridge::getLocation() {
     return location;
 }
 
@@ -70,7 +70,7 @@ Takes no parameters.
 
 Returns hostName as a string.
 */
-string getHostName() {
+string Bridge::getHostName() {
     return hostName;
 }
 
@@ -83,7 +83,7 @@ Takes no parameters.
 
 Returns port as a string.
 */
-string getPort() {
+string Bridge::getPort() {
     return port;
 }
 
@@ -97,7 +97,7 @@ Parameters:
 
 Returns the desired Group object.
 */
-Group getGroup(int element) {
+Group Bridge::getGroup(int element) {
     try {
         return groups.at(element);
     }
@@ -114,7 +114,7 @@ Setter for the name field.
 Parameters:
 - string n: The name of the Bridge.
 */
-void setName(string n) {
+void Bridge::setName(string n) {
     name = n;
 }
 
@@ -126,7 +126,7 @@ Setter for the location field.
 Parameters:
 - string l: A string providing the location of the Bridge.
 */
-void setLocation(string l) {
+void Bridge::setLocation(string l) {
     location = l;
 }
 
@@ -138,7 +138,7 @@ Setter for the hostName field.
 Parameters:
 - string hn: A string representation of the host name for the Bridge.
 */
-void setHostName(string hn) {
+void Bridge::setHostName(string hn) {
     hostName = hn;
 }
 
@@ -150,7 +150,7 @@ Setter for the port field.
 Parameters:
 - string p: A string representation of the Port for the Bridge.
 */
-void setPort(string p) {
+void Bridge::setPort(string p) {
     port = p;
 }
 
@@ -166,7 +166,7 @@ Method that adds a Group to the Bridge by adding the Group object to the Bridge 
 Parameters:
 - Group g: A Group object to be added to the Bridge.
 */
-void addGroup(Group g) {
+void Bridge::addGroup(Group g) {
     groups.push_back(g);
 }
 
@@ -180,14 +180,14 @@ Parameters:
 
 Returns whether the removal was successful as a boolean.
 */
-bool removeGroup(int element) {
+bool Bridge::removeGroup(int element) {
     // if the target Group is outside of the bounds of the groups vector, return false
     if( (element > groups.size() ) || (element < 0) ) {
         return false;
     }
     // else, remove the Group at the specified location
     else {
-        groups.erase(element);
+        groups.erase(groups.begin() + element);
         return true;
     }
 }

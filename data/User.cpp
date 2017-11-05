@@ -83,7 +83,7 @@ Parameters:
 
 Returns the desired Bridge object.
 */
-Bridge getBridge(int element) {
+Bridge User::getBridge(int element) {
     try {
         return bridges.at(element);
     }
@@ -140,6 +140,10 @@ void User::setPassword(string pass) {
     password = pass;
 }
 
+string User::constructGreetingString() {
+    return "Hello, \t" + username + " (" + firstName + " " + lastName + ")";
+}
+
 // --------------------------------------
 // PRIVATE METHODS
 // --------------------------------------
@@ -168,7 +172,7 @@ Method that assigns a given Bridge to the User by adding the Bridge object to th
 Parameters:
 - Bridge b: A Bridge object to be assigned to the User.
 */
-void addBridge(Bridge b) {
+void User::addBridge(Bridge b) {
     bridges.push_back(b);
 }
 
@@ -182,14 +186,14 @@ Parameters:
 
 Returns whether the removal was successful as a boolean.
 */
-bool removeBridge(int element) {
+bool User::removeBridge(int element) {
     // if the target Bridge is outside of the bounds of the bridges vector, return false
     if( (element > bridges.size() ) || (element < 0) ) {
         return false;
     }
     // else, remove the Bridge at the specified location
     else {
-        bridges.erase(element);
+        bridges.erase(bridges.begin() + element);
         return true;
     }
 }
@@ -201,7 +205,9 @@ int main(int argc, char **argv) {
     u.setFirstName("Jake");
     u.setLastName("Fryer");
     
-    cout << "Hello,\t" << u.getUsername() << " (" << u.getFirstName() << " " << u.getLastName() << ")" << endl;
+    //cout << "Hello,\t" << u.getUsername() << " (" << u.getFirstName() << " " << u.getLastName() << ")" << endl;
+    
+    cout << u.constructGreetingString() << endl;
     
     return 0;
 }

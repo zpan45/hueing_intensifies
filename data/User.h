@@ -12,6 +12,7 @@ The User class [...]
 
 #include <string>
 #include <iostream>
+#include <vector>
 #include "Bridge.h"
 
 class User {
@@ -26,6 +27,7 @@ class User {
         void setFirstName(std::string first);
         void setLastName(std::string last);
         void setPassword(std::string pass);
+        std::string constructGreetingString();
     private:
         std::string hashPassword(std::string pass);
         void addBridge(Bridge b);
@@ -35,7 +37,7 @@ class User {
         std::string firstName;
         std::string lastName;
         std::string password;
-        vector<Bridge> bridges;
+        std::vector<Bridge> bridges;
 };
 
 #endif

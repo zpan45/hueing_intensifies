@@ -21,7 +21,7 @@ Group()
 Default constructor for Group class. Initializes all fields to have no values.
 Takes no parameters.
 */
-Group() {
+Group::Group() {
     name = "";
 }
 
@@ -40,7 +40,7 @@ Takes no parameters.
 
 Returns name as a string.
 */
-string getName() {
+string Group::getName() {
     return name;
 }
 
@@ -54,7 +54,7 @@ Parameters:
 
 Returns the desired Light object.
 */
-Light getLight(int element) {
+Light Group::getLight(int element) {
     try {
         return lights.at(element);
     }
@@ -75,7 +75,7 @@ Method that adds a Light to the Group by adding the Light to the lights vector.
 Parameters:
 - Light l: A Light object to be added to the Group.
 */
-void addLight(Light l) {
+void Group::addLight(Light l) {
     lights.push_back(l);
 }
 
@@ -89,14 +89,14 @@ Parameters:
 
 Returns whether the removal was successful as a boolean.
 */
-bool removeLight(int element) {
+bool Group::removeLight(int element) {
     // if the target Light is outside of the bounds of the lights vector, return false
     if( (element > lights.size() ) || (element < 0) ) {
         return false;
     }
     // else, remove the Light at the specified location
     else {
-        lights.erase(element);
+        lights.erase(lights.begin() + element);
         return true;
     }
 }
