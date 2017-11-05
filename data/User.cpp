@@ -140,8 +140,15 @@ void User::setPassword(string pass) {
     password = pass;
 }
 
+/*
+constructGreetingString()
+
+Method that constructs a string to greet the User in the form of "Hello, <username> (<first> <last>)".
+
+Returns a greeting in the specified form.
+*/
 string User::constructGreetingString() {
-    return "Hello, \t" + username + " (" + firstName + " " + lastName + ")";
+    return "Hello, \t" + getUsername() + " (" + getFirstName() + " " + getLastName() + ")";
 }
 
 // --------------------------------------
