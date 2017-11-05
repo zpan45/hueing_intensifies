@@ -12,6 +12,7 @@ The User class [...]
 
 #include <string>
 #include <iostream>
+#include "Bridge.h"
 
 class User {
     public:
@@ -20,17 +21,21 @@ class User {
         std::string getUsername();
         std::string getFirstName();
         std::string getLastName();
+        Bridge getBridge(int element);
         void setUsername(std::string u);
         void setFirstName(std::string first);
         void setLastName(std::string last);
         void setPassword(std::string pass);
     private:
-        std::string hashPassword(std::string pass); 
+        std::string hashPassword(std::string pass);
+        void addBridge(Bridge b);
+        bool removeBridge(int element);
         
         std::string username;
         std::string firstName;
         std::string lastName;
         std::string password;
+        vector<Bridge> bridges;
 };
 
 #endif
