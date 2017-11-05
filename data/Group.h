@@ -23,7 +23,7 @@ class Group {
         Light getLight(int element);
     private:
         void addLight(Light l);
-        bool removeLight(Light l);
+        bool removeLight(int element);
         
         std::string name;
         std::vector<Light> lights;
