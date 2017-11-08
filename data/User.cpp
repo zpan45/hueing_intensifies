@@ -28,6 +28,14 @@ User::User() {
     lastName = "";
 }
 
+/*
+Copy assignment for User class
+
+This method allows the copying of one User object to another
+by overloading the assignment operator (=)
+
+Takes one User object pointer as a parameter
+*/
 User& User::operator=(const User& otherUser)
 {
     User::username = otherUser.username;
@@ -166,6 +174,32 @@ void User::setPassword(string pass) {
 
 string User::constructGreetingString() {
     return "Hello, \t" + username + " (" + firstName + " " + lastName + ")";
+}
+
+/*
+toString()
+
+Returns user info in a singe string.
+
+Takes no parameters.
+*/
+string User::toString()  {
+    string temp = "";
+
+    temp.std::string::append(username);
+    temp.std::string::append("\t");
+
+    temp.std::string::append(password);
+    temp.std::string::append("\t");
+
+    temp.std::string::append(firstName);
+    temp.std::string::append("\t");
+
+    temp.std::string::append(lastName);
+    temp.std::string::append("\t");
+
+    return temp;
+    //Add something for bridges when it's all worked out
 }
 
 // --------------------------------------
