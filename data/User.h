@@ -18,10 +18,11 @@ The User class [...]
 class User {
     public:
         User();
-        
+
         std::string getUsername();
         std::string getFirstName();
         std::string getLastName();
+        std::string getPassword();
         Bridge getBridge(int element);
         void setUsername(std::string u);
         void setFirstName(std::string first);
@@ -32,7 +33,7 @@ class User {
         std::string hashPassword(std::string pass);
         void addBridge(Bridge b);
         bool removeBridge(int element);
-        
+
         std::string username;
         std::string firstName;
         std::string lastName;

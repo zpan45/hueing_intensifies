@@ -74,6 +74,19 @@ string User::getLastName() {
 }
 
 /*
+getPassword()
+
+Getter for the password field.
+
+Takes no parameters.
+
+Returns the password associated with this user, a string.
+*/
+string User::getPassword() {
+    return password;
+}
+
+/*
 getBridge()
 
 Accessor method for a specific Bridge for this User. Throws an out_of_range if attempting to access an element outside of the vector's bounds.
@@ -98,7 +111,7 @@ setUsername()
 Setter for the username field.
 
 Parameters:
-- string u : A well-formed string. 
+- string u : A well-formed string.
 */
 void User::setUsername(string u) {
     username = u;
@@ -110,7 +123,7 @@ setFirstName()
 Setter for the user's first name field.
 
 Parameters:
-- string first : A well-formed string. 
+- string first : A well-formed string.
 */
 void User::setFirstName(string first) {
     firstName = first;
@@ -122,7 +135,7 @@ setLastName()
 Setter for the user's last name field.
 
 Parameters:
-- string last : A well-formed string. 
+- string last : A well-formed string.
 */
 void User::setLastName(string last) {
     lastName = last;
@@ -134,7 +147,7 @@ setPassword()
 Setter for the user's password field.
 
 Parameters:
-- string pass : A well-formed string. 
+- string pass : A well-formed string.
 */
 void User::setPassword(string pass) {
     password = pass;
@@ -154,13 +167,13 @@ hashPassword()
 Takes the user's password as a parameter and generates a "hashed" version of that password.
 
 Parameters:
-- string pass : A well-formed string. 
+- string pass : A well-formed string.
 
 Returns the hashed version of the password.
 */
 string User::hashPassword(string pass) {
     // ! TODO: Add method for hashing a user's password and returning the hashed string
-    
+
     return pass;
 }
 
@@ -201,13 +214,13 @@ bool User::removeBridge(int element) {
 int main(int argc, char **argv) {
     User u;
     u.setUsername("jfryer6");
-    
+
     u.setFirstName("Jake");
     u.setLastName("Fryer");
-    
+
     //cout << "Hello,\t" << u.getUsername() << " (" << u.getFirstName() << " " << u.getLastName() << ")" << endl;
-    
+
     cout << u.constructGreetingString() << endl;
-    
+
     return 0;
 }
