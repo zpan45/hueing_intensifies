@@ -18,6 +18,7 @@ The User class [...]
 class User {
     public:
         User();
+        User& operator=(const User&);
 
         std::string getUsername();
         std::string getFirstName();

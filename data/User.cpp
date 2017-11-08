@@ -28,6 +28,17 @@ User::User() {
     lastName = "";
 }
 
+User& User::operator=(const User& otherUser)
+{
+    User::username = otherUser.username;
+    User::firstName = otherUser.firstName;
+    User::lastName = otherUser.lastName;
+    User::password = otherUser.password;
+    //User::bridges = otherUser.bridges;
+
+    return *this;
+}
+
 // ! TODO: Add overloaded constructor for creating a user with fields
 
 // --------------------------------------
@@ -211,7 +222,7 @@ bool User::removeBridge(int element) {
     }
 }
 
-int main(int argc, char **argv) {
+/*int main(int argc, char **argv) {
     User u;
     u.setUsername("jfryer6");
 
@@ -223,4 +234,4 @@ int main(int argc, char **argv) {
     cout << u.constructGreetingString() << endl;
 
     return 0;
-}
+}*/
