@@ -1,11 +1,11 @@
-/*
-Bridge.cpp
-
-Bridge.cpp [...]
-
-@author - Jacob Fryer (jfryer6)
-@date - November 04, 2017
-*/
+/**
+ * @file Bridge.cpp
+ * Bridge Class.
+ *
+ * @brief Bridge Class
+ * @author Jacob Fryer (jfryer6)
+ * @date November 04, 2017
+ */
 
 #include "Bridge.h"
 
@@ -15,12 +15,10 @@ using namespace std;
 // CONSTRUCTORS
 // --------------------------------------
 
-/*
-Bridge()
 
-Default constructor for Bridge class. Initializes all fields to have no values.
-Takes no parameters.
-*/
+/**
+ * Default constructor for Bridge class. Initializes all fields to have no values.
+ */
 Bridge::Bridge() {
     name = "";
     location = "";
@@ -35,68 +33,48 @@ Bridge::Bridge() {
 // PUBLIC METHODS
 // --------------------------------------
 
-/*
-getName()
 
-Getter for the name of the Bridge.
-
-Takes no parameters.
-
-Returns name as a string.
-*/
+/**
+ * Getter for the name of the Bridge object.
+ * @return the name field, a string.
+ */
 string Bridge::getName() {
     return name;
 }
 
-/*
-getLocation()
 
-Getter for the location of the Bridge.
-
-Takes no parameters.
-
-Returns location as a string.
-*/
+/**
+ * Getter for the location of the Bridge object.
+ * @return the location field, a string.
+ */
 string Bridge::getLocation() {
     return location;
 }
 
-/*
-getHostName()
 
-Getter for the host name of the Bridge.
-
-Takes no parameters.
-
-Returns hostName as a string.
-*/
+/**
+ * Getter for the host name of the Bridge object.
+ * @return the host name field, a string.
+ */
 string Bridge::getHostName() {
     return hostName;
 }
 
-/*
-getPort()
 
-Getter for the port of the Bridge.
-
-Takes no parameters.
-
-Returns port as a string.
-*/
+/**
+ * Getter for the port of the Bridge object.
+ * @return the port field, a string.
+ */
 string Bridge::getPort() {
     return port;
 }
 
-/*
-getGroup()
 
-Accessor method for a specific Group in this Bridge. Throws an out_of_range if attempting to access an element outside of the vector's bounds.
-
-Parameters:
-- int element: The integer position of the desired Group object in the groups vector.
-
-Returns the desired Group object.
-*/
+/**
+ * Accessor method for a specific Group in this Bridge. Throws an out_of_range if attempting to access an element outside of the vector's bounds.
+ * @param element The integer position of the desired Group object in the groups vector.
+ * @return the desired Group object.
+ */
 Group Bridge::getGroup(int element) {
     try {
         return groups.at(element);
@@ -106,14 +84,11 @@ Group Bridge::getGroup(int element) {
     }
 }
 
-/*
-setName()
 
-Setter for the name field.
-
-Parameters:
-- string n: The name of the Bridge.
-*/
+/**
+ * Setter for the name field.
+ * @param n A string for the name of the Bridge.
+ */
 void Bridge::setName(string n) {
     name = n;
 }
@@ -126,30 +101,28 @@ Setter for the location field.
 Parameters:
 - string l: A string providing the location of the Bridge.
 */
+/**
+ * Setter for the location field.
+ * @param l A string for the location of the Bridge.
+ */
 void Bridge::setLocation(string l) {
     location = l;
 }
 
-/*
-setHostName()
 
-Setter for the hostName field.
-
-Parameters:
-- string hn: A string representation of the host name for the Bridge.
-*/
+/**
+ * Setter for the hostName field.
+ * @param hn A string representation of the host name for the Bridge.
+ */
 void Bridge::setHostName(string hn) {
     hostName = hn;
 }
 
-/*
-setPort()
 
-Setter for the port field.
-
-Parameters:
-- string p: A string representation of the Port for the Bridge.
-*/
+/**
+ * Setter for the port field.
+ * @param p A string representation of the Port for the Bridge.
+ */
 void Bridge::setPort(string p) {
     port = p;
 }
@@ -158,28 +131,21 @@ void Bridge::setPort(string p) {
 // PRIVATE METHODS
 // --------------------------------------
 
-/*
-addGroup()
 
-Method that adds a Group to the Bridge by adding the Group object to the Bridge class's groups vector.
-
-Parameters:
-- Group g: A Group object to be added to the Bridge.
-*/
+/**
+ * Method that adds a Group to the Bridge by adding the Group object to the Bridge class's groups vector.
+ * @param g A Group object to be added to the Bridge.
+ */
 void Bridge::addGroup(Group g) {
     groups.push_back(g);
 }
 
-/*
-removeGroup()
 
-Method to remove a Group at the given position from the Bridge.
-
-Parameters:
-- int element: The integer position of the desired Group object in the groups vector.
-
-Returns whether the removal was successful as a boolean.
-*/
+/**
+ * Method to remove a Group at the given position from the Bridge.
+ * @param element The integer position of the desired Group object in the groups vector.
+ * @return whether the removal was successful as a boolean.
+ */
 bool Bridge::removeGroup(int element) {
     // if the target Group is outside of the bounds of the groups vector, return false
     if( (element > groups.size() ) || (element < 0) ) {

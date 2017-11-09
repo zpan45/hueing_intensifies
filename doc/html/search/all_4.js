@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['getbridge',['getBridge',['../class_user.html#addfc8808d882be899a73c440479162e6',1,'User']]],
+  ['getbrightness',['getBrightness',['../class_light.html#a4371237821a700632106d203e6ccd657',1,'Light']]],
+  ['getcolour',['getColour',['../class_light.html#aca9d7c9b32ffa9162502d791718c00bf',1,'Light']]],
+  ['getfirstname',['getFirstName',['../class_user.html#a916b23414c3e97507a5b0a1ece77aede',1,'User']]],
+  ['getgroup',['getGroup',['../class_bridge.html#ad2d64bd9e4014553c24a7b2b23939712',1,'Bridge']]],
+  ['gethostname',['getHostName',['../class_bridge.html#aac6bc9b725ffaebee510c15415c937d9',1,'Bridge']]],
+  ['getisactive',['getIsActive',['../class_light.html#a0af03e7fefa768f8a4c7fd5d14aee658',1,'Light']]],
+  ['getlastname',['getLastName',['../class_user.html#a4d2dccad8093c31a64fb461ac8e42160',1,'User']]],
+  ['getlight',['getLight',['../class_group.html#ad353fdadc2712f418229359f76d165f7',1,'Group']]],
+  ['getlocation',['getLocation',['../class_bridge.html#a9a29a809110d39245ad743734ccb1b0b',1,'Bridge']]],
+  ['getname',['getName',['../class_bridge.html#ac64bf3cf4afb888d67bd9f2ff361de3a',1,'Bridge::getName()'],['../class_group.html#a98f0d57aa0acac724991ced372a385ce',1,'Group::getName()'],['../class_light.html#a5d421846f0491d87a0054bd0dbd0936e',1,'Light::getName()']]],
+  ['getpassword',['getPassword',['../class_user.html#a090eb9ee354cc25b2e8240b714b39d64',1,'User']]],
+  ['getport',['getPort',['../class_bridge.html#a08de5f59536d2f960da9bbd986a6ea0c',1,'Bridge']]],
+  ['getschedule',['getSchedule',['../class_light.html#aad4cc6c4178b22b238d8126d3f675234',1,'Light']]],
+  ['getuser',['getUser',['../class_d_b_file_manager.html#aec0855b28c63a50eb50ccd139c6edc96',1,'DBFileManager']]],
+  ['getusername',['getUsername',['../class_user.html#a5705c32c347050449ba6d72f32f18482',1,'User']]],
+  ['group',['Group',['../class_group.html',1,'Group'],['../class_group.html#a7b74f9ac68e0504ccf2e2854b7355ff1',1,'Group::Group()']]],
+  ['group_2ecpp',['Group.cpp',['../_group_8cpp.html',1,'']]],
+  ['group_2eh',['Group.h',['../_group_8h.html',1,'']]]
+];
