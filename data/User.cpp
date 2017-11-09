@@ -47,7 +47,23 @@ User& User::operator=(const User& otherUser)
     return *this;
 }
 
-// ! TODO: Add overloaded constructor for creating a user with fields
+/*
+User()
+
+Overloaded constructor for the User class. Initializes all fields to have specified values.
+
+Parameters
+- string un: The User's associated username, a string
+- string pw: The User's associated password, a string
+- string first: The User's first name, a string
+- string last: The User's last name, a string
+*/
+User::User(string un, string pw, string first, string last) {
+    username = un;
+    password = pw;
+    firstName = first;
+    lastName = last;
+}
 
 // --------------------------------------
 // PUBLIC METHODS
@@ -172,6 +188,13 @@ void User::setPassword(string pass) {
     password = pass;
 }
 
+/*
+constructGreetingString()
+
+Method that constructs a string to greet the User in the form of "Hello, <username> (<first> <last>)".
+
+Returns a greeting in the specified form.
+*/
 string User::constructGreetingString() {
     return "Hello, \t" + username + " (" + firstName + " " + lastName + ")";
 }
@@ -264,8 +287,11 @@ bool User::removeBridge(int element) {
     u.setLastName("Fryer");
 
     //cout << "Hello,\t" << u.getUsername() << " (" << u.getFirstName() << " " << u.getLastName() << ")" << endl;
-
+    
+    User u2("Username", "password123", "Some", "Body");
+    
     cout << u.constructGreetingString() << endl;
-
+    cout << u2.constructGreetingString() << endl;
+    
     return 0;
 }*/
