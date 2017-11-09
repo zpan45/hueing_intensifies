@@ -18,13 +18,13 @@ The Bridge class [...]
 class Bridge {
     public:
         Bridge();
-        
+
         std::string getName();
         std::string getLocation();
         std::string getHostName();
         std::string getPort();
         Group getGroup(int element);
-        
+
         void setName(std::string n);
         void setLocation(std::string l);
         void setHostName(std::string hn);
@@ -32,7 +32,7 @@ class Bridge {
     private:
         void addGroup(Group g);
         bool removeGroup(int element);
-        
+
         std::string name;
         std::string location;
         std::string hostName;

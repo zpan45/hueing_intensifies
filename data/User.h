@@ -20,7 +20,7 @@ class User {
         User();
         User& operator=(const User&);
         User(std::string un, std::string pw, std::string first, std::string last);
-        
+
         std::string getUsername();
         std::string getFirstName();
         std::string getLastName();
@@ -32,8 +32,8 @@ class User {
         void setPassword(std::string pass);
         std::string constructGreetingString();
         std::string toString();
-    private:
         std::string hashPassword(std::string pass);
+    private:
         void addBridge(Bridge b);
         bool removeBridge(int element);
 

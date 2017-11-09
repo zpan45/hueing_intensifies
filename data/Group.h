@@ -18,13 +18,13 @@ The Group class [...]
 class Group {
     public:
         Group();
-        
+
         std::string getName();
         Light getLight(int element);
     private:
         void addLight(Light l);
         bool removeLight(int element);
-        
+
         std::string name;
         std::vector<Light> lights;
 };

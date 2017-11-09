@@ -9,6 +9,12 @@
 
 int main(void)
 {
+    User testHash;
+    std::string testPWHash = "sineP";
+    std::cout << "Password: " << testPWHash << " Hashed Password: " << testHash.hashPassword(testPWHash) << std::endl;
+    std::cout << "Password: " << testPWHash << " Hashed Password: " << testHash.hashPassword(testPWHash) << std::endl;
+
+
     std::cout << "-----------------------------------------------" << std::endl;
     std::cout << "--------- User Database Test Program ----------" << std::endl;
     std::cout << "-----------------------------------------------" << std::endl;

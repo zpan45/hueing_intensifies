@@ -16,7 +16,7 @@ The Light class [...]
 class Light {
     public:
         Light();
-        
+
         std::string getName();
         bool getIsActive();
         int getBrightness();
@@ -29,7 +29,7 @@ class Light {
         void setSchedule(int sched);
     private:
         void convertHexcodeToCoords(std::string col);
-        
+
         std::string name;
         bool isActive;
         int brightness;
