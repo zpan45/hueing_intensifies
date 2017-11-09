@@ -18,6 +18,7 @@ The User class [...]
 class User {
     public:
         User();
+        User(std::string un, std::string pw, std::string first, std::string last);
         
         std::string getUsername();
         std::string getFirstName();
