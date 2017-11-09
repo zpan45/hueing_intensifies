@@ -32,7 +32,7 @@ class User {
         void setPassword(std::string pass);
         std::string constructGreetingString();
         std::string toString();
-        std::size_t hashPassword(std::string pass);
+        std::string hashPassword(std::string pass);
     private:
         void addBridge(Bridge b);
         bool removeBridge(int element);

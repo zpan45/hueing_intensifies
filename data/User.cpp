@@ -9,6 +9,7 @@ User.cpp [...]
 
 #include <functional>
 #include <cstddef>
+#include <sstream>
 #include "User.h"
 
 using namespace std;
@@ -214,7 +215,7 @@ string User::toString()  {
     temp.std::string::append(username);
     temp.std::string::append("\t");
 
-    temp.std::string::append(password);
+    temp.std::string::append(User::hashPassword(password));
     temp.std::string::append("\t");
 
     temp.std::string::append(firstName);
@@ -241,11 +242,15 @@ Parameters:
 
 Returns the hashed version of the password.
 */
-size_t User::hashPassword(string pass) {
+string User::hashPassword(string pass) {
 
     std::hash<std::string> str_hash;
 
-    return str_hash(pass);
+    std::stringstream ss;
+
+    ss << str_hash(pass);
+
+    return ss.str();
 }
 
 /*
