@@ -173,9 +173,8 @@ convertHexcodeToCoords()
 
 Method that converts a given, well-formed string representing a colour's hexcode into the associated colour space coordinates to be used with the Hue API.
 
-Returns ??? (** NOTE: Return type???) 
+Returns ??? (** NOTE: Return type???)
 */
 void Light::convertHexcodeToCoords(string col) {
     // ! TODO: Write method to convert a hexcode into valid colour coordinates for the Hue API to process if needed
 }
-    

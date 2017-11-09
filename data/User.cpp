@@ -7,6 +7,8 @@ User.cpp [...]
 @date - November 03, 2017
 */
 
+#include <functional>
+#include <cstddef>
 #include "User.h"
 
 using namespace std;
@@ -239,10 +241,11 @@ Parameters:
 
 Returns the hashed version of the password.
 */
-string User::hashPassword(string pass) {
-    // ! TODO: Add method for hashing a user's password and returning the hashed string
+size_t User::hashPassword(string pass) {
 
-    return pass;
+    std::hash<std::string> str_hash;
+
+    return str_hash(pass);
 }
 
 /*
@@ -287,11 +290,11 @@ bool User::removeBridge(int element) {
     u.setLastName("Fryer");
 
     //cout << "Hello,\t" << u.getUsername() << " (" << u.getFirstName() << " " << u.getLastName() << ")" << endl;
-    
+
     User u2("Username", "password123", "Some", "Body");
-    
+
     cout << u.constructGreetingString() << endl;
     cout << u2.constructGreetingString() << endl;
-    
+
     return 0;
 }*/
