@@ -13,6 +13,7 @@ int main(void)
     std::cout << "------------- Password Hash Test --------------" << std::endl;
     std::cout << "-----------------------------------------------" << std::endl;
     
+    // STEP ONE: Create Users
     
     User testHash("u1", "testPW", "foo", "bar");
     User testHash2("u2", "", "baz", "bop");
@@ -20,19 +21,38 @@ int main(void)
     std::cout << testHash.constructGreetingString() << std::endl;
     std::cout << testHash2.constructGreetingString() << std::endl << std::endl;
     
-    std::cout << "U1 Password: " << testHash.getPassword() << " Hashed Password: " << testHash.hashPassword(testHash.getPassword()) << std::endl;
+    // show user's password and its associated hash
+    std::cout << "U1 Password:\t" << testHash.getPassword() << "\tHashed Password:\t" << testHash.hashPassword(testHash.getPassword()) << std::endl;
     
+    // STEP TWO: Test Password Hashing
+    
+    // prompt the user to write the same password as above
     std::string secondPW;
-    std::cout << "Enter the above test password a second time: " << std::endl;
-    std::cin >> secondPW;
+    std::cout << "Enter the above test password a second time to test if password hashes are equal: " << std::endl;
+    std::cin >> secondPW; // store entered password in "secondPW" string
     
     testHash2.setPassword(secondPW);
-    std::cout << "Setting " << testHash2.getUsername() << "'s password... " << (testHash.getPassword() != "") << std::endl;
+    std::cout << "Setting " << testHash2.getUsername() << "'s password... ";
+    
+    // test if password was set properly -- if empty string, password setting failed
+    if(testHash.getPassword() != "") {
+        std::cout << "SUCCESS" << std::endl;
+    }
+    else {
+        std::cout << "Failure, password not set successfully." << std::endl;
+    }
     std::cout << testHash2.getUsername() << "'s password is: " << testHash2.getPassword() << std::endl;
     
-    std::cout << "U2 Password: " << testHash2.getPassword() << " Hashed Password: " << testHash2.hashPassword(testHash2.getPassword()) << std::endl;
+    std::cout << "U2 Password:\t" << testHash2.getPassword() << "\tHashed Password:\t" << testHash2.hashPassword(testHash2.getPassword()) << std::endl;
     
-    std::cout << "Testing if the password hashes were the same... " << (testHash.hashPassword(testHash.getPassword()) == testHash2.hashPassword(testHash2.getPassword())) << std::endl;
+    // Test if the hashed passwords are equal
+    std::cout << "Testing if the password hashes were the same... ";
+    if(testHash.hashPassword(testHash.getPassword()) == testHash2.hashPassword(testHash2.getPassword())) {
+        std::cout << "SUCCESS" << std::endl;
+    }
+    else {
+        std::cout << "Failure, passwords were unequal." << std::endl;
+    }
 
     std::cout << "-----------------------------------------------" << std::endl;
     std::cout << "--------- User Database Test Program ----------" << std::endl;
