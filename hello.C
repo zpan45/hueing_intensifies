@@ -6,6 +6,9 @@
 #include <Wt/WText>
 #include <Wt/WBorderLayout>
 
+#include "RegistrationWidget.h"
+#include "User.h"
+
 using namespace Wt;
 using namespace std;
 
@@ -46,6 +49,10 @@ HelloApplication::HelloApplication(const WEnvironment& env)
 
   passWord = new WLineEdit(root());
   passWord->setFocus();
+
+  root()->addWidget(new RegistrationWidget("String"));
+//  RegistrationWidget *registrationWidget = new RegistrationWidget("Registration Page");
+//  registrationWidget->clearRegistration();
 
 
   WPushButton *loginButton

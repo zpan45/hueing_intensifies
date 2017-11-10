@@ -16,14 +16,14 @@
 class RegistrationWidget: public Wt::WContainerWidget
 {
 public:
-  RegistrationWidget(const std::string& name);
+  RegistrationWidget(const std::string &name, Wt::WContainerWidget *parent = 0);
 
 private:
   Wt::WText        *title;
   Wt::WPushButton  *registerButton;
   std::string 		name_;
 
-  User createUser();
+//  User createUser(std::string &username, std::string &password, std::string &firstname, std::string &lastname);
   void clearRegistration();
 };
 

@@ -11,7 +11,7 @@
 #include "RegistrationWidget.h"
 
 using namespace Wt;
-
+using namespace std;
 /*
  * Registration Widget
  */
@@ -21,15 +21,14 @@ using namespace Wt;
  *Intializes and constructs the Registration Widget to be called by 
  *Hue main application. 
  */
-RegistrationWidget::RegistrationWidget(const std::string& name)
-: WContainerWidget(), name_(name)
+RegistrationWidget::RegistrationWidget(const std::string &name, WContainerWidget *parent)
+: WContainerWidget(parent), name_(name)
 {
-  setContentAlignment(AlignmentFlag::Center);
-  setTitle("Registration Widget");                              
+  setContentAlignment(AlignCenter);
+//  setTitle("Registration Widget");
 
-  registerButton = addWidget(std::make_unique<WPushButton>(tr("Registration")));
+  registerButton = new WPushButton("Registration", this);
   registerButton->clicked().connect(this, &RegistrationWidget::clearRegistration);
-  
   // userNameEdit = new WLineEdit(root());                     // allow text input
   // userNameEdit->setFocus();                                 // give focus
 
@@ -54,17 +53,17 @@ RegistrationWidget::RegistrationWidget(const std::string& name)
 /*This method is to create User after the user of programmer enters
  *their information.
 */
-User RegistrationWidget::createUser(string userName, string firstName, string lastName, string password)
+/*User RegistrationWidget::createUser(std::string &userName, std::string &firstName, std::string &lastName, std::string &password)
 {
   User *newUser = new User(userName, password, firstName, lastName);
   
-  return User;
+  return *newUser;
 }
 
 /*This method is to clear the widget after user has succesfully logged in.
 */
-void clearRegistration
+void RegistrationWidget::clearRegistration()
 {
-  root()->clear();
+  std::cout << "Registration Widget Cleared";
 }
 
