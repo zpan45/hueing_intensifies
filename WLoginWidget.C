@@ -21,56 +21,43 @@
 using namespace Wt;
 using namespace std;
 /*
- * Registration Widget
+ * Login Widget
  */
 
 
 /*
- *Intializes and constructs the Registration Widget to be called by
+ *Intializes and constructs the Login Widget to be called by
  *Hue main application.
  */
 WLoginWidget::WLoginWidget(const std::string &name, WContainerWidget *parent)
 : WContainerWidget(parent), name_(name)
 {
   setContentAlignment(AlignCenter);
-//  setTitle("Login Widget");
 
-  registerButton = new WPushButton("Login", this);
-  registerButton->clicked().connect(this, &RegistrationWidget::clearRegistration);
-  // userNameEdit = new WLineEdit(root());                     // allow text input
-  // userNameEdit->setFocus();                                 // give focus
+  // add the Username entry textbox
+  this->addWidget(new Wt::WText("Username: "));
+  usernameEdit = new WLineEdit(this);
+  usernameEdit->setFocus(); // set the focus to be on this textbox
+  this->addWidget(new Wt::WBreak());
 
-  // passWordEdit = new WLineEdit(root());
-  // passWordEdit->setFocus();
+  // add the Password entry textbox
+  this->addWidget(new Wt::WText("Password: "));
+  passwordEdit = new WLineEdit(this);
+  this->addWidget(new Wt::WBreak());
 
+  // add the register button
+  loginButton = new WPushButton("Login", this);
+  loginButton->clicked().connect(this, &RegistrationWidget::login);
 
-  // WPushButton *loginButton
-  //   = new WPushButton("Login", root());              // create a button
-  // loginButton->setMargin(5, Top);                            // add 5 pixels margin
-  // loginButton->setStyleClass("btn-primary");
-
-  // WPushButton *signUpButton = new WPushButton("Sign Up", root());
-  // signUpButton->setMargin(100, Bottom);
-
-
-  // loginButton->clicked().connect(this, &WLoginWidgetApplication::greet);
-  // userNameEdit->enterPressed().connect
-  //   (boost::bind(&WLoginWidgetApplication::greet, this));
 }
 
 /*This method is to create User after the user of programmer enters
  *their information.
-*/
-/*User RegistrationWidget::createUser(std::string &userName, std::string &firstName, std::string &lastName, std::string &password)
-{
-  User *newUser = new User(userName, password, firstName, lastName);
-
-  return *newUser;
-}
+ */
 
 /*This method is to clear the widget after user has succesfully logged in.
 */
-void WLoginWidget::clearLogin()
+void WLoginWidget::login()
 {
   std::cout << "Login Widget Cleared";
 }
