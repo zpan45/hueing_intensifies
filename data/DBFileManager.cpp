@@ -17,10 +17,24 @@
 //    5. Add user
 //    6. Remove user
 
+/**
+ * @file DBFileManager.cpp
+ * Database file manager.
+ *
+ * @brief Database file manager
+ * @author Team 24
+ * @date November 09, 2017
+ */
+
+
 #include "DBFileManager.h"
 
 /* CONSTRUCTORS */
 
+
+/**
+ * Default constructor. Initializes output stream to database file.
+ */
 DBFileManager::DBFileManager()
 {
     DBFileManager::userFileStream.std::ofstream::open("UserDatabase.txt"); //open output stream to database file
@@ -33,6 +47,11 @@ DBFileManager::DBFileManager()
 
 //}
 
+
+/**
+ * Save the vector of User objects to file.
+ * @param users a vector containing User objects.
+ */
 void saveUsers(std::vector<User> users)
 {
     if (!DBFileManager::userFileStream.std::ofstream::is_open()) //check that file is open
@@ -46,6 +65,10 @@ void saveUsers(std::vector<User> users)
     }
 }
 
+
+/**
+ * Write data to file.
+ */
 void writeToFile()
 {
     if (!userFile.std::ofstream::is_open()) //check that file is open
