@@ -1,3 +1,12 @@
+/**
+ * @file WLoginWidget.cpp
+ * Login Widget.
+ *
+ * @brief Login Widget.
+ * @author Team 24
+ * @date November 09, 2017
+ */
+
 #include <Wt/WApplication>
 #include <Wt/WBreak>
 #include <Wt/WContainerWidget>
@@ -8,7 +17,7 @@
 
 using namespace Wt;
 
-/*
+/**
  * Phillips Hue
  */
 class WLoginWidgetApplication : public WApplication
@@ -24,12 +33,14 @@ private:
   void greet();
 };
 
-/*
+
+/**
  * The env argument contains information about the new session, and
  * the initial request. It must be passed to the WApplication
  * constructor so it is typically also an argument for your custom
  * application constructor.
-*/
+ * @param env information about the new session, and the initial request.
+ */
 WLoginWidgetApplication::WLoginWidgetApplication(const WEnvironment& env)
   : WApplication(env)
 {
@@ -71,6 +82,10 @@ WLoginWidgetApplication::WLoginWidgetApplication(const WEnvironment& env)
   // }));
 }
 
+
+/**
+ * Update text to greet user.
+ */
 void WLoginWidgetApplication::greet()
 {
   /*
@@ -79,6 +94,12 @@ void WLoginWidgetApplication::greet()
   greeting_->setText("Hello there, " + userNameEdit->text());
 }
 
+
+/**
+ * Read information from the environment to decide whether the user has permission to start a new application.
+ * @param env environment
+ * @return new application
+ */
 WApplication *createApplication(const WEnvironment& env)
 {
   /*

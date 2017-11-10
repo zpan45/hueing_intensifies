@@ -16,6 +16,16 @@
 
 //    5. Add user
 //    6. Remove user
+
+/**
+ * @file DBFileManager.h
+ * Database file manager head file.
+ *
+ * @brief Database file manager head file.
+ * @author Team 24
+ * @date November 09, 2017
+ */
+
 #ifndef DBFILEMANAGER_H
 #define DBFILEMANAGER_H
 

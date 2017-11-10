@@ -1,11 +1,12 @@
-/*
-User.cpp
+/**
+ * @file User.cpp
+ * User Class.
+ *
+ * @brief User Class
+ * @author Jacob Fryer (jfryer6)
+ * @date November 03, 2017
+ */
 
-User.cpp [...]
-
-@author - Jacob Fryer (jfryer6)
-@date - November 03, 2017
-*/
 
 #include <functional>
 #include <cstddef>
@@ -18,12 +19,11 @@ using namespace std;
 // CONSTRUCTORS
 // --------------------------------------
 
-/*
-User()
 
-Default constructor for User class. Initializes all fields to have no values.
-Takes no parameters.
-*/
+/**
+ * Default constructor for User class. Initializes all fields to have no values.
+ * Takes no parameters.
+ */
 User::User() {
     username = "";
     password = "";
@@ -31,14 +31,13 @@ User::User() {
     lastName = "";
 }
 
-/*
-Copy assignment for User class
 
-This method allows the copying of one User object to another
-by overloading the assignment operator (=)
-
-Takes one User object pointer as a parameter
-*/
+/**
+ * Copy assignment for User class.
+ * This method allows the copying of one User object to another by overloading the assignment operator (=).
+ * @param otherUser the user object being copied
+ * @return the copied new user object
+ */
 User& User::operator=(const User& otherUser)
 {
     User::username = otherUser.username;
@@ -50,17 +49,14 @@ User& User::operator=(const User& otherUser)
     return *this;
 }
 
-/*
-User()
 
-Overloaded constructor for the User class. Initializes all fields to have specified values.
-
-Parameters
-- string un: The User's associated username, a string
-- string pw: The User's associated password, a string
-- string first: The User's first name, a string
-- string last: The User's last name, a string
-*/
+/** Overloaded constructor for the User class. Initializes all fields to have specified values.
+ * 
+ * @param un The User's associated username, a string
+ * @param pw The User's associated password, a string
+ * @param first The User's first name, a string
+ * @param last The User's last name, a string
+ */
 User::User(string un, string pw, string first, string last) {
     username = un;
     password = pw;
@@ -72,68 +68,48 @@ User::User(string un, string pw, string first, string last) {
 // PUBLIC METHODS
 // --------------------------------------
 
-/*
-getUsername()
 
-Getter for the username field.
-
-Takes no parameters.
-
-Returns the username associated with this user, a string.
-*/
+/**
+ * Getter for the username field.
+ * @return the username associated with this user, a string.
+ */
 string User::getUsername() {
     return username;
 }
 
-/*
-getFirstName()
 
-Getter for the first name field.
-
-Takes no parameters.
-
-Returns the first name associated with this user, a string.
-*/
+/**
+ * Getter for the first name field.
+ * @return the first name associated with this user, a string.
+ */
 string User::getFirstName() {
     return firstName;
 }
 
-/*
-getLastName()
 
-Getter for the last name field.
-
-Takes no parameters.
-
-Returns the last name associated with this user, a string.
-*/
+/**
+ * Getter for the last name field.
+ * @return the last name associated with this user, a string.
+ */
 string User::getLastName() {
     return lastName;
 }
 
-/*
-getPassword()
 
-Getter for the password field.
-
-Takes no parameters.
-
-Returns the password associated with this user, a string.
-*/
+/**
+ * Getter for the password field.
+ * @return the password associated with this user, a string.
+ */
 string User::getPassword() {
     return password;
 }
 
-/*
-getBridge()
 
-Accessor method for a specific Bridge for this User. Throws an out_of_range if attempting to access an element outside of the vector's bounds.
-
-Parameters:
-- int element: The integer position of the desired Bridge object in the bridges vector.
-
-Returns the desired Bridge object.
-*/
+/**
+ * Accessor method for a specific Bridge for this User. Throws an out_of_range if attempting to access an element outside of the vector's bounds.
+ * @param element The integer position of the desired Bridge object in the bridges vector.
+ * @return the desired Bridge object.
+ */
 Bridge User::getBridge(int element) {
     try {
         return bridges.at(element);
@@ -143,72 +119,57 @@ Bridge User::getBridge(int element) {
     }
 }
 
-/*
-setUsername()
 
-Setter for the username field.
-
-Parameters:
-- string u : A well-formed string.
-*/
+/**
+ * Setter for the username field.
+ * @param u A well-formed string as username.
+ */
 void User::setUsername(string u) {
     username = u;
 }
 
-/*
-setFirstName()
 
-Setter for the user's first name field.
-
-Parameters:
-- string first : A well-formed string.
-*/
+/**
+ * Setter for the first name field.
+ * @param u A well-formed string as first name.
+ */
 void User::setFirstName(string first) {
     firstName = first;
 }
 
-/*
-setLastName()
 
-Setter for the user's last name field.
-
-Parameters:
-- string last : A well-formed string.
-*/
+/**
+ * Setter for the last name field.
+ * @param u A well-formed string as last name.
+ */
 void User::setLastName(string last) {
     lastName = last;
 }
 
-/*
-setPassword()
 
-Setter for the user's password field.
-
-Parameters:
-- string pass : A well-formed string.
-*/
+/**
+ * Setter for the password field.
+ * @param u A well-formed string as password.
+ */
 void User::setPassword(string pass) {
     password = pass;
 }
 
-/*
-constructGreetingString()
 
-Method that constructs a string to greet the User in the form of "Hello, <username> (<first> <last>)".
+/**
+ * Method that constructs a string to greet the User in the form of "Hello, <username> (<first> <last>)".
 
-Returns a greeting in the specified form.
-*/
+ * @return a greeting in the specified form.
+ */
 string User::constructGreetingString() {
     return "Hello, \t" + username + " (" + firstName + " " + lastName + ")";
 }
 
-/*
-toString()
 
-Returns user info in a singe string.
-
-Takes no parameters.
-*/
+/**
+ * Returns user info in a singe string.
+ * @return user as string
+ */
 string User::toString()  {
     string temp = "";
 
@@ -232,16 +193,12 @@ string User::toString()  {
 // PRIVATE METHODS
 // --------------------------------------
 
-/*
-hashPassword()
 
-Takes the user's password as a parameter and generates a "hashed" version of that password.
-
-Parameters:
-- string pass : A well-formed string.
-
-Returns the hashed version of the password.
-*/
+/**
+ * Takes the user's password as a parameter and generates a "hashed" version of that password.
+ * @param pass A well-formed string as password.
+ * @return the hashed version of the password.
+ */
 string User::hashPassword(string pass) {
 
     std::hash<std::string> str_hash;
@@ -253,28 +210,21 @@ string User::hashPassword(string pass) {
     return ss.str();
 }
 
-/*
-addBridge()
 
-Method that assigns a given Bridge to the User by adding the Bridge object to the User class's bridges vector.
-
-Parameters:
-- Bridge b: A Bridge object to be assigned to the User.
-*/
+/**
+ * Method that assigns a given Bridge to the User by adding the Bridge object to the User class's bridges vector.
+ * @param b A Bridge object to be assigned to the User.
+ */
 void User::addBridge(Bridge b) {
     bridges.push_back(b);
 }
 
-/*
-removeBridge()
 
-Method to remove a Bridge at the given position from the User.
-
-Parameters:
-- int element: The integer position of the desired Bridge object in the bridges vector.
-
-Returns whether the removal was successful as a boolean.
-*/
+/**
+ * Method to remove a Bridge at the given position from the User.
+ * @param element The integer position of the desired Bridge object in the bridges vector.
+ * @return whether the removal was successful as a boolean.
+ */
 bool User::removeBridge(int element) {
     // if the target Bridge is outside of the bounds of the bridges vector, return false
     if( (element > bridges.size() ) || (element < 0) ) {
