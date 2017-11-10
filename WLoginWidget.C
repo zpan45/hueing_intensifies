@@ -35,9 +35,12 @@ WLoginWidgetApplication::WLoginWidgetApplication(const WEnvironment& env)
 {
   setTitle("Phillips Hue Login");                               // application title
   // show some text
-  userNameEdit = new WLineEdit(root());                     // allow text input
-  userNameEdit->setFocus();                                 // give focus
 
+  root()->addWidget(new WText("Enter your user name"));
+  userNameEdit = new WLineEdit(root());
+  userNameEdit->setFocus();
+
+  root()->addWidget(new WText("Enter your password"));
   passWordEdit = new WLineEdit(root());
   passWordEdit->setFocus();
 
@@ -52,7 +55,7 @@ WLoginWidgetApplication::WLoginWidgetApplication(const WEnvironment& env)
 
 
   loginButton->clicked().connect(this, &WLoginWidgetApplication::greet);
-  
+
 
   /*
    * - using an arbitrary function object (binding values with boost::bind())
@@ -63,7 +66,7 @@ WLoginWidgetApplication::WLoginWidgetApplication(const WEnvironment& env)
   /*
    * - using a c++0x lambda:
    */
-  // button->clicked().connect(std::bind([=]() { 
+  // button->clicked().connect(std::bind([=]() {
   //       greeting_->setText("Hello there, " + nameEdit_->text());
   // }));
 }
@@ -100,4 +103,3 @@ int main(int argc, char **argv)
    */
   return WRun(argc, argv, &createApplication);
 }
-
