@@ -1,11 +1,11 @@
-/*
-Bridge.h
-
-The Bridge class [...]
-
-@author - Jacob Fryer (jfryer6)
-@date - November 04, 2017
-*/
+/**
+ * @file Bridge.h
+ * Bridge Class head file.
+ *
+ * @brief Bridge Class head file.
+ * @author Jacob Fryer (jfryer6)
+ * @date November 04, 2017
+ */
 
 #ifndef _bridge_h_included
 #define _bridge_h_included
