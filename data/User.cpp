@@ -50,8 +50,8 @@ User& User::operator=(const User& otherUser)
 }
 
 
-/**
- * Overloaded constructor for the User class. Initializes all fields to have specified values.
+/** Overloaded constructor for the User class. Initializes all fields to have specified values.
+ * 
  * @param un The User's associated username, a string
  * @param pw The User's associated password, a string
  * @param first The User's first name, a string
