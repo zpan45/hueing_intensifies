@@ -1,3 +1,4 @@
+#define _GLIBCXX_USE_CXX11_ABI 1
 #include <Wt/WApplication>
 #include <Wt/WBreak>
 #include <Wt/WContainerWidget>
@@ -8,6 +9,7 @@
 
 #include "User.h"
 #include "RegistrationWidget.h"
+
 using namespace Wt;
 
 /*
@@ -15,8 +17,12 @@ using namespace Wt;
  */
 
 
-RegistrationWidget::RegistrationWidget(const std::string &name)
-  :WContainerWidget(), name_(name) 
+/*
+ *Intializes and constructs the Registration Widget to be called by 
+ *Hue main application. 
+ */
+RegistrationWidget::RegistrationWidget(const std::string& name)
+: WContainerWidget(), name_(name)
 {
   setContentAlignment(AlignmentFlag::Center);
   setTitle("Registration Widget");                              
@@ -45,17 +51,18 @@ RegistrationWidget::RegistrationWidget(const std::string &name)
   //   (boost::bind(&WLoginWidgetApplication::greet, this));
 }
 
+/*This method is to create User after the user of programmer enters
+ *their information.
+*/
 User RegistrationWidget::createUser(string userName, string firstName, string lastName, string password)
 {
-  User *newUser = new User();
-  newUser->setUsername(userName);
-  newUser->setFirstName(firstName);
-  newUser->setLastName(lastName);
-  newUser->setPassword(password);
+  User *newUser = new User(userName, password, firstName, lastName);
   
   return User;
 }
 
+/*This method is to clear the widget after user has succesfully logged in.
+*/
 void clearRegistration
 {
   root()->clear();
