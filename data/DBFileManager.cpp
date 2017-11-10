@@ -28,11 +28,6 @@ DBFileManager::DBFileManager()
 
 /* PUBLIC METHODS */
 
-//std::set<User> loadUsers(std::string fileName)
-//{
-
-//}
-
 void saveUsers(std::vector<User> users)
 {
     if (!DBFileManager::userFileStream.std::ofstream::is_open()) //check that file is open
@@ -43,6 +38,19 @@ void saveUsers(std::vector<User> users)
     else
     {
         writeToFile();
+    }
+}
+
+void loadUsers()
+{
+    if (!DBFileManager::userFileStream.std::ofstream::is_open()) //check that file is open
+    {
+        std::cout << "File failed to open." << std::endl;
+        return 1;
+    }
+    else
+    {
+        buildActiveDB();
     }
 }
 
@@ -60,6 +68,27 @@ void writeToFile()
             randomUser = *it;
             DBFileManager::userFileStream << randomUser.User::toString() << std::endl; //write info to a single line
         }
+    }
+}
+
+void buildActiveDB()
+{
+    std::ifstream infile("UserDatabase.txt");
+    User tempUser;
+
+    std::string username;
+    std::string password;
+    std::string firstName;
+    std::string lastName;
+
+    while(infile >> username >> password >> firstName >> lastName)
+    {
+        tempUser.setUsername(username);
+        tempUser.setPassword(password);
+        tempUser.setFirstName(firstName);
+        tempUser.setLastName(lastName);
+
+        DBFileManager::listOfUsers.std::vector<User>.push_back(tempUser);
     }
 }
 

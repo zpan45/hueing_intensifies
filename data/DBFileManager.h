@@ -32,8 +32,8 @@ class DBFileManager
     public:
         DBFileManager();
 
-        void loadUsers();
-        void saveUsers();
+        void loadUsers();//coded, needs testing
+        void saveUsers(); //coded, needs testing
         User getUser(std::string userName);
 
         bool addUser(User newUser);
@@ -44,7 +44,7 @@ class DBFileManager
         std::vector<User> listOfUsers;
 
         void clearFile();
-        void writeToFile();
-        void buildActiveDB();
+        void writeToFile(); //coded needs testing
+        void buildActiveDB(); //coded needs testing
 };
 #endif // DBFILEMANAGER_H
