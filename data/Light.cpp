@@ -1,8 +1,8 @@
 /**
- * @file User.cpp
- * User Class.
+ * @file Light.cpp
+ * Light Class.
  *
- * @brief User Class
+ * @brief Light Class
  * @author Jacob Fryer (jfryer6)
  * @date November 05, 2017
  */

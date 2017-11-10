@@ -1,8 +1,10 @@
-// This may look like C code, but it's really -*- C++ -*-
-/* 
- * Copyright (C) 2011 Emweb bvba, Heverlee, Belgium
+/**
+ * @file RegistrationWidget.h
+ * Registration Widget head file.
  *
- * See the LICENSE file for terms of use.
+ * @brief Registration Widget head file.
+ * @author Team 24
+ * @date November 09, 2017
  */
 
 #ifndef REGISTRATION_WIDGET_H_
