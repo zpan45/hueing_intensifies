@@ -1,3 +1,12 @@
+/**
+ * @file RegistrationWidget.cpp
+ * Registration Widget.
+ *
+ * @brief Registration Widget.
+ * @author Team 24
+ * @date November 09, 2017
+ */
+
 #define _GLIBCXX_USE_CXX11_ABI 1
 #include <Wt/WApplication>
 #include <Wt/WBreak>
@@ -12,14 +21,10 @@
 
 using namespace Wt;
 
-/*
- * Registration Widget
- */
 
-
-/*
- *Intializes and constructs the Registration Widget to be called by 
- *Hue main application. 
+/**
+ * Initializes and constructs the Registration Widget to be called by Hue main application.
+ * @param name Username used for registration as a String
  */
 RegistrationWidget::RegistrationWidget(const std::string& name)
 : WContainerWidget(), name_(name)
@@ -51,9 +56,14 @@ RegistrationWidget::RegistrationWidget(const std::string& name)
   //   (boost::bind(&WLoginWidgetApplication::greet, this));
 }
 
-/*This method is to create User after the user of programmer enters
- *their information.
-*/
+/**
+ * This method is to create User after the user of programmer enters their information.
+ * @param userName Username used to create User as a String
+ * @param firstName First name used to create User as a String
+ * @param lastName Last name used to create User as a String
+ * @param password Password used to create User as a String
+ * @return the User object created.
+ */
 User RegistrationWidget::createUser(string userName, string firstName, string lastName, string password)
 {
   User *newUser = new User(userName, password, firstName, lastName);
@@ -61,10 +71,13 @@ User RegistrationWidget::createUser(string userName, string firstName, string la
   return User;
 }
 
-/*This method is to clear the widget after user has succesfully logged in.
-*/
+
+/**
+ * This method is to clear the widget after user has successfully logged in.
+ */
 void clearRegistration
 {
-  root()->clear();
-}
+  root()->clear()
+
+};
 

@@ -1,11 +1,11 @@
-/*
-Light.h
-
-The Light class [...]
-
-@author - Jacob Fryer (jfryer6)
-@date - November 04, 2017
-*/
+/**
+ * @file Light.h
+ * Light Class head file.
+ *
+ * @brief Light Class head file
+ * @author Jacob Fryer (jfryer6)
+ * @date November 05, 2017
+ */
 
 #ifndef _light_h_included
 #define _light_h_included

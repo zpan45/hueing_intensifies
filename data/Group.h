@@ -1,11 +1,10 @@
-/*
-Group.h
-
-The Group class [...]
-
-@author - Jacob Fryer (jfryer6)
-@date - November 04, 2017
-*/
+/**
+ * @file Group.h
+ * Group Class head file.
+ * @brief Group Class head file.
+ * @author Jacob Fryer (jfryer6)
+ * @date November 04, 2017
+ */
 
 #ifndef _group_h_included
 #define _group_h_included

@@ -1,11 +1,11 @@
-/*
-User.h
-
-The User class [...]
-
-@author - Jacob Fryer (jfryer6)
-@date - November 03, 2017
-*/
+/**
+ * @file User.h
+ * User Class head file.
+ *
+ * @brief User Class head file.
+ * @author Jacob Fryer (jfryer6)
+ * @date November 03, 2017
+ */
 
 #ifndef _user_h_included
 #define _user_h_included
