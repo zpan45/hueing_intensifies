@@ -17,9 +17,8 @@ using namespace std;
  */
 
 
-/*
- *Intializes and constructs the Registration Widget to be called by 
- *Hue main application. 
+/** Initializes and constructs the Registration Widget to be called by 
+ * Hue main application. 
  */
 RegistrationWidget::RegistrationWidget(const std::string &name, WContainerWidget *parent)
 : WContainerWidget(parent), name_(name)
@@ -60,10 +59,10 @@ RegistrationWidget::RegistrationWidget(const std::string &name, WContainerWidget
   return *newUser;
 }
 
-/*This method is to clear the widget after user has succesfully logged in.
+/** This method is to clear the widget after user has succesfully logged in.
 */
 void RegistrationWidget::clearRegistration()
 {
-  std::cout << "Registration Widget Cleared";
+  std::cout << "Registration Widget Cleared" << std::endl;
 }
 

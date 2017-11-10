@@ -69,6 +69,7 @@ void HueApplication::goToLogIn() {
 * @todo - Needs to be properly implemented to take the User to the Registration Widget.
 */
 void HueApplication::goToRegister() {
+    setInternalPath("/register", true);
     root()->clear();
     root()->addWidget(new RegistrationWidget("String"));
 }
