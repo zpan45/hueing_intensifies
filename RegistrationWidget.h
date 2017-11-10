@@ -1,10 +1,8 @@
-/**
- * @file RegistrationWidget.h
- * Registration Widget head file.
+// This may look like C code, but it's really -*- C++ -*-
+/* 
+ * Copyright (C) 2011 Emweb bvba, Heverlee, Belgium
  *
- * @brief Registration Widget head file.
- * @author Team 24
- * @date November 09, 2017
+ * See the LICENSE file for terms of use.
  */
 
 #ifndef REGISTRATION_WIDGET_H_
