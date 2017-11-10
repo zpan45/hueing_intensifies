@@ -21,42 +21,47 @@ using namespace std;
  * Hue main application. 
  */
 RegistrationWidget::RegistrationWidget(const std::string &name, WContainerWidget *parent)
-: WContainerWidget(parent), name_(name)
-{
-  setContentAlignment(AlignCenter);
-//  setTitle("Registration Widget");
-
-  registerButton = new WPushButton("Registration", this);
-  registerButton->clicked().connect(this, &RegistrationWidget::clearRegistration);
-  // userNameEdit = new WLineEdit(root());                     // allow text input
-  // userNameEdit->setFocus();                                 // give focus
-
-  // passWordEdit = new WLineEdit(root());
-  // passWordEdit->setFocus();
-
-
-  // WPushButton *loginButton
-  //   = new WPushButton("Login", root());              // create a button
-  // loginButton->setMargin(5, Top);                            // add 5 pixels margin
-  // loginButton->setStyleClass("btn-primary");
-
-  // WPushButton *signUpButton = new WPushButton("Sign Up", root());
-  // signUpButton->setMargin(100, Bottom);
-
-
-  // loginButton->clicked().connect(this, &WLoginWidgetApplication::greet);
-  // userNameEdit->enterPressed().connect
-  //   (boost::bind(&WLoginWidgetApplication::greet, this));
+: WContainerWidget(parent), name_(name) {
+    setContentAlignment(AlignCenter);
+    
+    // add the Username entry textbox
+    this->addWidget(new Wt::WText("Username: "));
+    usernameEdit = new WLineEdit(this);
+    usernameEdit->setFocus(); // set the focus to be on this textbox
+    this->addWidget(new Wt::WBreak());
+    
+    // add the Password entry textbox
+    this->addWidget(new Wt::WText("Password: "));
+    passwordEdit = new WLineEdit(this);
+    this->addWidget(new Wt::WBreak());
+    
+    // add the first and last name entry text boxes
+    this->addWidget(new Wt::WText("First Name: "));
+    firstNameEdit = new WLineEdit(this);
+    this->addWidget(new Wt::WText("\tLast Name: "));
+    lastNameEdit = new WLineEdit(this);
+    this->addWidget(new Wt::WBreak());
+    
+    // add the register button
+    registerButton = new WPushButton("Register", this);
+    registerButton->clicked().connect(this, &RegistrationWidget::createUser);
 }
 
-/*This method is to create User after the user of programmer enters
- *their information.
+/** This method is to create User after the user of program enters
+* their information.
+* @todo - Validate that the User has filled out all four fields
+* @todo - Ensure that User has entered a valid email address as a username string
+* @todo - Hide password string
+* @todo - Return the User object somewhere for use in the rest of the app
 */
-/*User RegistrationWidget::createUser(std::string &userName, std::string &firstName, std::string &lastName, std::string &password)
-{
-  User *newUser = new User(userName, password, firstName, lastName);
-  
-  return *newUser;
+void RegistrationWidget::createUser() {
+    User newUser(usernameEdit->text().toUTF8(), passwordEdit->text().toUTF8(), firstNameEdit->text().toUTF8(), lastNameEdit->text().toUTF8());
+    
+    this->addWidget(new Wt::WBreak());
+    this->addWidget(new Wt::WBreak());
+    this->addWidget(new Wt::WBreak());
+    
+    this->addWidget(new Wt::WText( newUser.constructGreetingString() ));
 }
 
 /** This method is to clear the widget after user has succesfully logged in.
