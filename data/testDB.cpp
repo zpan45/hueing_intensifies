@@ -9,11 +9,30 @@
 
 int main(void)
 {
-    User testHash;
-    std::string testPWHash = "sineP";
-    std::cout << "Password: " << testPWHash << " Hashed Password: " << testHash.hashPassword(testPWHash) << std::endl;
-    std::cout << "Password: " << testPWHash << " Hashed Password: " << testHash.hashPassword(testPWHash) << std::endl;
-
+    std::cout << "-----------------------------------------------" << std::endl;
+    std::cout << "------------- Password Hash Test --------------" << std::endl;
+    std::cout << "-----------------------------------------------" << std::endl;
+    
+    
+    User testHash("u1", "testPW", "foo", "bar");
+    User testHash2("u2", "", "baz", "bop");
+    std::cout << "Creating test Users..." << std::endl;
+    std::cout << testHash.constructGreetingString() << std::endl;
+    std::cout << testHash2.constructGreetingString() << std::endl << std::endl;
+    
+    std::cout << "U1 Password: " << testHash.getPassword() << " Hashed Password: " << testHash.hashPassword(testHash.getPassword()) << std::endl;
+    
+    std::string secondPW;
+    std::cout << "Enter the above test password a second time: " << std::endl;
+    std::cin >> secondPW;
+    
+    testHash2.setPassword(secondPW);
+    std::cout << "Setting " << testHash2.getUsername() << "'s password... " << (testHash.getPassword() != "") << std::endl;
+    std::cout << testHash2.getUsername() << "'s password is: " << testHash2.getPassword() << std::endl;
+    
+    std::cout << "U2 Password: " << testHash2.getPassword() << " Hashed Password: " << testHash2.hashPassword(testHash2.getPassword()) << std::endl;
+    
+    std::cout << "Testing if the password hashes were the same... " << (testHash.hashPassword(testHash.getPassword()) == testHash2.hashPassword(testHash2.getPassword())) << std::endl;
 
     std::cout << "-----------------------------------------------" << std::endl;
     std::cout << "--------- User Database Test Program ----------" << std::endl;
