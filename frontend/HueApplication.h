@@ -12,6 +12,7 @@
 
 #include "User.h"
 #include "RegistrationWidget.h"
+#include "LoginWidget.h"
 
 class HueApplication : public Wt::WApplication {
 public:
