@@ -61,8 +61,12 @@ bool HueApplication::testLoggedInStatus() {
 */
 void HueApplication::goToLogIn() {
     // Currently, method just sets the curUser_ pointer to point to a new User object.
-    curUser_ = new User("jfryer6@uwo.ca", "pass123", "Jake", "Fryer");
-    cout << curUser_->getFirstName() << endl;
+    //curUser_ = new User("jfryer6@uwo.ca", "pass123", "Jake", "Fryer");
+    //cout << curUser_->getFirstName() << endl;
+    
+    setInternalPath("/login", true);
+    root()->clear();
+    root()->addWidget(new LoginWidget("Login"));
 }
 
 /** Method that displays the Registration Widget to the User.
@@ -71,7 +75,7 @@ void HueApplication::goToLogIn() {
 void HueApplication::goToRegister() {
     setInternalPath("/register", true);
     root()->clear();
-    root()->addWidget(new RegistrationWidget("String"));
+    root()->addWidget(new RegistrationWidget("Registration"));
 }
 
 /** Function that is called in runRESTful() to create the HueApplication, which is made the 
