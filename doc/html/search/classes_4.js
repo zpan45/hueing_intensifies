@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['user',['User',['../class_user.html',1,'']]]
+  ['light',['Light',['../class_light.html',1,'']]],
+  ['loginwidget',['LoginWidget',['../class_login_widget.html',1,'']]]
 ];

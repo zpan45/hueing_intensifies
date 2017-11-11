@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['light',['Light',['../class_light.html',1,'Light'],['../class_light.html#aeb5df09a25a32f19fdffa761268ba24f',1,'Light::Light()']]],
-  ['light_2ecpp',['Light.cpp',['../_light_8cpp.html',1,'']]],
-  ['light_2eh',['Light.h',['../_light_8h.html',1,'']]],
-  ['loadusers',['loadUsers',['../class_d_b_file_manager.html#adca0039a5be2b7f04b0179c47bdf80fb',1,'DBFileManager']]]
+  ['hashpassword',['hashPassword',['../class_user.html#a95c203a53669c6f8838ea1c6a6ef1d49',1,'User::hashPassword(std::string pass)'],['../class_user.html#a95c203a53669c6f8838ea1c6a6ef1d49',1,'User::hashPassword(std::string pass)']]],
+  ['hueapplication',['HueApplication',['../class_hue_application.html',1,'HueApplication'],['../class_hue_application.html#ad907b01d18c795c6672cffb63f121165',1,'HueApplication::HueApplication()']]],
+  ['hueapplication_2ecpp',['HueApplication.cpp',['../_hue_application_8cpp.html',1,'']]],
+  ['hueapplication_2eh',['HueApplication.h',['../_hue_application_8h.html',1,'']]]
 ];

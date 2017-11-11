@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['light',['Light',['../class_light.html',1,'']]]
+  ['hueapplication',['HueApplication',['../class_hue_application.html',1,'']]]
 ];
