@@ -31,59 +31,155 @@
 
 /* CONSTRUCTORS */
 
-
 /**
  * Default constructor. Initializes output stream to database file.
  */
 DBFileManager::DBFileManager()
 {
-    DBFileManager::userFileStream.std::ofstream::open("UserDatabase.txt"); //open output stream to database file
+    DBFileManager::mainPath = "USERS";
 }
 
 /* PUBLIC METHODS */
 
-//std::set<User> loadUsers(std::string fileName)
-//{
-
-//}
 
 
 /**
  * Save the vector of User objects to file.
  * @param users a vector containing User objects.
  */
-void saveUsers(std::vector<User> users)
+bool addNewUser(User newUser)
 {
-    if (!DBFileManager::userFileStream.std::ofstream::is_open()) //check that file is open
+    std::string filepath = createPath(newUser.User::getUsername());
+
+    if(boost::filesystem::exists(filepath))
     {
-        std::cout << "File failed to open." << std::endl;
+        std::cout << "Error: user already exists." << std::endl;
         return 1;
     }
     else
     {
-        writeToFile();
+        boost::filesystem::create_directory(filepath);
+        writeToFile(newUser, filepath);
+        return 0;
     }
 }
 
+bool saveUser(User currentUser)
+{
+    std::string filepath = createPath(currentUser).User::getUsername());
+
+    if(!boost::filesystem::exists(filepath))
+    {
+        std::cout << "Error: could not find user." << std::endl;
+        return 1;
+    }
+    else
+    {
+        writeToFile(currentUser, filepath);
+        return 0;
+    }
+}
+
+bool removeUser(User currentUser)
+{
+    std::string filepath = createPath(currentUser).User::getUsername());
+
+    if(!boost::filesystem::exists(filepath))
+    {
+        std::cout << "Error: could not find user." << std::endl;
+        return 1;
+    }
+    else
+    {
+        boost::filesystem::remove_all(filepath);
+        return 0;
+    }
+}
+
+User getUser(std::string username) //this depends on the toString() of user being updated with newline chars
+{
+    std::string filepath = createPath(currentUser).User::getUsername());
+
+    if(!boost::filesystem::exists(filepath))
+    {
+        std::cout << "Error: could not find user." << std::endl;
+        return 1;
+    }
+    else
+    {
+        User currentUser = readFromFile(filepath);
+        return currentUser;
+    }
+
+}
+
+std::string createPath(std::string username)
+{
+    string filepath = DBFileManager::mainPath;
+    filepath.std::string::append("/");
+    filepath.std::string::append(username);
+    filepath.std::string::append("/");
+    filepath.std::string::append(username);
+    filepath.std::string::append("_info.txt");
+}
 
 /**
  * Write data to file.
  */
-void writeToFile()
+void writeToFile(User newUser, std::string userPath))
 {
-    if (!userFile.std::ofstream::is_open()) //check that file is open
+    DBFileManager::userWriteStream.std::ofstream.open(userPath);
+
+    if(!DBFileManager::userWriteStream.std::ofstream::is_open()) //check that file is open
     {
         std::cout << "File failed to open." << std::endl;
         return 1;
     }
     else
     {
-        for (std::vector<User>::iterator it = DBFileManager::listOfUsers.begin() ; it != DBFileManager::listOfUsers.end(); ++it)
-        {
-            randomUser = *it;
-            DBFileManager::userFileStream << randomUser.User::toString() << std::endl; //write info to a single line
-        }
+        DBFileManager::userWriteStream << newUser.User::toString();
+        DBFileManager::userWriteStream.std::ofstream::close();
+        DBFileManager::userWriteStream.std::ofstream::clear();
+        return 0;
     }
+}
+
+User readFromFile(std::string userPath)
+{
+    DBFileManager::userReadStream.std::ifstream::open(userPath);
+
+    if(!DBFileManager::userReadStream.std::ifstream::is_open()) //check that file is open
+    {
+        std::cout << "File failed to open." << std::endl;
+        return 1;
+    }
+    else
+    {
+        User currentUser;
+        std::string currentLine;
+
+        //this will follow the exact format of the toString method to ensure
+            //the right values are stored in the right places
+        std::getline(DBFileManager::userReadStream, currentLine);
+        currentUser.User::setUsername(currentLine);
+
+        std::getline(DBFileManager::userReadStream, currentLine);
+        currentUser.User::setPassword(currentLine);
+
+        std::getline(DBFileManager::userReadStream, currentLine);
+        currentUser.User::setFirstName(currentLine);
+
+        std::getline(DBFileManager::userReadStream, currentLine);
+        currentUser.User::setLastName(currentLine);
+
+        //will add something here to deal with bridges as well
+
+        DBFileManager::userReadStream.std::ifstream::close();
+        DBFileManager::userReadStream.std::ifstream::clear();
+
+        return currentUser;
+    }
+
 }
 
 
