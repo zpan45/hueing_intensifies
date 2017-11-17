@@ -180,9 +180,9 @@ int main(void)
 
     code works, but commenting out for now
 
-    //////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
     //   STEP 4 --> Test Boost exists() and create files/directories   /
-    //////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
 
     std::string dirName = "Test_Dir";
     std::string dirName2 = "Directory1";
@@ -213,7 +213,29 @@ int main(void)
     {
         std::cout << "Couldn't detect file." << std::endl;
     }
-*/
 
+    ///////////////////////////////////////////////////////////////////////////////
+    //   STEP 5 --> Test DBFileManager instantiation and add all users in vector  /
+    ///////////////////////////////////////////////////////////////////////////////
+
+    DBFileManager activeDB;
+    std::cout << "DBFileManager insantiated successfully." << std::endl;
+    std::cout << "Now inserting users..." << std::endl;
+
+    for (std::vector<User>::iterator it = currentUsers.begin() ; it != currentUsers.end(); ++it)
+        {
+            randomUser = *it;
+            activeDB.DBFileManager::addNewUser(randomUser);
+            /*if(::activeDB.DBFileManager::addNewUser(randomUser))
+            {
+                std::cout << randomUser.User::getUsername() << " added succesfully." << std::endl;
+            }
+            else
+            {
+                std::cout << "Failed to add user." << std::endl;
+            }
+        }
+        std::cout << "Writing to filesystem complete. Verify that there are " << currentUsers.std::vector<User>::size() << " users in the USERS/ filesystem." << std::endl;
+*/
 
 }
