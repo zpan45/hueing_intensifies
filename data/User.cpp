@@ -51,7 +51,7 @@ User& User::operator=(const User& otherUser)
 
 
 /** Overloaded constructor for the User class. Initializes all fields to have specified values.
- * 
+ *
  * @param un The User's associated username, a string
  * @param pw The User's associated password, a string
  * @param first The User's first name, a string
@@ -174,16 +174,16 @@ string User::toString()  {
     string temp = "";
 
     temp.std::string::append(username);
-    temp.std::string::append("\t");
+    temp.std::string::append("\n");
 
     temp.std::string::append(User::hashPassword(password));
-    temp.std::string::append("\t");
+    temp.std::string::append("\n");
 
     temp.std::string::append(firstName);
-    temp.std::string::append("\t");
+    temp.std::string::append("\n");
 
     temp.std::string::append(lastName);
-    temp.std::string::append("\t");
+    temp.std::string::append("\n");
 
     return temp;
     //Add something for bridges when it's all worked out
