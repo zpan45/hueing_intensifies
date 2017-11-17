@@ -36,7 +36,13 @@
  */
 DBFileManager::DBFileManager()
 {
-    DBFileManager::mainPath = "USERS";
+    //std::ifstream userReadStream;
+    //std::ofstream userWriteStream;
+
+    if(!boost::filesystem::exists("./USERS"))
+    {
+        boost::filesystem::create_directory("./USERS");
+    }
 }
 
 /* PUBLIC METHODS */
@@ -47,26 +53,28 @@ DBFileManager::DBFileManager()
  * Save the vector of User objects to file.
  * @param users a vector containing User objects.
  */
-bool addNewUser(User newUser)
+bool DBFileManager::addNewUser(User newUser)
 {
-    std::string filepath = createPath(newUser.User::getUsername());
+    std::string username = newUser.User::getUsername();
+    std::string dirPath = DBFileManager::createDirPath(username);
 
-    if(boost::filesystem::exists(filepath))
+    if(boost::filesystem::exists(dirPath))
     {
         std::cout << "Error: user already exists." << std::endl;
         return 1;
     }
     else
     {
-        boost::filesystem::create_directory(filepath);
-        writeToFile(newUser, filepath);
+        boost::filesystem::create_directory(dirPath);
+        dirPath = DBFileManager::createFilePath(username);
+        DBFileManager::writeToFile(newUser, dirPath);
         return 0;
     }
 }
 
-bool saveUser(User currentUser)
+bool DBFileManager::saveUser(User currentUser)
 {
-    std::string filepath = createPath(currentUser).User::getUsername());
+    std::string filepath = DBFileManager::createFilePath(currentUser.User::getUsername());
 
     if(!boost::filesystem::exists(filepath))
     {
@@ -75,14 +83,14 @@ bool saveUser(User currentUser)
     }
     else
     {
-        writeToFile(currentUser, filepath);
+        DBFileManager::writeToFile(currentUser, filepath);
         return 0;
     }
 }
 
-bool removeUser(User currentUser)
+bool DBFileManager::removeUser(User currentUser)
 {
-    std::string filepath = createPath(currentUser).User::getUsername());
+    std::string filepath = DBFileManager::createDirPath(currentUser.User::getUsername());
 
     if(!boost::filesystem::exists(filepath))
     {
@@ -96,62 +104,69 @@ bool removeUser(User currentUser)
     }
 }
 
-User getUser(std::string username) //this depends on the toString() of user being updated with newline chars
+User DBFileManager::getUser(std::string username) //this depends on the toString() of user being updated with newline chars
 {
-    std::string filepath = createPath(currentUser).User::getUsername());
+    std::string filepath = DBFileManager::createFilePath(username);
 
     if(!boost::filesystem::exists(filepath))
     {
         std::cout << "Error: could not find user." << std::endl;
-        return 1;
     }
     else
     {
-        User currentUser = readFromFile(filepath);
+        User currentUser = DBFileManager::readFromFile(filepath);
         return currentUser;
     }
 
 }
 
-std::string createPath(std::string username)
+std::string DBFileManager::createDirPath(std::string username)
 {
-    string filepath = DBFileManager::mainPath;
+    std::string dirPath = "USERS";
+    dirPath.std::string::append("/");
+    dirPath.std::string::append(username);
+
+    return dirPath;
+}
+
+std::string DBFileManager::createFilePath(std::string username)
+{
+    std::string filepath = "USERS";
     filepath.std::string::append("/");
     filepath.std::string::append(username);
     filepath.std::string::append("/");
     filepath.std::string::append(username);
     filepath.std::string::append("_info.txt");
+
+    return filepath;
 }
 
 /**
  * Write data to file.
  */
-void writeToFile(User newUser, std::string userPath))
+void DBFileManager::writeToFile(User newUser, std::string userPath)
 {
-    DBFileManager::userWriteStream.std::ofstream.open(userPath);
+    std::ofstream userWriteStream(userPath);
 
-    if(!DBFileManager::userWriteStream.std::ofstream::is_open()) //check that file is open
+    if(!userWriteStream.std::ofstream::is_open()) //check that file is open
     {
         std::cout << "File failed to open." << std::endl;
-        return 1;
     }
     else
     {
-        DBFileManager::userWriteStream << newUser.User::toString();
-        DBFileManager::userWriteStream.std::ofstream::close();
-        DBFileManager::userWriteStream.std::ofstream::clear();
-        return 0;
+        userWriteStream << newUser.User::toString();
+        userWriteStream.std::ofstream::close();
+        userWriteStream.std::ofstream::clear();
     }
 }
 
-User readFromFile(std::string userPath)
+User DBFileManager::readFromFile(std::string userPath)
 {
-    DBFileManager::userReadStream.std::ifstream::open(userPath);
+    std::ifstream userReadStream(userPath);
 
-    if(!DBFileManager::userReadStream.std::ifstream::is_open()) //check that file is open
+    if(!userReadStream.std::ifstream::is_open()) //check that file is open
     {
         std::cout << "File failed to open." << std::endl;
-        return 1;
     }
     else
     {
@@ -160,22 +175,22 @@ User readFromFile(std::string userPath)
 
         //this will follow the exact format of the toString method to ensure
             //the right values are stored in the right places
-        std::getline(DBFileManager::userReadStream, currentLine);
+        std::getline(userReadStream, currentLine);
         currentUser.User::setUsername(currentLine);
 
-        std::getline(DBFileManager::userReadStream, currentLine);
+        std::getline(userReadStream, currentLine);
         currentUser.User::setPassword(currentLine);
 
-        std::getline(DBFileManager::userReadStream, currentLine);
+        std::getline(userReadStream, currentLine);
         currentUser.User::setFirstName(currentLine);
 
-        std::getline(DBFileManager::userReadStream, currentLine);
+        std::getline(userReadStream, currentLine);
         currentUser.User::setLastName(currentLine);
 
         //will add something here to deal with bridges as well
 
-        DBFileManager::userReadStream.std::ifstream::close();
-        DBFileManager::userReadStream.std::ifstream::clear();
+        userReadStream.std::ifstream::close();
+        userReadStream.std::ifstream::clear();
 
         return currentUser;
     }
