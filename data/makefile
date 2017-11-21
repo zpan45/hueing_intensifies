@@ -1,6 +1,6 @@
 app : User.o Bridge.o Group.o Light.o testDB.o
 	g++ -std=c++11 User.o Bridge.o Group.o Light.o testDB.o -o app
-    
+
 User.o: User.cpp User.h Bridge.h
 	g++ -std=c++11 -Wall -c User.cpp
 
