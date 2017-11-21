@@ -4,8 +4,10 @@
 #include <set>
 #include <stdlib.h>
 #include <vector>
+#include <boost/filesystem.hpp>
 
 #include "User.h"
+#include "DBFileManager.h"
 
 int main(void)
 {
@@ -179,7 +181,7 @@ int main(void)
     #include <boost/filesystem.hpp>
 
     code works, but commenting out for now
-
+    */
     ////////////////////////////////////////////////////////////////////
     //   STEP 4 --> Test Boost exists() and create files/directories   /
     ////////////////////////////////////////////////////////////////////
@@ -226,7 +228,8 @@ int main(void)
         {
             randomUser = *it;
             activeDB.DBFileManager::addNewUser(randomUser);
-            /*if(::activeDB.DBFileManager::addNewUser(randomUser))
+            /*
+            if(::activeDB.DBFileManager::addNewUser(randomUser))
             {
                 std::cout << randomUser.User::getUsername() << " added succesfully." << std::endl;
             }
@@ -237,5 +240,6 @@ int main(void)
         }
         std::cout << "Writing to filesystem complete. Verify that there are " << currentUsers.std::vector<User>::size() << " users in the USERS/ filesystem." << std::endl;
 */
+    }
 
 }
