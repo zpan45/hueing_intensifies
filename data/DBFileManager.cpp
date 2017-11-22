@@ -48,6 +48,7 @@ DBFileManager::DBFileManager()
 /* PUBLIC METHODS */
 
 
+
 /**
  * Save the vector of User objects to file.
  * @param users a vector containing User objects.
@@ -68,19 +69,6 @@ bool DBFileManager::addNewUser(User newUser)
         dirPath = DBFileManager::createFilePath(username);
         DBFileManager::writeToFile(newUser, dirPath);
         return 0;
-    }
-}
-
-void loadUsers()
-{
-    if (!DBFileManager::userFileStream.std::ofstream::is_open()) //check that file is open
-    {
-        std::cout << "File failed to open." << std::endl;
-        return 1;
-    }
-    else
-    {
-        buildActiveDB();
     }
 }
 
@@ -206,6 +194,7 @@ User DBFileManager::readFromFile(std::string userPath)
 
         return currentUser;
     }
+
 }
 
 
