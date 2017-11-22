@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <vector>
 
-#include <boost/filesystem.hpp>
+//#include <boost/filesystem.hpp>
 
 #include "User.h"
 #include "DBFileManager.h"
@@ -155,6 +155,9 @@ int main(void)
         std::cout << "Writing to file complete. Verify that there are " << currentUsers.std::vector<User>::size() << " users in the file." << std::endl;
     }
 
+    userFile.std::ofstream::close();
+    userFile.std::ofstream::clear();
+
     /////////////////////////////////////////////////////
     //   STEP 3 --> Read lines from file and display    /
     /////////////////////////////////////////////////////
@@ -231,11 +234,13 @@ int main(void)
             else
             {
                 std::cout << "Failed to add user." << std::endl;
-            }
+            }*/
         }
         std::cout << "Writing to filesystem complete. Verify that there are " << currentUsers.std::vector<User>::size() << " users in the USERS/ filesystem." << std::endl;
-*/
 
-}
+
+
+
+
 
 }

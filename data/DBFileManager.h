@@ -56,7 +56,5 @@ class DBFileManager
 
     private:
 
-
-
 };
 #endif // DBFILEMANAGER_H
