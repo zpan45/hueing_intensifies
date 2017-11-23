@@ -29,7 +29,7 @@ bool IndivBridgeManagerWidget::checkBridge(Bridge b, string uName) {
     connect(b, uName);
     for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        if(currentStatus!="") return ture;
+        if(currentStatus!="") return true;
     }
     return currentStatus=="";
 }
