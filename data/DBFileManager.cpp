@@ -26,6 +26,8 @@
  * @date November 09, 2017
  */
 
+#include <cstddef>
+#include <sstream>
 
 #include "DBFileManager.h"
 
@@ -125,7 +127,7 @@ std::string DBFileManager::createDirPath(std::string username)
     std::hash<std::string> usr_hash;
     std::stringstream ss;
     ss << usr_hash(username);
-    newusername = ss.str();
+    std::string newusername = ss.str();
 
     std::string dirPath = "USERS";
     dirPath.std::string::append("/");
@@ -139,7 +141,7 @@ std::string DBFileManager::createFilePath(std::string username)
     std::hash<std::string> usr_hash;
     std::stringstream ss;
     ss << usr_hash(username);
-    newusername = ss.str();
+    std::string newusername = ss.str();
 
     std::string filepath = "USERS";
     filepath.std::string::append("/");
