@@ -52,8 +52,8 @@ DBFileManager::DBFileManager()
 
 
 /**
- * Save the vector of User objects to file.
- * @param users a vector containing User objects.
+ * Creates a new directory for a newly-registered user. NOTE: actual user info file not created here
+ * @param newUser a new user object
  */
 bool DBFileManager::addNewUser(User newUser)
 {
@@ -74,6 +74,11 @@ bool DBFileManager::addNewUser(User newUser)
     }
 }
 
+/**
+ * Creates a new user info file within the user's directory, and can be used to save a user's info
+ * at the end of the session, since the output file stream overwrites the file contents.
+ * @param newUser a new user object
+ */
 bool DBFileManager::saveUser(User currentUser)
 {
     std::string filepath = DBFileManager::createFilePath(currentUser.User::getUsername());
@@ -199,7 +204,12 @@ User DBFileManager::readFromFile(std::string userPath)
         std::getline(userReadStream, currentLine);
         currentUser.User::setLastName(currentLine);
 
-        //will add something here to deal with bridges as well
+        while(!userReadStream.std::ifstream::eof())
+        {
+            std::getline(userReadStream, currentLine);
+            //build new Bridge using info
+            //add Bridge to user bridges
+        }
 
         userReadStream.std::ifstream::close();
         userReadStream.std::ifstream::clear();
