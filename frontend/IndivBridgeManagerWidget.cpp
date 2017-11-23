@@ -27,7 +27,10 @@ IndivBridgeManagerWidget::~IndivBridgeManagerWidget() {
 bool IndivBridgeManagerWidget::checkBridge(Bridge b, string uName) {
     currentStatus="";
     connect(b, uName);
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        if(currentStatus!="") return ture;
+    }
     return currentStatus=="";
 }
 
@@ -42,7 +45,7 @@ void IndivBridgeManagerWidget::connect() {
     url_<<USERNAME;
 
     Wt::Http::Client *client=new Wt::Http::Client(this);
-    client->setTimeout(5);
+    client->setTimeout(HTML_CLIENT_TIMEOUT);
     client->setMaximumResponseSize(10*1024);
     client->done().connect(boost::bind(&IndivBridgeManagerWidget::handleHttpResponse, this, client, _1, _2));
     client->get(url_);
@@ -57,7 +60,7 @@ void IndivBridgeManagerWidget::connect(Bridge b, string uName) {
     url_<<b.getHostName()<<":"<<b.getPort()<<"/api/"<<uName;
 
     Wt::Http::Client *client=new Wt::Http::Client(this);
-    client->setTimeout(5);
+    client->setTimeout(HTML_CLIENT_TIMEOUT);
     client->setMaximumResponseSize(10*1024);
     client->done().connect(boost::bind(&IndivBridgeManagerWidget::handleHttpResponse, this, client, _1, _2));
     client->get(url_);
@@ -79,17 +82,8 @@ void IndivBridgeManagerWidget::handleHttpResponse(Wt::Http::Client *client, boos
 
     } else {
         currentStatus=response.body();
-        cout<<currentStatus;
-        cout<<"\n";
+        cout<<currentStatus<<endl;
     }
 
     delete client;
-}
-
-//test main
-int main(int argc, char **argv)
-{
-    return Wt::WRun(argc, argv, [](const Wt::WEnvironment& env) {
-        return std::make_unique<IndivBridgeManagerWidget>(env);
-    });
 }

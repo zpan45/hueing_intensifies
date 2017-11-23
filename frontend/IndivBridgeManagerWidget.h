@@ -21,8 +21,10 @@
 
 #include "Bridge.h"
 
-#define USERNAME "newdeveloper";
-#define URL "http://localhost:8000/api/";
+#define USERNAME "newdeveloper"
+#define HTML_CLIENT_TIMEOUT 5
+#define HTML_MESSAGE_CHECK 10 //check if message received every 100ms * HTML_MESSAGE_CHECK times
+#define URL "http://localhost:8000/api/"
 
 using namespace std;
 using namespace Wt;
