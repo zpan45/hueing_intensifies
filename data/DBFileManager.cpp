@@ -122,20 +122,30 @@ User DBFileManager::getUser(std::string username) //this depends on the toString
 
 std::string DBFileManager::createDirPath(std::string username)
 {
+    std::hash<std::string> usr_hash;
+    std::stringstream ss;
+    ss << usr_hash(username);
+    newusername = ss.str();
+
     std::string dirPath = "USERS";
     dirPath.std::string::append("/");
-    dirPath.std::string::append(username);
+    dirPath.std::string::append(newusername);
 
     return dirPath;
 }
 
 std::string DBFileManager::createFilePath(std::string username)
 {
+    std::hash<std::string> usr_hash;
+    std::stringstream ss;
+    ss << usr_hash(username);
+    newusername = ss.str();
+
     std::string filepath = "USERS";
     filepath.std::string::append("/");
-    filepath.std::string::append(username);
+    filepath.std::string::append(newusername);
     filepath.std::string::append("/");
-    filepath.std::string::append(username);
+    filepath.std::string::append(newusername);
     filepath.std::string::append("_info.txt");
 
     return filepath;
