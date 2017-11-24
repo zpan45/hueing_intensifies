@@ -1,6 +1,8 @@
 /*
  * API Code
  * https://www.developers.meethue.com/documentation/lights-api
+ *
+ * Lights, Groups, Schedule
  */
 #include <sstream>
 #include <Wt/Http/Client>
@@ -96,4 +98,47 @@ put(url_, Message);
 
 //Delete group
 url_ << username << "/groups" << id;
+DELETE(url_);
+
+
+/*
+ * Schedule
+ * https://www.developers.meethue.com/documentation/schedules-api-0
+ */
+
+//Get all schedules
+url_ << username << "/schedules";
+get(url_);
+
+//Create schedule
+url_ << username << "/schedules";
+post(url_, Message);
+// Body Example:
+// {
+// 	"name": "Wake up",
+// 	"description": "My wake up alarm",
+// 	"command": {
+// 		"address": "/api/<username>/groups/1/action",
+// 		"method": "PUT",
+// 		"body": {
+// 			"on": true
+// 		}
+// 	},
+// 	"localtime": "2015-06-30T14:24:40"
+// }
+
+//Get schedule attributes
+url_ << username << "/schedules" << id;
+get(url_);
+
+//Set Schedule attributes
+url_ << username << "/schedules" << id;
+put(url_, Message);
+// Body Example:
+// {
+// 	"name": "Wake up"
+// }
+
+//Delete schedule
+url_ << username << "/schedules" << id;
 DELETE(url_);
