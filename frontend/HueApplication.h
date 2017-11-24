@@ -13,6 +13,7 @@
 #include "User.h"
 #include "RegistrationWidget.h"
 #include "LoginWidget.h"
+#include "IndivBridgeManagerWidget.h"
 
 class HueApplication : public Wt::WApplication {
 public:
@@ -24,6 +25,7 @@ private:
     bool testLoggedInStatus();
     void goToLogIn();
     void goToRegister();
+    void displayBridges();
 };
 
 #endif

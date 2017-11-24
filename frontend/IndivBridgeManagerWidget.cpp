@@ -4,9 +4,36 @@
 #define _GLIBCXX_USE_CXX11_ABI 1
 #include "IndivBridgeManagerWidget.h"
 
-//constructor
-IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Wt::WContainerWidget *parent) : WContainerWidget(parent){
+using namespace std;
 
+/** Constructor
+* @param name - 
+* @param parent -
+* @param b - The Bridge object whose properties this Widget will allow the user to display and edit.
+*/
+IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Bridge b, Wt::WContainerWidget *parent) : Wt::WContainerWidget(parent){
+    
+    b.setName("new bridge");
+    b.setLocation("up ur butt");
+    b.setHostName("255.255.255.0");
+    b.setPort("8080");
+    
+    //string s = "Bridge \"" + b.getName() + "\" located @ \"" + b.getLocation() + "\"";
+    this->addWidget(new Wt::WText("Bridge Name: ", this));
+    this->addWidget(new Wt::WLineEdit(b.getName(), this));
+    this->addWidget(new Wt::WBreak());
+    
+    this->addWidget(new Wt::WText("Location: ", this));
+    this->addWidget(new Wt::WLineEdit(b.getLocation(), this));
+    this->addWidget(new Wt::WBreak());
+    
+    this->addWidget(new Wt::WText("Hostname: ", this));
+    this->addWidget(new Wt::WLineEdit(b.getHostName(), this));
+    this->addWidget(new Wt::WBreak());
+    
+    this->addWidget(new Wt::WText("Port #: ", this));
+    this->addWidget(new Wt::WLineEdit(b.getPort(), this));
+    this->addWidget(new Wt::WBreak());
 }
 
 
@@ -25,7 +52,7 @@ IndivBridgeManagerWidget::~IndivBridgeManagerWidget() {
  * @return bool Bridge reached
  */
 bool IndivBridgeManagerWidget::checkBridge(Bridge b, string uName) {
-    currentStatus="";
+    string currentStatus="";
     connect(b, uName);
     for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -41,14 +68,14 @@ bool IndivBridgeManagerWidget::checkBridge(Bridge b, string uName) {
  *
  */
 void IndivBridgeManagerWidget::connect() {
-    string url_=URL;
-    url_<<USERNAME;
+    stringstream url_;
+    url_<< URL <<USERNAME;
 
     Wt::Http::Client *client=new Wt::Http::Client(this);
     client->setTimeout(HTML_CLIENT_TIMEOUT);
     client->setMaximumResponseSize(10*1024);
-    client->done().connect(boost::bind(&IndivBridgeManagerWidget::handleHttpResponse, this, client, _1, _2));
-    client->get(url_);
+    //client->done().connect(boost::bind(&IndivBridgeManagerWidget::handleHttpResponse, this, client, _1, _2));
+    //client->get(url_.str());
 }
 /**
  * Try to connect to provided Bridge with specified 'Bridge username'
@@ -56,14 +83,16 @@ void IndivBridgeManagerWidget::connect() {
  * @param uName Bridge username
  */
 void IndivBridgeManagerWidget::connect(Bridge b, string uName) {
-    string url_="http://";
-    url_<<b.getHostName()<<":"<<b.getPort()<<"/api/"<<uName;
+    stringstream url_;
+    url_<<"http://"<<b.getHostName()<<":"<<b.getPort()<<"/api/"<<uName;
 
-    Wt::Http::Client *client=new Wt::Http::Client(this);
-    client->setTimeout(HTML_CLIENT_TIMEOUT);
-    client->setMaximumResponseSize(10*1024);
-    client->done().connect(boost::bind(&IndivBridgeManagerWidget::handleHttpResponse, this, client, _1, _2));
-    client->get(url_);
+    //Wt::Http::Client *client=new Wt::Http::Client(this);
+    //client->setTimeout(HTML_CLIENT_TIMEOUT);
+    //client->setMaximumResponseSize(10*1024);
+    //client->done().connect(boost::bind(&IndivBridgeManagerWidget::handleHttpResponse, this, client, _1, _2));
+    //client->get(url_.str());
+    
+    cout << url_.str() << endl << endl;
 }
 
 
@@ -75,6 +104,7 @@ void IndivBridgeManagerWidget::connect(Bridge b, string uName) {
  * @param response HTTP message received
  *
  */
+ /*
 void IndivBridgeManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err,
                                                   const Wt::Http::Message &response) const {
     if(err||response.status()!=200) {
@@ -87,3 +117,4 @@ void IndivBridgeManagerWidget::handleHttpResponse(Wt::Http::Client *client, boos
 
     delete client;
 }
+*/

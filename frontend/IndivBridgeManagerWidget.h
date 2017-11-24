@@ -5,6 +5,7 @@
 #ifndef INDIVBRIDGEMANAGERWIDGET_H
 #define INDIVBRIDGEMANAGERWIDGET_H
 
+#include <string>
 #include <chrono>
 #include <thread>
 #include <vector>
@@ -26,22 +27,18 @@
 #define HTML_MESSAGE_CHECK 10 //check if message received every 100ms * HTML_MESSAGE_CHECK times
 #define URL "http://localhost:8000/api/"
 
-using namespace std;
-using namespace Wt;
-
 class IndivBridgeManagerWidget: public Wt::WContainerWidget {
 
 public:
-    IndivBridgeManagerWidget(const std::string &name, Wt::WContainerWidget *parent = 0);
+    IndivBridgeManagerWidget(const std::string &name, Bridge b, Wt::WContainerWidget *parent = 0);
     virtual ~IndivBridgeManagerWidget();
-    bool checkBridge(Bridge b, string uName);
+    bool checkBridge(Bridge b, std::string uName);
 
 
 private:
     void connect();
-    void connect(Bridge b, string uName);
-    bool handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err,const Wt::Http::Message& response) const;
-    string currentStatus="";
+    void connect(Bridge b, std::string uName);
+    //bool handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err,const Wt::Http::Message& response) const;
 };
 
 #endif
