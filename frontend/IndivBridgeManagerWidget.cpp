@@ -43,6 +43,12 @@ IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Brid
     portNumEdit_ = new Wt::WLineEdit(b.getPort(), this);
     portLabel->setBuddy(portNumEdit_);
     this->addWidget(new Wt::WBreak());
+    
+    // add the "Update" button for changing a Bridge's information
+    Wt::WPushButton *update_ = new Wt::WPushButton("Update", this);
+    update_->clicked().connect(bind([=]() {
+        update(b);
+    }));
 }
 
 
@@ -104,7 +110,62 @@ void IndivBridgeManagerWidget::connect(Bridge b, string uName) {
     cout << url_.str() << endl << endl;
 }
 
+/** Method that consults the current Bridge object for all associated groups, and displays them
+* in a list with buttons that will allow the user to modify an individual Group.
+* @param b - The Bridge object that contains the vector of Groups to be displayed.
+*/
+void IndivBridgeManagerWidget::displayGroups( Bridge b ) {
+    // ! TODO -- implement method that displays all Groups associated with the current Bridge
+    // use Bridge.cpp's "getGroup()" method?? Iterate from 0 - size of the vector?
+}
 
+/** Method to update the current Bridge object with any changes from the text boxes.
+* @param b - The Bridge object to be updated.
+*/
+void IndivBridgeManagerWidget::update( Bridge b ) {
+    this->addWidget(new Wt::WBreak());
+    
+    Wt::WContainerWidget *old = new Wt::WContainerWidget(this);
+    old->addWidget(new Wt::WText("<b>Old Stuff:</b>"));
+    old->addWidget(new Wt::WBreak());
+    old->addWidget(new Wt::WText(b.getName()));
+    old->addWidget(new Wt::WBreak());
+    old->addWidget(new Wt::WText(b.getLocation()));
+    old->addWidget(new Wt::WBreak());
+    old->addWidget(new Wt::WText(b.getHostName()));
+    old->addWidget(new Wt::WBreak());
+    old->addWidget(new Wt::WText(b.getPort()));
+    
+    if( b.getName() != bridgeNameEdit_->text().toUTF8() ) {
+        b.setName(bridgeNameEdit_->text().toUTF8());
+    }
+    
+    if ( b.getLocation() != bridgeLocationEdit_->text().toUTF8() ) {
+        b.setLocation(bridgeLocationEdit_->text().toUTF8());
+    }
+    
+    if ( b.getHostName() != hostNameEdit_->text().toUTF8() ) {
+        b.setHostName(hostNameEdit_->text().toUTF8());
+    }
+    
+    if ( b.getPort() != portNumEdit_->text().toUTF8() ) {
+        b.setPort(portNumEdit_->text().toUTF8());
+    }
+    
+    this->addWidget(new Wt::WBreak());
+    this->addWidget(new Wt::WBreak());
+    
+    Wt::WContainerWidget *changed = new Wt::WContainerWidget(this);
+    changed->addWidget(new Wt::WText("<b>New Stuff:</b>"));
+    changed->addWidget(new Wt::WBreak());
+    changed->addWidget(new Wt::WText(b.getName()));
+    changed->addWidget(new Wt::WBreak());
+    changed->addWidget(new Wt::WText(b.getLocation()));
+    changed->addWidget(new Wt::WBreak());
+    changed->addWidget(new Wt::WText(b.getHostName()));
+    changed->addWidget(new Wt::WBreak());
+    changed->addWidget(new Wt::WText(b.getPort()));
+}
 
 /**
  * Handles Http Response from Bridge. Update currentstatus upon receiving successful response.

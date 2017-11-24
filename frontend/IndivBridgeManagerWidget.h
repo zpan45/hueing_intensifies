@@ -37,6 +37,7 @@ public:
 
 
 private:
+    Bridge *bridge;
     Wt::WLineEdit *bridgeNameEdit_;
     Wt::WLineEdit *bridgeLocationEdit_;
     Wt::WLineEdit *hostNameEdit_;
@@ -44,6 +45,8 @@ private:
     
     void connect();
     void connect(Bridge b, std::string uName);
+    void displayGroups(Bridge b);
+    void update(Bridge b);
     //bool handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err,const Wt::Http::Message& response) const;
 };
 
