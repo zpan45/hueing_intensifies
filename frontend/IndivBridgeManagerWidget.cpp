@@ -46,6 +46,10 @@ IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Brid
     
     // add the "Update" button for changing a Bridge's information
     Wt::WPushButton *update_ = new Wt::WPushButton("Update", this);
+    
+    // the update_ button is bound to a lambda function that calls the update()
+    // method. Done this way because you cannot pass parameters through Wt's connect()
+    // method.
     update_->clicked().connect(bind([=]() {
         update(b);
     }));
