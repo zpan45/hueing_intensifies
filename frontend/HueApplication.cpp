@@ -108,7 +108,7 @@ void HueApplication::displayBridges() {
     // ----------------------------------------------------------
     
     // just a test bridge to pass as a parameter for the IndivBridgeManagerWidget
-    Bridge b;
+    Bridge *b = new Bridge;
     root()->addWidget(new IndivBridgeManagerWidget("bmanager", b));
 }
 

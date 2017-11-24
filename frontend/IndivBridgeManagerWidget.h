@@ -20,6 +20,7 @@
 #include <Wt/Http/Response>
 #include <Wt/Http/Client>
 #include <Wt/WLabel>
+#include <Wt/WTemplate>
 
 #include "Bridge.h"
 
@@ -31,13 +32,13 @@
 class IndivBridgeManagerWidget: public Wt::WContainerWidget {
 
 public:
-    IndivBridgeManagerWidget(const std::string &name, Bridge b, Wt::WContainerWidget *parent = 0);
+    IndivBridgeManagerWidget(const std::string &name, Bridge *b, Wt::WContainerWidget *parent = 0);
     virtual ~IndivBridgeManagerWidget();
     bool checkBridge(Bridge b, std::string uName);
 
 
 private:
-    Bridge *bridge;
+    Bridge *b;
     Wt::WLineEdit *bridgeNameEdit_;
     Wt::WLineEdit *bridgeLocationEdit_;
     Wt::WLineEdit *hostNameEdit_;
@@ -46,7 +47,7 @@ private:
     void connect();
     void connect(Bridge b, std::string uName);
     void displayGroups(Bridge b);
-    void update(Bridge b);
+    void update(Bridge *b);
     //bool handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err,const Wt::Http::Message& response) const;
 };
 

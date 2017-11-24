@@ -11,36 +11,41 @@ using namespace std;
 * @param parent -
 * @param b - The Bridge object whose properties this Widget will allow the user to display and edit.
 */
-IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Bridge b, Wt::WContainerWidget *parent) : Wt::WContainerWidget(parent){
+IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Bridge *bridge, Wt::WContainerWidget *parent) : Wt::WContainerWidget(parent){
     
+    b = bridge; // b is a pointer to the current bridge object
+    // It HAS to be a pointer because otherwise the changes from the update() method won't persist
     
     // for testing purposes only -- in the future, the Bridge b will already have details associated with it when passed in
-    b.setName("new bridge");
-    b.setLocation("up ur butt");
-    b.setHostName("255.255.255.0");
-    b.setPort("8080");
+    b->setName("new bridge");
+    b->setLocation("in a place");
+    b->setHostName("255.255.255.0");
+    b->setPort("8080");
     
     // set up the "Bridge Name" text entry field with a label
     Wt::WLabel *nameLabel = new Wt::WLabel("Bridge Name: \t", this);
-    bridgeNameEdit_ = new Wt::WLineEdit(b.getName(), this);
+    bridgeNameEdit_ = new Wt::WLineEdit(b->getName(), this);
     nameLabel->setBuddy(bridgeNameEdit_);
     this->addWidget(new Wt::WBreak());
     
     // set up the Location Name text entry field with a label
     Wt::WLabel *locLabel = new Wt::WLabel("Location: \t", this);
-    bridgeLocationEdit_ = new Wt::WLineEdit(b.getLocation(), this);
+    bridgeLocationEdit_ = new Wt::WLineEdit(b->getLocation(), this);
     locLabel->setBuddy(bridgeLocationEdit_);
     this->addWidget(new Wt::WBreak());
 
     // set up the Host Name text entry field with a label
     Wt::WLabel *hostLabel = new Wt::WLabel("Hostname: \t", this);
-    hostNameEdit_ = new Wt::WLineEdit(b.getHostName(), this);
+    hostNameEdit_ = new Wt::WLineEdit(b->getHostName(), this);
+    hostNameEdit_->setTextSize(15); // set the max length of this field
+    hostNameEdit_->setInputMask("009.009.009.009;_"); // set the input mask to force IP address format
     hostLabel->setBuddy(hostNameEdit_);
     this->addWidget(new Wt::WBreak());
     
     // set up the Port Number text entry field with a label
     Wt::WLabel *portLabel = new Wt::WLabel("Port #: \t", this);
-    portNumEdit_ = new Wt::WLineEdit(b.getPort(), this);
+    portNumEdit_ = new Wt::WLineEdit(b->getPort(), this);
+    portNumEdit_->setTextSize(5); // set the max length of this field
     portLabel->setBuddy(portNumEdit_);
     this->addWidget(new Wt::WBreak());
     
@@ -50,7 +55,7 @@ IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Brid
     // the update_ button is bound to a lambda function that calls the update()
     // method. Done this way because you cannot pass parameters through Wt's connect()
     // method.
-    update_->clicked().connect(bind([=]() {
+    update_->clicked().connect(bind([&]() {
         update(b);
     }));
 }
@@ -126,34 +131,34 @@ void IndivBridgeManagerWidget::displayGroups( Bridge b ) {
 /** Method to update the current Bridge object with any changes from the text boxes.
 * @param b - The Bridge object to be updated.
 */
-void IndivBridgeManagerWidget::update( Bridge b ) {
+void IndivBridgeManagerWidget::update( Bridge *b ) {
     this->addWidget(new Wt::WBreak());
     
     Wt::WContainerWidget *old = new Wt::WContainerWidget(this);
     old->addWidget(new Wt::WText("<b>Old Stuff:</b>"));
     old->addWidget(new Wt::WBreak());
-    old->addWidget(new Wt::WText(b.getName()));
+    old->addWidget(new Wt::WText(b->getName()));
     old->addWidget(new Wt::WBreak());
-    old->addWidget(new Wt::WText(b.getLocation()));
+    old->addWidget(new Wt::WText(b->getLocation()));
     old->addWidget(new Wt::WBreak());
-    old->addWidget(new Wt::WText(b.getHostName()));
+    old->addWidget(new Wt::WText(b->getHostName()));
     old->addWidget(new Wt::WBreak());
-    old->addWidget(new Wt::WText(b.getPort()));
+    old->addWidget(new Wt::WText(b->getPort()));
     
-    if( b.getName() != bridgeNameEdit_->text().toUTF8() ) {
-        b.setName(bridgeNameEdit_->text().toUTF8());
+    if( b->getName() != bridgeNameEdit_->text().toUTF8() ) {
+        b->setName(bridgeNameEdit_->text().toUTF8());
     }
     
-    if ( b.getLocation() != bridgeLocationEdit_->text().toUTF8() ) {
-        b.setLocation(bridgeLocationEdit_->text().toUTF8());
+    if ( b->getLocation() != bridgeLocationEdit_->text().toUTF8() ) {
+        b->setLocation(bridgeLocationEdit_->text().toUTF8());
     }
     
-    if ( b.getHostName() != hostNameEdit_->text().toUTF8() ) {
-        b.setHostName(hostNameEdit_->text().toUTF8());
+    if ( b->getHostName() != hostNameEdit_->text().toUTF8() ) {
+        b->setHostName(hostNameEdit_->text().toUTF8());
     }
     
-    if ( b.getPort() != portNumEdit_->text().toUTF8() ) {
-        b.setPort(portNumEdit_->text().toUTF8());
+    if ( b->getPort() != portNumEdit_->text().toUTF8() ) {
+        b->setPort(portNumEdit_->text().toUTF8());
     }
     
     this->addWidget(new Wt::WBreak());
@@ -162,13 +167,14 @@ void IndivBridgeManagerWidget::update( Bridge b ) {
     Wt::WContainerWidget *changed = new Wt::WContainerWidget(this);
     changed->addWidget(new Wt::WText("<b>New Stuff:</b>"));
     changed->addWidget(new Wt::WBreak());
-    changed->addWidget(new Wt::WText(b.getName()));
+    changed->addWidget(new Wt::WText(b->getName()));
     changed->addWidget(new Wt::WBreak());
-    changed->addWidget(new Wt::WText(b.getLocation()));
+    changed->addWidget(new Wt::WText(b->getLocation()));
     changed->addWidget(new Wt::WBreak());
-    changed->addWidget(new Wt::WText(b.getHostName()));
+    changed->addWidget(new Wt::WText(b->getHostName()));
     changed->addWidget(new Wt::WBreak());
-    changed->addWidget(new Wt::WText(b.getPort()));
+    changed->addWidget(new Wt::WText(b->getPort()));
+    
 }
 
 /**
