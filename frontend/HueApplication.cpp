@@ -128,7 +128,11 @@ void HueApplication::displayBridges() {
     Wt::WGroupBox *groupbox = new Wt::WGroupBox(curUser_->constructGreetingString(), root());
     for(int i = 0; i < 5; i++) {
         groupbox->addWidget(new Wt::WText(curUser_->getBridge(i).getName() + " @ " + curUser_->getBridge(i).getLocation() + " "));
+        
+        // currently these buttons don't actually do anything...
         groupbox->addWidget(new Wt::WPushButton("Edit"));
+        
+        
         groupbox->addWidget(new Wt::WBreak());
     }
     
