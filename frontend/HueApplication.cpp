@@ -38,6 +38,24 @@ HueApplication::HueApplication(const Wt::WEnvironment& env) : Wt::WApplication(e
         
         
         // ------------------------------ TESTING FOR INDIVBRIDGEMANAGERWIDGET
+        curUser_ = new User("jfryer6@uwo.ca", "pass123", "Jake", "Fryer");
+        Bridge br;
+        string bridgeString;
+        
+        for(int i = 0; i < 5; i++) {
+            bridgeString = "bridge";
+            bridgeString.std::string::append(std::to_string(i+1));
+            br.setName(bridgeString);
+            br.setLocation("dummyLocation");
+            br.setHostName("180.0.0.0");
+            br.setPort("8080");
+            
+            curUser_->addBridge(br);
+        }
+        
+        for(int j = 0; j < 5; j++) {
+            cout << curUser_->getBridge(j).getName() << endl;
+        }
         
         cont->addWidget(new Wt::WBreak());
         cont->addWidget(new Wt::WBreak());
@@ -107,9 +125,19 @@ void HueApplication::displayBridges() {
     
     // ----------------------------------------------------------
     
+    Wt::WGroupBox *groupbox = new Wt::WGroupBox(curUser_->constructGreetingString(), root());
+    for(int i = 0; i < 5; i++) {
+        groupbox->addWidget(new Wt::WText(curUser_->getBridge(i).getName() + " @ " + curUser_->getBridge(i).getLocation() + " "));
+        groupbox->addWidget(new Wt::WPushButton("Edit"));
+        groupbox->addWidget(new Wt::WBreak());
+    }
+    
+    
+    /*
     // just a test bridge to pass as a parameter for the IndivBridgeManagerWidget
     Bridge *b = new Bridge;
     root()->addWidget(new IndivBridgeManagerWidget("bmanager", b));
+    */
 }
 
 /** Function that is called in runRESTful() to create the HueApplication, which is made the 

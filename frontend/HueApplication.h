@@ -9,6 +9,7 @@
 #include <Wt/WText>
 #include <Wt/WException>
 #include <Wt/WServer>
+#include <Wt/WGroupBox>
 
 #include "User.h"
 #include "RegistrationWidget.h"
