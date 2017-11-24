@@ -5,6 +5,7 @@
 #ifndef INDIVBRIDGEMANAGERWIDGET_H
 #define INDIVBRIDGEMANAGERWIDGET_H
 
+#include <string>
 #include <chrono>
 #include <thread>
 #include <vector>
@@ -18,6 +19,8 @@
 #include <Wt/WBorderLayout>
 #include <Wt/Http/Response>
 #include <Wt/Http/Client>
+#include <Wt/WLabel>
+#include <Wt/WTemplate>
 
 #include "Bridge.h"
 
@@ -26,22 +29,26 @@
 #define HTML_MESSAGE_CHECK 10 //check if message received every 100ms * HTML_MESSAGE_CHECK times
 #define URL "http://localhost:8000/api/"
 
-using namespace std;
-using namespace Wt;
-
 class IndivBridgeManagerWidget: public Wt::WContainerWidget {
 
 public:
-    IndivBridgeManagerWidget(const std::string &name, Wt::WContainerWidget *parent = 0);
+    IndivBridgeManagerWidget(const std::string &name, Bridge *b, Wt::WContainerWidget *parent = 0);
     virtual ~IndivBridgeManagerWidget();
-    bool checkBridge(Bridge b, string uName);
+    bool checkBridge(Bridge b, std::string uName);
 
 
 private:
+    Bridge *b;
+    Wt::WLineEdit *bridgeNameEdit_;
+    Wt::WLineEdit *bridgeLocationEdit_;
+    Wt::WLineEdit *hostNameEdit_;
+    Wt::WLineEdit *portNumEdit_;
+    
     void connect();
-    void connect(Bridge b, string uName);
-    bool handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err,const Wt::Http::Message& response) const;
-    string currentStatus="";
+    void connect(Bridge b, std::string uName);
+    void displayGroups(Bridge b);
+    void update(Bridge *b);
+    //bool handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err,const Wt::Http::Message& response) const;
 };
 
 #endif

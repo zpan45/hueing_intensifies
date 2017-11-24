@@ -35,6 +35,16 @@ HueApplication::HueApplication(const Wt::WEnvironment& env) : Wt::WApplication(e
         
         Wt::WPushButton *registerButton = new Wt::WPushButton("Register", cont);
         registerButton->clicked().connect(this, &HueApplication::goToRegister);
+        
+        
+        // ------------------------------ TESTING FOR INDIVBRIDGEMANAGERWIDGET
+        
+        cont->addWidget(new Wt::WBreak());
+        cont->addWidget(new Wt::WBreak());
+        cont->addWidget(new Wt::WBreak());
+        
+        Wt::WPushButton *bridgeButton = new Wt::WPushButton("Bridges", cont);
+        bridgeButton->clicked().connect(this, &HueApplication::displayBridges);
     }
     else {
         // if the curUser_ pointer does point to a User, greet the User with a friendly hello!
@@ -76,6 +86,30 @@ void HueApplication::goToRegister() {
     setInternalPath("/register", true);
     root()->clear();
     root()->addWidget(new RegistrationWidget("Registration"));
+}
+
+void HueApplication::displayBridges() {
+    // ---------------------------------------------------------
+    
+    // !TODO - We will display a list of ALL bridges associated with the current User object if the User is logged in.
+    
+    // For now, this is just a test to make sure we can connect the Individual Bridge Manager.
+    
+    // In the future, this method will display all the bridges. It will propagate a list of all the current bridges, and create a button next to each one that will take us to that Bridge's page. For example...
+    
+    /*
+        1. Bridge1 @ dummyLocation  [ Click Here to Edit ]
+        2. Bridge2 @ my house       [ Click Here to Edit ]
+        3. ..
+    */
+    
+    // The "Click Here to Edit" button will be connected to a method that spawns the IndivBridgeManagerWidget, pass that Bridge as a parameter, and allow you to edit that Bridge's parameters through the new Widget. 
+    
+    // ----------------------------------------------------------
+    
+    // just a test bridge to pass as a parameter for the IndivBridgeManagerWidget
+    Bridge *b = new Bridge;
+    root()->addWidget(new IndivBridgeManagerWidget("bmanager", b));
 }
 
 /** Function that is called in runRESTful() to create the HueApplication, which is made the 
