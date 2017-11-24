@@ -13,26 +13,35 @@ using namespace std;
 */
 IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Bridge b, Wt::WContainerWidget *parent) : Wt::WContainerWidget(parent){
     
+    
+    // for testing purposes only -- in the future, the Bridge b will already have details associated with it when passed in
     b.setName("new bridge");
     b.setLocation("up ur butt");
     b.setHostName("255.255.255.0");
     b.setPort("8080");
     
-    //string s = "Bridge \"" + b.getName() + "\" located @ \"" + b.getLocation() + "\"";
-    this->addWidget(new Wt::WText("Bridge Name: ", this));
-    this->addWidget(new Wt::WLineEdit(b.getName(), this));
+    // set up the "Bridge Name" text entry field with a label
+    Wt::WLabel *nameLabel = new Wt::WLabel("Bridge Name: \t", this);
+    bridgeNameEdit_ = new Wt::WLineEdit(b.getName(), this);
+    nameLabel->setBuddy(bridgeNameEdit_);
     this->addWidget(new Wt::WBreak());
     
-    this->addWidget(new Wt::WText("Location: ", this));
-    this->addWidget(new Wt::WLineEdit(b.getLocation(), this));
+    // set up the Location Name text entry field with a label
+    Wt::WLabel *locLabel = new Wt::WLabel("Location: \t", this);
+    bridgeLocationEdit_ = new Wt::WLineEdit(b.getLocation(), this);
+    locLabel->setBuddy(bridgeLocationEdit_);
+    this->addWidget(new Wt::WBreak());
+
+    // set up the Host Name text entry field with a label
+    Wt::WLabel *hostLabel = new Wt::WLabel("Hostname: \t", this);
+    hostNameEdit_ = new Wt::WLineEdit(b.getHostName(), this);
+    hostLabel->setBuddy(hostNameEdit_);
     this->addWidget(new Wt::WBreak());
     
-    this->addWidget(new Wt::WText("Hostname: ", this));
-    this->addWidget(new Wt::WLineEdit(b.getHostName(), this));
-    this->addWidget(new Wt::WBreak());
-    
-    this->addWidget(new Wt::WText("Port #: ", this));
-    this->addWidget(new Wt::WLineEdit(b.getPort(), this));
+    // set up the Port Number text entry field with a label
+    Wt::WLabel *portLabel = new Wt::WLabel("Port #: \t", this);
+    portNumEdit_ = new Wt::WLineEdit(b.getPort(), this);
+    portLabel->setBuddy(portNumEdit_);
     this->addWidget(new Wt::WBreak());
 }
 

@@ -19,6 +19,7 @@
 #include <Wt/WBorderLayout>
 #include <Wt/Http/Response>
 #include <Wt/Http/Client>
+#include <Wt/WLabel>
 
 #include "Bridge.h"
 
@@ -36,6 +37,11 @@ public:
 
 
 private:
+    Wt::WLineEdit *bridgeNameEdit_;
+    Wt::WLineEdit *bridgeLocationEdit_;
+    Wt::WLineEdit *hostNameEdit_;
+    Wt::WLineEdit *portNumEdit_;
+    
     void connect();
     void connect(Bridge b, std::string uName);
     //bool handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err,const Wt::Http::Message& response) const;
