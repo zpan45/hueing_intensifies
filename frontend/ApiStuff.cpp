@@ -1,5 +1,6 @@
 /*
  * API Code
+ * https://www.developers.meethue.com/documentation/lights-api
  */
 #include <sstream>
 #include <Wt/Http/Client>
@@ -25,7 +26,6 @@ url_ << username << "/lights";
 post(url_);
   //Optional body: {"deviceid":["45AF34","543636","34AFBE"]}
 
-
 //Get light attribute and state
 url_ << username << "/lights/" << id;
 get(url_);
@@ -45,6 +45,55 @@ put(url_, Message);
 // 	"bri": 200
 //  }
 
-//Selete Light
+//Delete Light
 url_ << username << "/lights/" << id;
-put(url_);
+DELETE(url_);
+
+
+/*
+ * Groups
+ */
+
+//Get all groups
+url_ << username << "/groups";
+get(url_);
+
+//Create group
+url_ << username << "/groups";
+post(url_, Message);
+// Body Example:
+// {
+// 	"lights": [
+// 		"1",
+// 		"2"
+// 	],
+// 	"name": "bedroom",
+//         "type": "LightGroup"
+// }
+// {
+//     "name": "Living room",
+//     "type": "Room",
+//     "class": "Living room",
+//     "lights": [
+//         "3",
+//         "4"
+//     ]
+// }
+
+//Get group attributes
+url_ << username << "/groups" << id;
+get(url_);
+
+//Set group state
+url_ << username << "/groups" << id << "/action";
+put(url_, Message);
+// Body Example
+// {
+// 	"on": true,
+// 	"hue": 2000,
+// 	"effect": "colorloop"
+// }
+
+//Delete group
+url_ << username << "/groups" << id;
+DELETE(url_);
