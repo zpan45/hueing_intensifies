@@ -69,7 +69,6 @@ bool DBFileManager::addNewUser(User newUser)
     {
         boost::filesystem::create_directory(dirPath);
         dirPath = DBFileManager::createFilePath(username);
-        DBFileManager::writeToFile(newUser, dirPath);
         return 0;
     }
 }
@@ -81,9 +80,10 @@ bool DBFileManager::addNewUser(User newUser)
  */
 bool DBFileManager::saveUser(User currentUser)
 {
+    std::string dirPath = DBFileManager::createDirPath(currentUser.User::getUsername());
     std::string filepath = DBFileManager::createFilePath(currentUser.User::getUsername());
 
-    if(!boost::filesystem::exists(filepath))
+    if(!boost::filesystem::exists(dirPath))
     {
         std::cout << "Error: could not find user." << std::endl;
         return 1;
