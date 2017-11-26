@@ -7,14 +7,47 @@
 #include <sstream>
 #include <Wt/Http/Client>
 
+#include <Wt/HTTP/Message.h> //Pack the JSONs into Message to send to api
+
 //
 stringstream url_ = "/api/";
+
+/*
+ * Handling API Requests and Response
+ */
+
+auto client = addChild(std::make_unique<Http::Client>());
+client->setTimeout(std::chrono::seconds{15});
+client->setMaximumResponseSize(10 * 1024);
+client->done().connect(std::bind(&MyWidget::handleHttpResponse, this, _1, _2));
+if (client->//GET/POST/PUT/requestDelete Method here)
+{
+  WApplication::instance()->deferRendering();
+  else {
+    // in case of an error in the %URL/client could not schedule request
+  }
+}
+void handleHttpResponse(std::system::error_code err, const Http::Message& response)
+{
+  WApplication::instance()->resumeRendering();
+  if (!err && response.status() == 200) {
+    //result holds the response JSON
+    Json::Object result;
+    //body() returns the JSON Text body of the response as a string
+    Json::parse(response.body(), result)
+    //example: stores name of the light in WString s
+    WString s = result.get("name")
+  }
+}
+
+
 
  /*
   * Lights
   */
 
 //Get All Lights
+//Returns JSON with Name, state(on, bri, hue, etc.)
 url_ << username << "/lights";
 get(url_);
 
@@ -29,6 +62,7 @@ post(url_);
   //Optional body: {"deviceid":["45AF34","543636","34AFBE"]}
 
 //Get light attribute and state
+//Returns JSON with Name, state(on, bri, hue, etc.)
 url_ << username << "/lights/" << id;
 get(url_);
 
@@ -38,6 +72,7 @@ put(url_, Message);
   //Body: {"name":"Bedroom Light"}
 
 //Set Light state
+//See documentation for JSON attributes
 url_ << username << "/lights/" << id << "/state";
 put(url_, Message);
 // Body:
@@ -49,11 +84,12 @@ put(url_, Message);
 
 //Delete Light
 url_ << username << "/lights/" << id;
-DELETE(url_);
+deleteRequest(url_);
 
 
 /*
  * Groups
+ * https://www.developers.meethue.com/documentation/groups-api
  */
 
 //Get all groups
@@ -72,6 +108,7 @@ post(url_, Message);
 // 	"name": "bedroom",
 //         "type": "LightGroup"
 // }
+//
 // {
 //     "name": "Living room",
 //     "type": "Room",
@@ -98,7 +135,7 @@ put(url_, Message);
 
 //Delete group
 url_ << username << "/groups" << id;
-DELETE(url_);
+deleteRequest(url_);
 
 
 /*
@@ -141,4 +178,4 @@ put(url_, Message);
 
 //Delete schedule
 url_ << username << "/schedules" << id;
-DELETE(url_);
+deleteRequest(url_);
