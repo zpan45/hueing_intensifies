@@ -19,6 +19,17 @@ using namespace std;
 HueApplication::HueApplication(const Wt::WEnvironment& env) : Wt::WApplication(env) {
     setTitle("CS3307 - Team24 Hue Application");
     
+    showMainPage();
+    
+    Wt::WApplication *app = Wt::WApplication::instance();
+
+    app->internalPathChanged().connect(std::bind([=] () {
+        handleRequest();
+    }));
+    
+}
+
+void HueApplication::showMainPage() {    
     // add a new container widget for the "Logged In" dialogue / greeting
     Wt::WContainerWidget *cont = new Wt::WContainerWidget();
     root()->addWidget(cont);
@@ -72,12 +83,6 @@ HueApplication::HueApplication(const Wt::WEnvironment& env) : Wt::WApplication(e
         cont->addWidget(new Wt::WText("Hello, "));
         cont->addWidget(new Wt::WText( curUser_->getFirstName() ));
     }
-    
-    Wt::WApplication *app = Wt::WApplication::instance();
-
-    app->internalPathChanged().connect(std::bind([=] () {
-        handleRequest();
-    }));
     
 }
 
@@ -206,7 +211,6 @@ void HueApplication::addBridge() {
         cout << "Port " << b.getPort() << endl;
         
         curUser_->addBridge(b);
-        
     }
 }
 
@@ -215,6 +219,7 @@ void HueApplication::handleRequest() {
     
     if(app->internalPath() == "/") {
         root()->clear();
+        showMainPage();
     }
     else if(app->internalPath() == "/bridges") {
         root()->clear();

@@ -25,6 +25,7 @@ public:
 private:
     User *curUser_ = nullptr;
     
+    void showMainPage();
     bool testLoggedInStatus();
     void goToLogIn();
     void goToRegister();
