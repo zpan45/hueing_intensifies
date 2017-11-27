@@ -119,6 +119,13 @@ Bridge User::getBridge(int element) {
     }
 }
 
+/**
+* Accessor method that returns the number of Bridges associated with the User, which is the length of the vector.
+* @return the number of Bridges as an integer.
+*/
+int User::getNumberOfBridges() {
+    return bridges.size();
+}
 
 /**
  * Setter for the username field.
