@@ -181,10 +181,32 @@ void HueApplication::addBridge() {
     
     dialogue.show();
     
-    // On successful close, do the following:
+    // On successful close of the dialogue, do the following:
     if (dialogue.exec() == Wt::WDialog::Accepted) {
         // ! TODO: Here is where we create the new Bridge object out of the details fed to the form.
-        cout << bridgeNameEdit_->text().toUTF8() << endl;
+        
+        /*
+        cout << "Name " << bridgeNameEdit_->text().toUTF8() << endl;
+        cout << "Location " << bridgeLocationEdit_->text().toUTF8() << endl;
+        cout << "Hostname " << hostNameEdit_->text().toUTF8() << endl;
+        cout << "Port " << portNumEdit_->text().toUTF8() << endl;
+        */
+        
+        Bridge b;
+        
+        b.setName(bridgeNameEdit_->text().toUTF8());
+        b.setLocation(bridgeLocationEdit_->text().toUTF8());
+        b.setHostName(hostNameEdit_->text().toUTF8());
+        b.setPort(portNumEdit_->text().toUTF8());
+        
+        
+        cout << "Name " << b.getName() << endl;
+        cout << "Location " << b.getLocation() << endl;
+        cout << "Hostname " << b.getHostName() << endl;
+        cout << "Port " << b.getPort() << endl;
+        
+        curUser_->addBridge(b);
+        
     }
 }
 
