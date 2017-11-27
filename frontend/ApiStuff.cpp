@@ -5,8 +5,8 @@
  * Lights, Groups, Schedule
  */
 #include <sstream>
+#include <Wt/WString.h>
 #include <Wt/Http/Client>
-
 #include <Wt/HTTP/Message.h> //Pack the JSONs into Message to send to api
 
 //
@@ -34,9 +34,9 @@ void handleHttpResponse(std::system::error_code err, const Http::Message& respon
     //result holds the response JSON
     Json::Object result;
     //body() returns the JSON Text body of the response as a string
-    Json::parse(response.body(), result)
+    Json::parse(response.body(), result);
     //example: stores name of the light in WString s
-    WString s = result.get("name")
+    WString s = result.get("name");
   }
 }
 
@@ -47,7 +47,7 @@ void handleHttpResponse(std::system::error_code err, const Http::Message& respon
   */
 
 //Get All Lights
-//Returns JSON with Name, state(on, bri, hue, etc.)
+//Returns JSON with ALL light Name, state(on, bri, hue, etc.)
 url_ << username << "/lights";
 get(url_);
 
@@ -66,10 +66,31 @@ post(url_);
 url_ << username << "/lights/" << id;
 get(url_);
 
+int hue = result.get("hue");
+bool on = result.get("on");
+WString effect = result.get("effect");
+WString alert = result.get("alert");
+int brightness = result.get("bri");
+int saturation = result.get("sat");
+int ct = result.get("ct");
+idktype xy = result.get("xy");
+bool reachable = result.get("reachable");
+WString colourMode = result.get("colormode");
+
+WString name = result.get("name");
+WString type = result.get("type");
+WString modelID = result.get("modelid");
+
+
 //Set Light attributes (set name/rename)
 url_ << username << "/lights/" << id;
 put(url_, Message);
   //Body: {"name":"Bedroom Light"}
+stringstream msg = "{";
+//Set name
+msg << ""name":" << """ << lightName << ""}";
+Message.addBodyText(msg.str());
+
 
 //Set Light state
 //See documentation for JSON attributes
@@ -81,6 +102,12 @@ put(url_, Message);
 // 	"on": true,
 // 	"bri": 200
 //  }
+
+stringstream msg = "{\n";
+//Set "on" or anything, one at a time
+msg << "\t"on":" << onBool << ",\n}";
+Message.addBodyText(msg.str());
+
 
 //Delete Light
 url_ << username << "/lights/" << id;
@@ -118,6 +145,12 @@ post(url_, Message);
 //         "4"
 //     ]
 // }
+
+stringstream msg = "{\n";
+//Set name
+msg << "\t"lights": [" << """ << uhhlightid? << "",\n}";
+Message.addBodyText(msg.str());
+
 
 //Get group attributes
 url_ << username << "/groups" << id;
