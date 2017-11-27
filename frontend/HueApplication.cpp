@@ -61,9 +61,11 @@ HueApplication::HueApplication(const Wt::WEnvironment& env) : Wt::WApplication(e
         cont->addWidget(new Wt::WBreak());
         cont->addWidget(new Wt::WBreak());
         
-        Wt::WPushButton *bridgeButton = new Wt::WPushButton("Bridges", cont);
-        bridgeButton->setLink(Wt::WLink(Wt::WLink::InternalPath, "/bridges"));
-        // bridgeButton->clicked().connect(this, &HueApplication::displayBridges);
+        Wt::WPushButton *dispBridgeButton = new Wt::WPushButton("Bridges", cont);
+        dispBridgeButton->setLink(Wt::WLink(Wt::WLink::InternalPath, "/bridges"));
+        
+        Wt::WPushButton *addBridgeButton = new Wt::WPushButton("Add Bridge", cont);
+        addBridgeButton->clicked().connect(this, &HueApplication::addBridge);
     }
     else {
         // if the curUser_ pointer does point to a User, greet the User with a friendly hello!
@@ -74,7 +76,7 @@ HueApplication::HueApplication(const Wt::WEnvironment& env) : Wt::WApplication(e
     Wt::WApplication *app = Wt::WApplication::instance();
 
     app->internalPathChanged().connect(std::bind([=] () {
-         handleRequest();
+        handleRequest();
     }));
     
 }
@@ -140,6 +142,49 @@ void HueApplication::displayBridges() {
         button->setLink(Wt::WLink(Wt::WLink::InternalPath, s));
         
         groupbox->addWidget(new Wt::WBreak());
+    }
+}
+
+void HueApplication::addBridge() {
+    Wt::WDialog dialogue("Add New Bridge...");
+    
+    // set up the "Bridge Name" text entry field with a label
+    Wt::WLabel *nameLabel = new Wt::WLabel("Bridge Name: \t", dialogue.contents());
+    Wt::WLineEdit *bridgeNameEdit_ = new Wt::WLineEdit(dialogue.contents());
+    nameLabel->setBuddy(bridgeNameEdit_);
+    dialogue.contents()->addWidget(new Wt::WBreak());
+    
+    // set up the Location Name text entry field with a label
+    Wt::WLabel *locLabel = new Wt::WLabel("Location: \t", dialogue.contents());
+    Wt::WLineEdit *bridgeLocationEdit_ = new Wt::WLineEdit(dialogue.contents());
+    locLabel->setBuddy(bridgeLocationEdit_);
+    dialogue.contents()->addWidget(new Wt::WBreak());
+
+    // set up the Host Name text entry field with a label
+    Wt::WLabel *hostLabel = new Wt::WLabel("Hostname: \t", dialogue.contents());
+    Wt::WLineEdit *hostNameEdit_ = new Wt::WLineEdit(dialogue.contents());
+    hostNameEdit_->setTextSize(15); // set the max length of this field
+    hostNameEdit_->setInputMask("009.009.009.009;_"); // set the input mask to force IP address format
+    hostLabel->setBuddy(hostNameEdit_);
+    dialogue.contents()->addWidget(new Wt::WBreak());
+    
+    // set up the Port Number text entry field with a label
+    Wt::WLabel *portLabel = new Wt::WLabel("Port #: \t", dialogue.contents());
+    Wt::WLineEdit *portNumEdit_ = new Wt::WLineEdit(dialogue.contents());
+    portNumEdit_->setTextSize(5); // set the max length of this field
+    portLabel->setBuddy(portNumEdit_);
+    dialogue.contents()->addWidget(new Wt::WBreak());
+    
+    Wt::WPushButton *confirm_ = new Wt::WPushButton( "Submit", dialogue.contents() );
+    
+    confirm_->clicked().connect(&dialogue, &Wt::WDialog::accept);
+    
+    dialogue.show();
+    
+    // On successful close, do the following:
+    if (dialogue.exec() == Wt::WDialog::Accepted) {
+        // ! TODO: Here is where we create the new Bridge object out of the details fed to the form.
+        cout << bridgeNameEdit_->text().toUTF8() << endl;
     }
 }
 

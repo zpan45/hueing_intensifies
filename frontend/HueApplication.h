@@ -10,6 +10,7 @@
 #include <Wt/WException>
 #include <Wt/WServer>
 #include <Wt/WGroupBox>
+#include <Wt/WDialog>
 #include <vector>
 
 #include "User.h"
@@ -28,6 +29,8 @@ private:
     void goToLogIn();
     void goToRegister();
     void displayBridges();
+    void addBridge();
+    void dialogueDone(Wt::WDialog::DialogCode code);
     void handleRequest();
 };
 
