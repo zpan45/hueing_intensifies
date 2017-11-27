@@ -62,13 +62,21 @@ HueApplication::HueApplication(const Wt::WEnvironment& env) : Wt::WApplication(e
         cont->addWidget(new Wt::WBreak());
         
         Wt::WPushButton *bridgeButton = new Wt::WPushButton("Bridges", cont);
-        bridgeButton->clicked().connect(this, &HueApplication::displayBridges);
+        bridgeButton->setLink(Wt::WLink(Wt::WLink::InternalPath, "/bridges"));
+        // bridgeButton->clicked().connect(this, &HueApplication::displayBridges);
     }
     else {
         // if the curUser_ pointer does point to a User, greet the User with a friendly hello!
         cont->addWidget(new Wt::WText("Hello, "));
         cont->addWidget(new Wt::WText( curUser_->getFirstName() ));
     }
+    
+    Wt::WApplication *app = Wt::WApplication::instance();
+
+    app->internalPathChanged().connect(std::bind([=] () {
+         handleRequest();
+    }));
+    
 }
 
 /** Method that checks if the User is logged in by testing whether the curUser_ variable points
@@ -106,32 +114,30 @@ void HueApplication::goToRegister() {
     root()->addWidget(new RegistrationWidget("Registration"));
 }
 
+/** This method displays a list of ALL bridges associated with the current 
+* User object if the User is logged in. It will propagate a list of all the 
+* current bridges, and create a button next to each one that will take us 
+* to that Bridge's page. For example...
+*
+*        1. Bridge1 @ dummyLocation  [ Click Here to Edit ]
+*        2. Bridge2 @ my house       [ Click Here to Edit ]
+*        3. ..
+*/
 void HueApplication::displayBridges() {
-    // ---------------------------------------------------------
-    
-    // !TODO - We will display a list of ALL bridges associated with the current User object if the User is logged in.
-    
-    // For now, this is just a test to make sure we can connect the Individual Bridge Manager.
-    
-    // In the future, this method will display all the bridges. It will propagate a list of all the current bridges, and create a button next to each one that will take us to that Bridge's page. For example...
-    
-    /*
-        1. Bridge1 @ dummyLocation  [ Click Here to Edit ]
-        2. Bridge2 @ my house       [ Click Here to Edit ]
-        3. ..
-    */
-    
-    // The "Click Here to Edit" button will be connected to a method that spawns the IndivBridgeManagerWidget, pass that Bridge as a parameter, and allow you to edit that Bridge's parameters through the new Widget. 
-    
-    // ----------------------------------------------------------
-    
+    // Add a new groupbox to display all the Bridges associated with the current User
     Wt::WGroupBox *groupbox = new Wt::WGroupBox(curUser_->constructGreetingString(), root());
+    
     for(int i = 0; i < 5; i++) {
         groupbox->addWidget(new Wt::WText(curUser_->getBridge(i).getName() + " @ " + curUser_->getBridge(i).getLocation() + " "));
         
-        // currently these buttons don't actually do anything...
-        groupbox->addWidget(new Wt::WPushButton("Edit"));
+        // The "Click Here to Edit" button will be connected to a method that spawns the IndivBridgeManagerWidget, pass that Bridge as a parameter, and allow you to edit that Bridge's parameters through the new Widget. 
         
+        //IDEA: Add buttons as links; use internalpath handling for /bridges for the main bridges widget and then /bridges/# for the subsequent bridges. use connect() to connect each button to a link?
+        string s = "Edit " + to_string(i);
+        Wt::WPushButton *button = new Wt::WPushButton(s, groupbox);
+        
+        s = "/" + to_string(i);
+        button->setLink(Wt::WLink(Wt::WLink::InternalPath, s));
         
         groupbox->addWidget(new Wt::WBreak());
     }
@@ -142,6 +148,20 @@ void HueApplication::displayBridges() {
     Bridge *b = new Bridge;
     root()->addWidget(new IndivBridgeManagerWidget("bmanager", b));
     */
+}
+
+void HueApplication::handleRequest() {
+    Wt::WApplication *app = Wt::WApplication::instance();
+    
+    if(app->internalPath() == "/") {
+        root()->clear();
+    }
+    else if(app->internalPath() == "/bridges") {
+        displayBridges();
+    }
+    else {
+        root()->clear();
+    }
 }
 
 /** Function that is called in runRESTful() to create the HueApplication, which is made the 
