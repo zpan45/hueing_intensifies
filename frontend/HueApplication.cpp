@@ -38,19 +38,45 @@ HueApplication::HueApplication(const Wt::WEnvironment& env) : Wt::WApplication(e
         
         
         // ------------------------------ TESTING FOR INDIVBRIDGEMANAGERWIDGET
+        curUser_ = new User("jfryer6@uwo.ca", "pass123", "Jake", "Fryer");
+        Bridge br;
+        string bridgeString;
+        
+        for(int i = 0; i < 5; i++) {
+            bridgeString = "bridge";
+            bridgeString.std::string::append(std::to_string(i+1));
+            br.setName(bridgeString);
+            br.setLocation("dummyLocation");
+            br.setHostName("180.0.0.0");
+            br.setPort("8080");
+            
+            curUser_->addBridge(br);
+        }
+        
+        for(int j = 0; j < 5; j++) {
+            cout << curUser_->getBridge(j).getName() << endl;
+        }
         
         cont->addWidget(new Wt::WBreak());
         cont->addWidget(new Wt::WBreak());
         cont->addWidget(new Wt::WBreak());
         
         Wt::WPushButton *bridgeButton = new Wt::WPushButton("Bridges", cont);
-        bridgeButton->clicked().connect(this, &HueApplication::displayBridges);
+        bridgeButton->setLink(Wt::WLink(Wt::WLink::InternalPath, "/bridges"));
+        // bridgeButton->clicked().connect(this, &HueApplication::displayBridges);
     }
     else {
         // if the curUser_ pointer does point to a User, greet the User with a friendly hello!
         cont->addWidget(new Wt::WText("Hello, "));
         cont->addWidget(new Wt::WText( curUser_->getFirstName() ));
     }
+    
+    Wt::WApplication *app = Wt::WApplication::instance();
+
+    app->internalPathChanged().connect(std::bind([=] () {
+         handleRequest();
+    }));
+    
 }
 
 /** Method that checks if the User is logged in by testing whether the curUser_ variable points
@@ -88,28 +114,59 @@ void HueApplication::goToRegister() {
     root()->addWidget(new RegistrationWidget("Registration"));
 }
 
+/** This method displays a list of ALL bridges associated with the current 
+* User object if the User is logged in. It will propagate a list of all the 
+* current bridges, and create a button next to each one that will take us 
+* to that Bridge's page. For example...
+*
+*        1. Bridge1 @ dummyLocation  [ Click Here to Edit ]
+*        2. Bridge2 @ my house       [ Click Here to Edit ]
+*        3. ..
+*/
 void HueApplication::displayBridges() {
-    // ---------------------------------------------------------
+    // Add a new groupbox to display all the Bridges associated with the current User
+    Wt::WGroupBox *groupbox = new Wt::WGroupBox(curUser_->constructGreetingString(), root());
     
-    // !TODO - We will display a list of ALL bridges associated with the current User object if the User is logged in.
+    for(int i = 0; i < 5; i++) {
+        groupbox->addWidget(new Wt::WText(curUser_->getBridge(i).getName() + " @ " + curUser_->getBridge(i).getLocation() + " "));
+        
+        // The "Click Here to Edit" button will be connected to a method that spawns the IndivBridgeManagerWidget, pass that Bridge as a parameter, and allow you to edit that Bridge's parameters through the new Widget. 
+        
+        //IDEA: Add buttons as links; use internalpath handling for /bridges for the main bridges widget and then /bridges/# for the subsequent bridges. use connect() to connect each button to a link?
+        string s = "Edit " + to_string(i);
+        Wt::WPushButton *button = new Wt::WPushButton(s, groupbox);
+        
+        s = "/bridges/" + to_string(i);
+        button->setLink(Wt::WLink(Wt::WLink::InternalPath, s));
+        
+        groupbox->addWidget(new Wt::WBreak());
+    }
+}
+
+void HueApplication::handleRequest() {
+    Wt::WApplication *app = Wt::WApplication::instance();
     
-    // For now, this is just a test to make sure we can connect the Individual Bridge Manager.
-    
-    // In the future, this method will display all the bridges. It will propagate a list of all the current bridges, and create a button next to each one that will take us to that Bridge's page. For example...
-    
-    /*
-        1. Bridge1 @ dummyLocation  [ Click Here to Edit ]
-        2. Bridge2 @ my house       [ Click Here to Edit ]
-        3. ..
-    */
-    
-    // The "Click Here to Edit" button will be connected to a method that spawns the IndivBridgeManagerWidget, pass that Bridge as a parameter, and allow you to edit that Bridge's parameters through the new Widget. 
-    
-    // ----------------------------------------------------------
-    
-    // just a test bridge to pass as a parameter for the IndivBridgeManagerWidget
-    Bridge *b = new Bridge;
-    root()->addWidget(new IndivBridgeManagerWidget("bmanager", b));
+    if(app->internalPath() == "/") {
+        root()->clear();
+    }
+    else if(app->internalPath() == "/bridges") {
+        root()->clear();
+        displayBridges();
+    }
+    // handle the case with an integer number 'i' following "/bridges/i"
+    else if(app->internalPath() == "/bridges/") {
+        // LOL how2dothis
+        
+        /*
+        // just a test bridge to pass as a parameter for the IndivBridgeManagerWidget
+        Bridge *b = new Bridge;
+        root()->addWidget(new IndivBridgeManagerWidget("bmanager", b));
+        */
+        
+    }
+    else {
+        root()->clear();
+    }
 }
 
 /** Function that is called in runRESTful() to create the HueApplication, which is made the 

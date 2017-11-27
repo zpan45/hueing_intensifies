@@ -9,6 +9,8 @@
 #include <Wt/WText>
 #include <Wt/WException>
 #include <Wt/WServer>
+#include <Wt/WGroupBox>
+#include <vector>
 
 #include "User.h"
 #include "RegistrationWidget.h"
@@ -26,6 +28,7 @@ private:
     void goToLogIn();
     void goToRegister();
     void displayBridges();
+    void handleRequest();
 };
 
 #endif

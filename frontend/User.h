@@ -33,10 +33,9 @@ class User {
         std::string constructGreetingString();
         std::string toString();
         std::string hashPassword(std::string pass);
-    private:
         void addBridge(Bridge b);
         bool removeBridge(int element);
-
+    private:
         std::string username;
         std::string firstName;
         std::string lastName;
