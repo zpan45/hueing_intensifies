@@ -26,6 +26,7 @@ class User {
         std::string getLastName();
         std::string getPassword();
         Bridge getBridge(int element);
+        std::vector<Bridge> getAllBridges();
         void setUsername(std::string u);
         void setFirstName(std::string first);
         void setLastName(std::string last);
@@ -33,9 +34,9 @@ class User {
         std::string constructGreetingString();
         std::string toString();
         std::string hashPassword(std::string pass);
-    private:
         void addBridge(Bridge b);
         bool removeBridge(int element);
+    private:
 
         std::string username;
         std::string firstName;

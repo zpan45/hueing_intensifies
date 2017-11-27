@@ -29,6 +29,7 @@ class Bridge {
         void setLocation(std::string l);
         void setHostName(std::string hn);
         void setPort(std::string p);
+        std::string toString();
     private:
         void addGroup(Group g);
         bool removeGroup(int element);

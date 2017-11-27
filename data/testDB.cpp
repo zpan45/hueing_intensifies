@@ -85,7 +85,7 @@ int main(void)
     std::cin >> numOfUsers;
 
     /*
-    create users and fill the vector
+    create users with 3 bridges each and fill the vector
     */
 
     User randomUser;
@@ -107,6 +107,25 @@ int main(void)
         password = "pass";
         password.std::string::append(std::to_string(i+1));
         randomUser.setPassword(password);
+
+        for (int j = 0; j < 3; j++)
+        {
+            std::string name = "testname";
+            std::string location = "testlocation";
+            std::string hostname = "0.0.0.0";
+            std::string port = "80";
+
+            name.std::string::append(std::to_string(j+1));
+            location.std::string::append(std::to_string(j+1));
+
+            Bridge testBridge;
+            testBridge.setName(name);
+            testBridge.setLocation(location);
+            testBridge.setHostName(hostname);
+            testBridge.setPort(port);
+
+            randomUser.addBridge(testBridge);
+        }
 
         currentUsers.std::vector<User>::push_back(randomUser);
     }
@@ -227,14 +246,7 @@ int main(void)
         {
             randomUser = *it;
             activeDB.DBFileManager::addNewUser(randomUser);
-            /*if(::activeDB.DBFileManager::addNewUser(randomUser))
-            {
-                std::cout << randomUser.User::getUsername() << " added succesfully." << std::endl;
-            }
-            else
-            {
-                std::cout << "Failed to add user." << std::endl;
-            }*/
+            activeDB.DBFileManager::saveUser(randomUser);
         }
         std::cout << "Writing to filesystem complete. Verify that there are " << currentUsers.std::vector<User>::size() << " users in the USERS/ filesystem." << std::endl;
 

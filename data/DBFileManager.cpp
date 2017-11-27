@@ -26,6 +26,8 @@
  * @date November 09, 2017
  */
 
+#include <cstddef>
+#include <sstream>
 
 #include "DBFileManager.h"
 
@@ -50,8 +52,8 @@ DBFileManager::DBFileManager()
 
 
 /**
- * Save the vector of User objects to file.
- * @param users a vector containing User objects.
+ * Creates a new directory for a newly-registered user. NOTE: actual user info file not created here
+ * @param newUser a new user object
  */
 bool DBFileManager::addNewUser(User newUser)
 {
@@ -67,16 +69,21 @@ bool DBFileManager::addNewUser(User newUser)
     {
         boost::filesystem::create_directory(dirPath);
         dirPath = DBFileManager::createFilePath(username);
-        DBFileManager::writeToFile(newUser, dirPath);
         return 0;
     }
 }
 
+/**
+ * Creates a new user info file within the user's directory, and can be used to save a user's info
+ * at the end of the session, since the output file stream overwrites the file contents.
+ * @param newUser a new user object
+ */
 bool DBFileManager::saveUser(User currentUser)
 {
+    std::string dirPath = DBFileManager::createDirPath(currentUser.User::getUsername());
     std::string filepath = DBFileManager::createFilePath(currentUser.User::getUsername());
 
-    if(!boost::filesystem::exists(filepath))
+    if(!boost::filesystem::exists(dirPath))
     {
         std::cout << "Error: could not find user." << std::endl;
         return 1;
@@ -122,20 +129,30 @@ User DBFileManager::getUser(std::string username) //this depends on the toString
 
 std::string DBFileManager::createDirPath(std::string username)
 {
+    std::hash<std::string> usr_hash;
+    std::stringstream ss;
+    ss << usr_hash(username);
+    std::string newusername = ss.str();
+
     std::string dirPath = "USERS";
     dirPath.std::string::append("/");
-    dirPath.std::string::append(username);
+    dirPath.std::string::append(newusername);
 
     return dirPath;
 }
 
 std::string DBFileManager::createFilePath(std::string username)
 {
+    std::hash<std::string> usr_hash;
+    std::stringstream ss;
+    ss << usr_hash(username);
+    std::string newusername = ss.str();
+
     std::string filepath = "USERS";
     filepath.std::string::append("/");
-    filepath.std::string::append(username);
+    filepath.std::string::append(newusername);
     filepath.std::string::append("/");
-    filepath.std::string::append(username);
+    filepath.std::string::append(newusername);
     filepath.std::string::append("_info.txt");
 
     return filepath;
@@ -187,7 +204,12 @@ User DBFileManager::readFromFile(std::string userPath)
         std::getline(userReadStream, currentLine);
         currentUser.User::setLastName(currentLine);
 
-        //will add something here to deal with bridges as well
+        while(!userReadStream.std::ifstream::eof())
+        {
+            std::getline(userReadStream, currentLine);
+            //build new Bridge using info
+            //add Bridge to user bridges
+        }
 
         userReadStream.std::ifstream::close();
         userReadStream.std::ifstream::clear();
