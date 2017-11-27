@@ -134,7 +134,7 @@ void HueApplication::displayBridges() {
     // Add a new groupbox to display all the Bridges associated with the current User
     Wt::WGroupBox *groupbox = new Wt::WGroupBox(curUser_->constructGreetingString(), root());
     
-    for(int i = 0; i < 5; i++) {
+    for(int i = 0; i < curUser_->getNumberOfBridges(); i++) {
         groupbox->addWidget(new Wt::WText(curUser_->getBridge(i).getName() + " @ " + curUser_->getBridge(i).getLocation() + " "));
         
         // The "Click Here to Edit" button will be connected to a method that spawns the IndivBridgeManagerWidget, pass that Bridge as a parameter, and allow you to edit that Bridge's parameters through the new Widget. 

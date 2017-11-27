@@ -26,6 +26,7 @@ class User {
         std::string getLastName();
         std::string getPassword();
         Bridge getBridge(int element);
+        int getNumberOfBridges();
         void setUsername(std::string u);
         void setFirstName(std::string first);
         void setLastName(std::string last);
