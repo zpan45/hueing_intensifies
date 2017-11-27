@@ -110,9 +110,10 @@ string User::getPassword() {
  * @param element The integer position of the desired Bridge object in the bridges vector.
  * @return the desired Bridge object.
  */
-Bridge User::getBridge(int element) {
+Bridge* User::getBridge(int element) {
     try {
-        return bridges.at(element);
+        Bridge *b = &bridges.at(element);
+        return b;
     }
     catch(const out_of_range& oor) {
         cerr << element << " is out of range for this User" << endl;

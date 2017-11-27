@@ -17,10 +17,12 @@ IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Brid
     // It HAS to be a pointer because otherwise the changes from the update() method won't persist
     
     // for testing purposes only -- in the future, the Bridge b will already have details associated with it when passed in
+    /*
     b->setName("new bridge");
     b->setLocation("in a place");
     b->setHostName("255.255.255.0");
     b->setPort("8080");
+    */
     
     // set up the "Bridge Name" text entry field with a label
     Wt::WLabel *nameLabel = new Wt::WLabel("Bridge Name: \t", this);
