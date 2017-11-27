@@ -136,18 +136,11 @@ void HueApplication::displayBridges() {
         string s = "Edit " + to_string(i);
         Wt::WPushButton *button = new Wt::WPushButton(s, groupbox);
         
-        s = "/" + to_string(i);
+        s = "/bridges/" + to_string(i);
         button->setLink(Wt::WLink(Wt::WLink::InternalPath, s));
         
         groupbox->addWidget(new Wt::WBreak());
     }
-    
-    
-    /*
-    // just a test bridge to pass as a parameter for the IndivBridgeManagerWidget
-    Bridge *b = new Bridge;
-    root()->addWidget(new IndivBridgeManagerWidget("bmanager", b));
-    */
 }
 
 void HueApplication::handleRequest() {
@@ -157,7 +150,19 @@ void HueApplication::handleRequest() {
         root()->clear();
     }
     else if(app->internalPath() == "/bridges") {
+        root()->clear();
         displayBridges();
+    }
+    // handle the case with an integer number 'i' following "/bridges/i"
+    else if(app->internalPath() == "/bridges/") {
+        // LOL how2dothis
+        
+        /*
+        // just a test bridge to pass as a parameter for the IndivBridgeManagerWidget
+        Bridge *b = new Bridge;
+        root()->addWidget(new IndivBridgeManagerWidget("bmanager", b));
+        */
+        
     }
     else {
         root()->clear();
