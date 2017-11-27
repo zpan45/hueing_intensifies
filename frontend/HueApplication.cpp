@@ -55,7 +55,7 @@ void HueApplication::showMainPage() {
         
         for(int i = 0; i < 5; i++) {
             bridgeString = "bridge";
-            bridgeString.std::string::append(std::to_string(i+1));
+            bridgeString.std::string::append(std::to_string(i));
             br.setName(bridgeString);
             br.setLocation("dummyLocation");
             br.setHostName("180.0.0.0");
@@ -224,7 +224,7 @@ void HueApplication::handleRequest() {
     
     // "/bridges" is a string of length 8. If the internal path is at least 8 characters, try to resolve the link as follows:
     else if (app->internalPath().size() >= 8) {
-        cout << "We found that the path was >= 8\n" << app->internalPath() << "\nIt is " << app->internalPath().size() << " characters long" << endl << endl;
+        // cout << "We found that the path was >= 8\n" << app->internalPath() << "\nIt is " << app->internalPath().size() << " characters long" << endl << endl;
         
         // if the internal path is just "/bridges", display a list of all bridges
         if(app->internalPath() == "/bridges") {
@@ -233,14 +233,15 @@ void HueApplication::handleRequest() {
         }
         
         // handle the case with an integer number 'i' following "/bridges/"
-        // N.B. - The "substr()" method actually slices out the first 0-9 characters, leaving only whatever follows the trailing "/" (so, an integer, ideally)
         else if(app->internalPath().size() > 9 && app->internalPath().substr(0, 9) == "/bridges/") {
             // cout << "We got to the substr stuff" << endl << endl;
             stringstream s;
             int bridgeNum;
             Bridge *b;
             
-            s << app->internalPath();
+            //cout << "remaining curpath: " << app->internalPath().substr(9, app->internalPath().size()) << endl;
+            
+            s << app->internalPath().substr(9, app->internalPath().size());
             s >> bridgeNum;
             
             // !WARNING -- NEED to implement error handling here.
