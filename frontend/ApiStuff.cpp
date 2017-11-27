@@ -88,7 +88,7 @@ put(url_, Message);
   //Body: {"name":"Bedroom Light"}
 stringstream msg = "{";
 //Set name
-msg << ""name":" << """ << lightName << ""}";
+msg << "\"name\":\"" << lightName << "\"}";
 Message.addBodyText(msg.str());
 
 
@@ -105,7 +105,7 @@ put(url_, Message);
 
 stringstream msg = "{\n";
 //Set "on" or anything, one at a time
-msg << "\t"on":" << onBool << ",\n}";
+msg << "\t\"on\":" << onBool << ",\n}";
 Message.addBodyText(msg.str());
 
 
@@ -148,7 +148,7 @@ post(url_, Message);
 
 stringstream msg = "{\n";
 //Set name
-msg << "\t"lights": [" << """ << uhhlightid? << "",\n}";
+msg << "\t\"lights\": [\n" << "\"" << uhhlightid? << "\",\n}";
 Message.addBodyText(msg.str());
 
 
@@ -197,9 +197,29 @@ post(url_, Message);
 // 	"localtime": "2015-06-30T14:24:40"
 // }
 
+stringstream msg = "{\n";
+msg << "\t\"name\": \"" << scheduleName << "\",\n";
+msg << "\t\"description\": \"" << scheduleDesc << "\",\n";
+msg << "\t\"command\": {\n";
+msg << "\t\t\"address\": \"" << url_ << "\",\n";
+msg << "\t\t\"method\": \"" << method << "\",\n";
+msg << "\t\t\"body\": {\n";
+msg << "\t\t\t\"on\": "  << onBool << "\n";
+msg << "\t\t}";
+msg << "\t},";
+msg << "\"localtime\": \"" << time << "\"\n}"
+
+Message.addBodyText(msg.str());
+
+
 //Get schedule attributes
 url_ << username << "/schedules" << id;
 get(url_);
+
+WString name = result.get("name");
+WString desc = result.get("desctiption");
+timeType time = result.get("time");
+
 
 //Set Schedule attributes
 url_ << username << "/schedules" << id;
@@ -208,6 +228,12 @@ put(url_, Message);
 // {
 // 	"name": "Wake up"
 // }
+
+stringstream msg = "{";
+//Set name
+msg << "\"name\":\"" << schedName << "\"}";
+Message.addBodyText(msg.str());
+
 
 //Delete schedule
 url_ << username << "/schedules" << id;
