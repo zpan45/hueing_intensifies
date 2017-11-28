@@ -21,11 +21,12 @@ using namespace std;
  */
 Light::Light() {
     name = "";
-    isActive = false;
-    brightness = 0;
-    colour = "#FFFFFF";
+    isActive = false; //on
+    brightness = 0;   //bri
+    hue = 0;          //hue
+    sat = 0;          //sat
     schedule = 0;
-    id = 0;
+    id = "";
 }
 
 // ! TODO: Add overloaded constructor for creating a Light with fields
@@ -63,13 +64,21 @@ int Light::getBrightness() {
 
 
 /**
- * Getter for the colour of the Light.
- * @return the colour of the Light (in hexcode form) as a string.
+ * Getter for the hue of the Light.
+ * @return the hue of the Light as an int.
  */
-string Light::getColour() {
-    return colour;
+int Light::getHue() {
+    return hue;
 }
 
+
+/**
+ * Getter for the sat of the Light.
+ * @return the sat of the Light as an int.
+ */
+int Light::getSat() {
+    return sat;
+}
 
 // TODO: Should this be returning an integer? Perhaps look into a different way of implementing the schedules.
 /**
@@ -82,9 +91,9 @@ int Light::getSchedule() {
 
 /**
  * Getter for the ID field.
- * @return Light ID in int.
+ * @return Light ID in string.
  */
-int Light::getID() {
+string Light::getID() {
     return id;
 }
 
@@ -117,11 +126,19 @@ void Light::setBrightness(int b) {
 
 
 /**
- * Setter for the colour field.
- * @param hexcode A well-formed hexcode string that represents the colour that the Light should be emitting.
+ * Setter for the hue field.
+ * @param h An integer representation of the light's hue.
  */
-void Light::setColour(string hexcode) {
-    colour = hexcode;
+void Light::setHue(int h) {
+    hue = h;
+}
+
+/**
+ * Setter for the sat field.
+ * @param h An integer representation of the light's sat.
+ */
+void Light::setSat(int s) {
+    sat = s;
 }
 
 // TODO: Determine how to represent the schedule properly. See "getSchedule()"
@@ -138,7 +155,7 @@ void Light::setSchedule(int sched) {
  * Setter for the ID field.
  * @param id An integer representation of Light ID.
  */
-void Light::setID(int i) {
+void Light::setID(string i) {
     id = i;
 }
 
@@ -148,7 +165,7 @@ void Light::setID(int i) {
 
 
 /**
- * Method that converts a given, well-formed string representing a colour's hexcode into the associated colour space coordinates to be used with the Hue API.
+ * WILL BE REMOVED: Method that converts a given, well-formed string representing a colour's hexcode into the associated colour space coordinates to be used with the Hue API.
  * @param col A well-formed hexcode string that represents a colour
  */
 void Light::convertHexcodeToCoords(string col) {

@@ -14,6 +14,7 @@
 #include <iostream>
 #include <vector>
 #include "Group.h"
+#include "Light.h"
 
 class Bridge {
     public:
@@ -26,6 +27,7 @@ class Bridge {
         std::string getUsername();
         std::string getStatus();
         Group* getGroup(int element);
+        Light* getLight(int element);
         int getNumberOfGroups();
 
         void setName(std::string n);
@@ -37,7 +39,9 @@ class Bridge {
         std::string toString();
 
         void addGroup(Group g);
+        void addLight(Light l);
         bool removeGroup(int element);
+        bool removeLight(int element);
     private:
         std::string name;
         std::string location;
@@ -47,6 +51,7 @@ class Bridge {
         //status is used to store API response from bridge
         std::string status;
         std::vector<Group> groups;
+        std::vector<Light> lights;
 };
 
 #endif
