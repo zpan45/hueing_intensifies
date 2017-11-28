@@ -88,10 +88,10 @@ int main(void)
     create users with 3 bridges each and fill the vector
     */
 
-    User randomUser;
-
     for(int i = 0; i < numOfUsers; i++)
     {
+        User randomUser;
+
         userName = "user";
         userName.std::string::append(std::to_string(i+1));
         randomUser.setUsername(userName);
@@ -108,27 +108,60 @@ int main(void)
         password.std::string::append(std::to_string(i+1));
         randomUser.setPassword(password);
 
-        for (int j = 0; j < 3; j++)
-        {
-            std::string name = "testname";
-            std::string location = "testlocation";
-            std::string hostname = "0.0.0.0";
-            std::string port = "80";
+        std::string name1 = "testname1";
+        std::string location1 = "testlocation1";
+        std::string hostname1 = "1.1.1.1";
+        std::string port1 = "11";
 
-            name.std::string::append(std::to_string(j+1));
-            location.std::string::append(std::to_string(j+1));
+        std::string name2 = "testname2";
+        std::string location2 = "testlocation2";
+        std::string hostname2 = "2.2.2.2";
+        std::string port2 = "22";
 
-            Bridge testBridge;
-            testBridge.setName(name);
-            testBridge.setLocation(location);
-            testBridge.setHostName(hostname);
-            testBridge.setPort(port);
+        std::string name3 = "testname3";
+        std::string location3 = "testlocation3";
+        std::string hostname3 = "3.3.3.3";
+        std::string port3 = "33";
 
-            randomUser.addBridge(testBridge);
-        }
+        Bridge testBridge1;
+        Bridge testBridge2;
+        Bridge testBridge3;
+
+        testBridge1.setName(name1);
+        testBridge1.setLocation(location1);
+        testBridge1.setHostName(hostname1);
+        testBridge1.setPort(port1);
+
+        std::cout << testBridge1.Bridge::toString() << std::endl;
+
+        testBridge2.setName(name2);
+        testBridge2.setLocation(location2);
+        testBridge2.setHostName(hostname2);
+        testBridge2.setPort(port2);
+
+        std::cout << testBridge2.Bridge::toString() << std::endl;
+
+        testBridge3.setName(name3);
+        testBridge3.setLocation(location3);
+        testBridge3.setHostName(hostname3);
+        testBridge3.setPort(port3);
+
+        std::cout << testBridge3.Bridge::toString() << std::endl;
+
+        randomUser.User::addBridge(testBridge1);
+        std::cout << "Bridge1 added." << std::endl;
+
+        randomUser.User::addBridge(testBridge2);
+        std::cout << "Bridge2 added." << std::endl;
+
+        randomUser.User::addBridge(testBridge3);
+        std::cout << "Bridge3 added." << std::endl;
+
+        std::cout << randomUser.User::toString() << std::endl;
 
         currentUsers.std::vector<User>::push_back(randomUser);
     }
+
 
     /*
     Check that vector isn't empty and display contents
@@ -146,13 +179,13 @@ int main(void)
         std::cout << "Vector has been filled with " << currentUsers.std::vector<User>::size() << " users:" << std::endl;
 
         //Print for verification
-        for (std::vector<User>::iterator it = currentUsers.begin() ; it != currentUsers.end(); ++it)
+        for (std::vector<User>::iterator it = currentUsers.std::vector<User>::begin() ; it != currentUsers.std::vector<User>::end(); ++it)
         {
             tempUser = *it;
             std::cout << tempUser.User::toString() << std::endl;
         }
     }
-
+/*
     ////////////////////////////////////////////////////////////
     //   STEP 2  --> Iterate through vector and write to file  /
     ////////////////////////////////////////////////////////////
@@ -253,6 +286,6 @@ int main(void)
 
 
 
-
+*/
 
 }
