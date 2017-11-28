@@ -44,14 +44,14 @@ User& User::operator=(const User& otherUser)
     User::firstName = otherUser.firstName;
     User::lastName = otherUser.lastName;
     User::password = otherUser.password;
-    //User::bridges = otherUser.bridges;
+    User::bridges = otherUser.bridges;
 
     return *this;
 }
 
 
 /** Overloaded constructor for the User class. Initializes all fields to have specified values.
- * 
+ *
  * @param un The User's associated username, a string
  * @param pw The User's associated password, a string
  * @param first The User's first name, a string
@@ -128,6 +128,12 @@ int User::getNumberOfBridges() {
     return bridges.size();
 }
 
+std::vector<Bridge> User::getAllBridges()
+{
+    std::vector<Bridge> bridgeList = User::bridges;
+    return bridgeList;
+}
+
 /**
  * Setter for the username field.
  * @param u A well-formed string as username.
@@ -180,21 +186,27 @@ string User::constructGreetingString() {
  */
 string User::toString()  {
     string temp = "";
+    Bridge tempBridge;
 
-    temp.std::string::append(username);
-    temp.std::string::append("\t");
+    temp.std::string::append(User::username);
+    temp.std::string::append("\n");
 
     temp.std::string::append(User::hashPassword(password));
-    temp.std::string::append("\t");
+    temp.std::string::append("\n");
 
-    temp.std::string::append(firstName);
-    temp.std::string::append("\t");
+    temp.std::string::append(User::firstName);
+    temp.std::string::append("\n");
 
-    temp.std::string::append(lastName);
-    temp.std::string::append("\t");
+    temp.std::string::append(User::lastName);
+    temp.std::string::append("\n");
 
+    for (std::vector<Bridge>::iterator it = User::bridges.begin() ; it != User::bridges.end(); ++it)
+    {
+        tempBridge = *it;
+        temp.std::string::append(tempBridge.toString());
+    }
     return temp;
-    //Add something for bridges when it's all worked out
+
 }
 
 // --------------------------------------

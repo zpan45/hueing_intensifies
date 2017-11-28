@@ -163,6 +163,25 @@ void Bridge::setStatus(string s) {
     status = s;
 }
 
+std::string Bridge::toString()
+{
+    string temp = "";
+
+    temp.std::string::append(Bridge::name);
+    temp.std::string::append("\n");
+
+    temp.std::string::append(Bridge::location);
+    temp.std::string::append("\n");
+
+    temp.std::string::append(Bridge::hostName);
+    temp.std::string::append("\n");
+
+    temp.std::string::append(Bridge::port);
+    temp.std::string::append("\n");
+
+    return temp;
+}
+
 
 
 // --------------------------------------

@@ -34,7 +34,8 @@ class Bridge {
         void setPort(std::string p);
         void setUsername(std::string u);
         void setStatus(std::string s);
-        
+        std::string toString();
+
         void addGroup(Group g);
         bool removeGroup(int element);
     private:
