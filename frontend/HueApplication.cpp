@@ -42,10 +42,10 @@ void HueApplication::showMainPage() {
         cont->addWidget(new Wt::WBreak());
         
         Wt::WPushButton *loginButton = new Wt::WPushButton("Login", cont);
-        loginButton->clicked().connect(this, &HueApplication::goToLogIn);
+        loginButton->setLink(Wt::WLink(Wt::WLink::InternalPath, "/login"));
         
         Wt::WPushButton *registerButton = new Wt::WPushButton("Register", cont);
-        registerButton->clicked().connect(this, &HueApplication::goToRegister);
+        registerButton->setLink(Wt::WLink(Wt::WLink::InternalPath, "/register"));
         
         
         // ------------------------------ TESTING FOR INDIVBRIDGEMANAGERWIDGET
@@ -107,7 +107,7 @@ void HueApplication::goToLogIn() {
     //curUser_ = new User("jfryer6@uwo.ca", "pass123", "Jake", "Fryer");
     //cout << curUser_->getFirstName() << endl;
     
-    setInternalPath("/login", true);
+    //setInternalPath("/login", true);
     root()->clear();
     root()->addWidget(new LoginWidget("Login"));
 }
@@ -116,7 +116,7 @@ void HueApplication::goToLogIn() {
 * @todo - Needs to be properly implemented to take the User to the Registration Widget.
 */
 void HueApplication::goToRegister() {
-    setInternalPath("/register", true);
+    //setInternalPath("/register", true);
     root()->clear();
     root()->addWidget(new RegistrationWidget("Registration"));
 }
@@ -148,6 +148,41 @@ void HueApplication::displayBridges() {
         
         groupbox->addWidget(new Wt::WBreak());
     }
+    
+    // add a remove button
+    Wt::WComboBox *cb = new Wt::WComboBox(groupbox);
+    
+    // loop through all Bridges associated with the current User, adding them as selectable options
+    for(int i = 0; i < curUser_->getNumberOfBridges(); i++) {
+        cb->addItem(curUser_->getBridge(i)->getName());
+    }
+    
+    groupbox->addWidget(new Wt::WBreak());
+    
+    Wt::WText *out = new Wt::WText(groupbox); // this is the "Delete?" text
+    
+    groupbox->addWidget(new Wt::WBreak());
+    Wt::WPushButton *delButton_ = new Wt::WPushButton("Delete", groupbox);
+    delButton_->setEnabled(false);
+    
+    // if the selected Bridge was changed:
+    cb->changed().connect(std::bind([=] () {
+        out->setText(Wt::WString::fromUTF8("Delete {1}?").arg(cb->currentText()));
+        delButton_->setEnabled(true);
+    }));
+    
+    // if the delete button is clicked, remove the option to remove the Bridge and the Bridge itself
+    delButton_->clicked().connect(std::bind([=] () {
+        curUser_->removeBridge(cb->currentIndex()); // delete the Bridge with the current index 
+        cb->removeItem(cb->currentIndex()); // remove the option to delete a button
+        delButton_->setEnabled(false); // disable the delete button
+        
+        for(int i = 0; i < curUser_->getNumberOfBridges(); i++) {
+            cout << curUser_->getBridge(i)->getName() << endl;
+        }
+        
+        groupbox->refresh();
+    }));
 }
 
 void HueApplication::addBridge() {
@@ -222,6 +257,9 @@ void HueApplication::handleRequest() {
         showMainPage();
     }
     
+    else if(app->internalPath() == "/login") {
+        goToLogIn();
+    }
     // "/bridges" is a string of length 8. If the internal path is at least 8 characters, try to resolve the link as follows:
     else if (app->internalPath().size() >= 8) {
         // cout << "We found that the path was >= 8\n" << app->internalPath() << "\nIt is " << app->internalPath().size() << " characters long" << endl << endl;
@@ -231,7 +269,10 @@ void HueApplication::handleRequest() {
             root()->clear();
             displayBridges();
         }
-        
+        // handle go to "/register" internal link
+        else if(app->internalPath() == "/register") {
+            goToRegister();
+        }
         // handle the case with an integer number 'i' following "/bridges/"
         else if(app->internalPath().size() > 9 && app->internalPath().substr(0, 9) == "/bridges/") {
             // cout << "We got to the substr stuff" << endl << endl;

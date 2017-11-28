@@ -25,6 +25,7 @@ Light::Light() {
     brightness = 0;
     colour = "#FFFFFF";
     schedule = 0;
+    id = 0;
 }
 
 // ! TODO: Add overloaded constructor for creating a Light with fields
@@ -79,6 +80,14 @@ int Light::getSchedule() {
     return schedule;
 }
 
+/**
+ * Getter for the ID field.
+ * @return Light ID in int.
+ */
+int Light::getID() {
+    return id;
+}
+
 
 /**
  * Setter for the name field.
@@ -123,6 +132,14 @@ void Light::setColour(string hexcode) {
  */
 void Light::setSchedule(int sched) {
     schedule = sched;
+}
+
+/**
+ * Setter for the ID field.
+ * @param id An integer representation of Light ID.
+ */
+void Light::setID(int i) {
+    id = i;
 }
 
 // --------------------------------------
