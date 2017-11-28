@@ -37,7 +37,7 @@ class IndivBridgeManagerWidget: public Wt::WContainerWidget {
 public:
     IndivBridgeManagerWidget(const std::string &name, Bridge *b, Wt::WContainerWidget *parent = 0);
     virtual ~IndivBridgeManagerWidget();
-    bool checkBridge(Bridge *b);
+    bool checkBridge();
 
 
 private:
@@ -48,11 +48,10 @@ private:
     Wt::WLineEdit *portNumEdit_;
     
     void connect();
-    void connect(Bridge *b);
     void showInformation();
     void displayGroups();
     void update();
-    void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response, Bridge *b) const;
+    void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response) const;
 };
 
 #endif

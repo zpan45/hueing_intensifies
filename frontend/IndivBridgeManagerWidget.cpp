@@ -15,7 +15,7 @@ IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Brid
     
     b = bridge; // b is a pointer to the current bridge object
     // It HAS to be a pointer because otherwise the changes from the update() method won't persist
-    checkBridge(b);
+    checkBridge();
     
     
     Group g;
@@ -50,12 +50,11 @@ IndivBridgeManagerWidget::~IndivBridgeManagerWidget() {
 //public methods
 /**
  * Check if the Bridge provided can be reached with specified username.
- * @param b pointer to Bridge to be checked
  * @return bool Bridge reached
  */
-bool IndivBridgeManagerWidget::checkBridge(Bridge *b) {
+bool IndivBridgeManagerWidget::checkBridge() {
     //connect to Bridge
-    connect(b);
+    connect();
     //if connection is successful, Bridge's status would be updated by handleHttpResponse()
     for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
         //check every 100ms for HTML_MESSAGE_CHECK times
@@ -70,24 +69,9 @@ bool IndivBridgeManagerWidget::checkBridge(Bridge *b) {
 //private methods
 
 /**
- * WILL BE REMOVED: Try to connect to bridge using default URL (http://localhost:8000/api/newdeveloper)
- *
+ * Try to connect to provided Bridge
  */
 void IndivBridgeManagerWidget::connect() {
-    stringstream url_;
-    url_<< URL <<USERNAME;
-
-    Wt::Http::Client *client=new Wt::Http::Client(this);
-    client->setTimeout(HTML_CLIENT_TIMEOUT);
-    client->setMaximumResponseSize(10*1024);
-    //client->done().connect(boost::bind(&IndivBridgeManagerWidget::handleHttpResponse, this, client, _1, _2));
-    //client->get(url_.str());
-}
-/**
- * Try to connect to provided Bridge
- * @param b pointer to Bridge trying to connect to
- */
-void IndivBridgeManagerWidget::connect(Bridge *b) {
     //construct URL
     stringstream url_;
     url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/newdeveloper";
@@ -97,7 +81,7 @@ void IndivBridgeManagerWidget::connect(Bridge *b) {
     client->setMaximumResponseSize(10*1024);
     //TODO: here, do we pass a *Bridge to handleHttpResponse?
     //bind done signal with handling method
-    client->done().connect(boost::bind(&IndivBridgeManagerWidget::handleHttpResponse, this, client, _1, _2, b));
+    client->done().connect(boost::bind(&IndivBridgeManagerWidget::handleHttpResponse, this, client, _1, _2));
     //send get request
     client->get(url_.str());
     
@@ -274,8 +258,7 @@ void IndivBridgeManagerWidget::update() {
  *
  */
 
-void IndivBridgeManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err,
-                                                  const Wt::Http::Message &response, Bridge *b) const {
+void IndivBridgeManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message &response) const {
     if(err||response.status()!=200) {
         cerr<<"Error: "<<err.message()<<" ,"<<response.status()<<endl;
 
