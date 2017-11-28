@@ -17,7 +17,6 @@ IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Brid
     // It HAS to be a pointer because otherwise the changes from the update() method won't persist
     checkBridge();
     
-    
     Group g;
     g.setName("new group1");
     
@@ -25,11 +24,18 @@ IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Brid
     g.setName("newG2");
     b->addGroup(g);
     
+    
+    
     for(int i = 0; i < b->getNumberOfGroups(); i++) {
         cout << b->getGroup(i)->getName() << endl;
     }
     
     showInformation();
+    
+    Group *group;
+    group = b->getGroup(0);
+    
+    this->addWidget(new IndivGroupManagerWidget("gmanager", group));
     
     // for testing purposes only -- in the future, the Bridge b will already have details associated with it when passed in
     /*
@@ -151,7 +157,11 @@ void IndivBridgeManagerWidget::displayGroups() {
         string s = "Edit " + to_string(i);
         Wt::WPushButton *button = new Wt::WPushButton(s, groupbox);
         
+        //Wt::WApplication *app = Wt::WApplication::instance();
+        //s = app->internalPath() + "/groups/" + to_string(i);
         s = "/groups/" + to_string(i);
+        //delete app;
+        
         button->setLink(Wt::WLink(Wt::WLink::InternalPath, s));
         
         groupbox->addWidget(new Wt::WBreak());
@@ -160,7 +170,7 @@ void IndivBridgeManagerWidget::displayGroups() {
     // add a remove button
     Wt::WComboBox *cb = new Wt::WComboBox(groupbox);
     
-    // loop through all Bridges associated with the current User, adding them as selectable options
+    // loop through all Groups associated with the current Bridge, adding them as selectable options
     for(int i = 0; i < b->getNumberOfGroups(); i++) {
         cb->addItem(b->getGroup(i)->getName());
     }
@@ -173,15 +183,15 @@ void IndivBridgeManagerWidget::displayGroups() {
     Wt::WPushButton *delButton_ = new Wt::WPushButton("Delete", groupbox);
     delButton_->setEnabled(false);
     
-    // if the selected Bridge was changed:
+    // if the selected Group was changed:
     cb->changed().connect(std::bind([=] () {
         out->setText(Wt::WString::fromUTF8("Delete {1}?").arg(cb->currentText()));
         delButton_->setEnabled(true);
     }));
     
-    // if the delete button is clicked, remove the option to remove the Bridge and the Bridge itself
+    // if the delete button is clicked, remove the option to remove the Group and the Group itself
     delButton_->clicked().connect(std::bind([=] () {
-        b->removeGroup(cb->currentIndex()); // delete the Bridge with the current index 
+        b->removeGroup(cb->currentIndex()); // delete the Group with the current index 
         cb->removeItem(cb->currentIndex()); // remove the option to delete a button
         delButton_->setEnabled(false); // disable the delete button
         

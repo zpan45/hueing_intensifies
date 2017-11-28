@@ -19,7 +19,7 @@ class Group {
         Group();
 
         std::string getName();
-        Light getLight(int element);
+        Light* getLight(int element);
         int getNumberOfLights();
         void setName(std::string n);
         void addLight(Light l);

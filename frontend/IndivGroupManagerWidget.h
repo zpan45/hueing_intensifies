@@ -1,9 +1,5 @@
-//
-// Created by Peter on 2017/11/21.
-//
-
-#ifndef INDIVBRIDGEMANAGERWIDGET_H
-#define INDIVBRIDGEMANAGERWIDGET_H
+#ifndef INDIVGROUPMANAGERWIDGET_H
+#define INDIVGROUPMANAGERWIDGET_H
 
 #include <string>
 #include <chrono>
@@ -25,34 +21,27 @@
 #include <Wt/WGroupBox>
 #include <Wt/WComboBox>
 
-#include "Bridge.h"
-#include "IndivGroupManagerWidget.h"
+#include "Group.h"
 
 #define USERNAME "newdeveloper"
 #define HTML_CLIENT_TIMEOUT 5
 #define HTML_MESSAGE_CHECK 20 //check if message received every 100ms * HTML_MESSAGE_CHECK times
 #define URL "http://localhost:8000/api/"
 
-class IndivBridgeManagerWidget: public Wt::WContainerWidget {
+class IndivGroupManagerWidget: public Wt::WContainerWidget {
 
 public:
-    IndivBridgeManagerWidget(const std::string &name, Bridge *b, Wt::WContainerWidget *parent = 0);
-    virtual ~IndivBridgeManagerWidget();
-    bool checkBridge();
-
+    IndivGroupManagerWidget(const std::string &name, Group *g, Wt::WContainerWidget *parent = 0);
+    virtual ~IndivGroupManagerWidget();
 
 private:
-    Bridge *b;
-    Wt::WLineEdit *bridgeNameEdit_;
-    Wt::WLineEdit *bridgeLocationEdit_;
-    Wt::WLineEdit *hostNameEdit_;
-    Wt::WLineEdit *portNumEdit_;
+    Group *g;
+    Wt::WLineEdit *groupNameEdit_;
     
-    void connect();
     void showInformation();
-    void displayGroups();
+    void displayLights();
     void update();
-    void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response) const;
+    //void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response, Group *g) const;
 };
 
 #endif
