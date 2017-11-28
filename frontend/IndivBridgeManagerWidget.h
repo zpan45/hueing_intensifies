@@ -26,6 +26,7 @@
 #include <Wt/WComboBox>
 
 #include "Bridge.h"
+#include "IndivGroupManagerWidget.h"
 
 #define USERNAME "newdeveloper"
 #define HTML_CLIENT_TIMEOUT 5
