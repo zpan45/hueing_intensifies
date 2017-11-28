@@ -59,6 +59,8 @@ IndivBridgeManagerWidget::~IndivBridgeManagerWidget() {
  * @return bool Bridge reached
  */
 bool IndivBridgeManagerWidget::checkBridge() {
+    //clean stored Bridge status
+    b->setStatus("");
     //connect to Bridge
     connect();
     //if connection is successful, Bridge's status would be updated by handleHttpResponse()
@@ -278,5 +280,43 @@ void IndivBridgeManagerWidget::handleHttpResponse(Wt::Http::Client *client, boos
     }
 
     delete client;
+}
+
+/**
+ * Connect to the bridge hardware and update the Lights objects stored in the bridge.
+ * @return false if Bridge cannot be reached
+ */
+bool IndivBridgeManagerWidget::updateLights() {
+    //drop all saved lights in the bridge
+    b->clearLights();
+    //try to connect to the Bridge; if connected, checkBridge returns true and bridge status is set
+    if (!checkBridge(b)) return false;
+    Wt::Json::Object result= new Wt::Json::Object;
+    //try to parse bridge status string to JSON object
+    try {
+        Wt::Json::parse(b->getStatus(), result);
+    } catch (exception e)
+    {
+        cout<<"JSON parse failure."<<endl;
+        return false;
+    }
+    //JSON object lightsJSON contains all the lights JSON
+    Wt::Json::Object lightsJSON= new Wt::Json::Object;
+    lightsJSON=result.get("lights");
+    //set<string> contains all the lightIDs
+    std::set<std::string> lightIDs=lightsJSON.names();
+    //for each lightID, get light status and store them in vector bridge.lights
+    for (auto it=lightIDs.begin();it!=lightIDs.end();++it) {
+        Light newlight= new Light();
+        newlight.setID(*it);
+        newlight.setName(lightsJSON.get(*it).get("name"));
+        newlight.setIsActive(lightsJSON.get(*it).get("state").get("on"));
+        newlight.setBrightness(lightsJSON.get(*it).get("state").get("bri"));
+        newlight.setHue(lightsJSON.get(*it).get("state").get("hue"));
+        newlight.setSat(lightsJSON.get(*it).get("state").get("sat"));
+        b->addLight(newlight);
+    }
+    return true;
+
 }
 

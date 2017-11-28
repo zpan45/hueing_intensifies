@@ -255,3 +255,10 @@ bool Bridge::removeLight(int element) {
         return true;
     }
 }
+
+/**
+ * Method to drop all stored lights in the bridge.
+ */
+void Bridge::clearLights() {
+    lights.clear();
+}

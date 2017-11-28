@@ -53,6 +53,7 @@ private:
     void displayGroups();
     void update();
     void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response) const;
+    void updateLights();
 };
 
 #endif
