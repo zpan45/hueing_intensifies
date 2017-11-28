@@ -23,12 +23,14 @@ class Bridge {
         std::string getLocation();
         std::string getHostName();
         std::string getPort();
+        std::string getUsername();
         Group getGroup(int element);
 
         void setName(std::string n);
         void setLocation(std::string l);
         void setHostName(std::string hn);
         void setPort(std::string p);
+        void setUsername(std::string u);
     private:
         void addGroup(Group g);
         bool removeGroup(int element);
@@ -37,6 +39,7 @@ class Bridge {
         std::string location;
         std::string hostName;
         std::string port;
+        std::string username;
         std::vector<Group> groups;
 };
 

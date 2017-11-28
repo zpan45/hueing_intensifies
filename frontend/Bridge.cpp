@@ -24,6 +24,7 @@ Bridge::Bridge() {
     location = "";
     hostName = "";
     port = "";
+    username = "";
 }
 
 // ! TODO: Add overloaded constructor for creating a Bridge with fields
@@ -69,6 +70,13 @@ string Bridge::getPort() {
     return port;
 }
 
+/**
+ * Getter for the username of the Bridge object.
+ * @return the username field, a string.
+ */
+string Bridge::getUsername() {
+    return username;
+}
 
 /**
  * Accessor method for a specific Group in this Bridge. Throws an out_of_range if attempting to access an element outside of the vector's bounds.
@@ -126,6 +134,15 @@ void Bridge::setHostName(string hn) {
 void Bridge::setPort(string p) {
     port = p;
 }
+
+/**
+ * Setter for the username field.
+ * @param p A string representation of the username for the Bridge.
+ */
+void Bridge::setUsername(string u) {
+    username = u;
+}
+
 
 // --------------------------------------
 // PRIVATE METHODS
