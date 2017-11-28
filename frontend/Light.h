@@ -23,14 +23,14 @@ class Light {
         int getHue();
         int getSat();
         int getSchedule();
-        int getID();
+        std::string getID();
         void setName(std::string n);
         void setIsActive(bool onOff);
         void setBrightness(int b);
         void setHue(int h);
         void setSat(int s);
         void setSchedule(int sched);
-        void setID(int id);
+        void setID(std::string i);
     private:
         void convertHexcodeToCoords(std::string col);
 
@@ -40,7 +40,7 @@ class Light {
         int hue;
         int sat;
         int schedule;
-        int id;
+        std::string id;
 };
 
 #endif
