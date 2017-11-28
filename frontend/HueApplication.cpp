@@ -19,6 +19,17 @@ using namespace std;
 HueApplication::HueApplication(const Wt::WEnvironment& env) : Wt::WApplication(env) {
     setTitle("CS3307 - Team24 Hue Application");
     
+    showMainPage();
+    
+    Wt::WApplication *app = Wt::WApplication::instance();
+
+    app->internalPathChanged().connect(std::bind([=] () {
+        handleRequest();
+    }));
+    
+}
+
+void HueApplication::showMainPage() {    
     // add a new container widget for the "Logged In" dialogue / greeting
     Wt::WContainerWidget *cont = new Wt::WContainerWidget();
     root()->addWidget(cont);
@@ -44,7 +55,7 @@ HueApplication::HueApplication(const Wt::WEnvironment& env) : Wt::WApplication(e
         
         for(int i = 0; i < 5; i++) {
             bridgeString = "bridge";
-            bridgeString.std::string::append(std::to_string(i+1));
+            bridgeString.std::string::append(std::to_string(i));
             br.setName(bridgeString);
             br.setLocation("dummyLocation");
             br.setHostName("180.0.0.0");
@@ -54,28 +65,24 @@ HueApplication::HueApplication(const Wt::WEnvironment& env) : Wt::WApplication(e
         }
         
         for(int j = 0; j < 5; j++) {
-            cout << curUser_->getBridge(j).getName() << endl;
+            cout << curUser_->getBridge(j)->getName() << endl;
         }
         
         cont->addWidget(new Wt::WBreak());
         cont->addWidget(new Wt::WBreak());
         cont->addWidget(new Wt::WBreak());
         
-        Wt::WPushButton *bridgeButton = new Wt::WPushButton("Bridges", cont);
-        bridgeButton->setLink(Wt::WLink(Wt::WLink::InternalPath, "/bridges"));
-        // bridgeButton->clicked().connect(this, &HueApplication::displayBridges);
+        Wt::WPushButton *dispBridgeButton = new Wt::WPushButton("Bridges", cont);
+        dispBridgeButton->setLink(Wt::WLink(Wt::WLink::InternalPath, "/bridges"));
+        
+        Wt::WPushButton *addBridgeButton = new Wt::WPushButton("Add Bridge", cont);
+        addBridgeButton->clicked().connect(this, &HueApplication::addBridge);
     }
     else {
         // if the curUser_ pointer does point to a User, greet the User with a friendly hello!
         cont->addWidget(new Wt::WText("Hello, "));
         cont->addWidget(new Wt::WText( curUser_->getFirstName() ));
     }
-    
-    Wt::WApplication *app = Wt::WApplication::instance();
-
-    app->internalPathChanged().connect(std::bind([=] () {
-         handleRequest();
-    }));
     
 }
 
@@ -127,8 +134,8 @@ void HueApplication::displayBridges() {
     // Add a new groupbox to display all the Bridges associated with the current User
     Wt::WGroupBox *groupbox = new Wt::WGroupBox(curUser_->constructGreetingString(), root());
     
-    for(int i = 0; i < 5; i++) {
-        groupbox->addWidget(new Wt::WText(curUser_->getBridge(i).getName() + " @ " + curUser_->getBridge(i).getLocation() + " "));
+    for(int i = 0; i < curUser_->getNumberOfBridges(); i++) {
+        groupbox->addWidget(new Wt::WText(curUser_->getBridge(i)->getName() + " @ " + curUser_->getBridge(i)->getLocation() + " "));
         
         // The "Click Here to Edit" button will be connected to a method that spawns the IndivBridgeManagerWidget, pass that Bridge as a parameter, and allow you to edit that Bridge's parameters through the new Widget. 
         
@@ -143,26 +150,107 @@ void HueApplication::displayBridges() {
     }
 }
 
+void HueApplication::addBridge() {
+    Wt::WDialog dialogue("Add New Bridge...");
+    
+    // set up the "Bridge Name" text entry field with a label
+    Wt::WLabel *nameLabel = new Wt::WLabel("Bridge Name: \t", dialogue.contents());
+    Wt::WLineEdit *bridgeNameEdit_ = new Wt::WLineEdit(dialogue.contents());
+    nameLabel->setBuddy(bridgeNameEdit_);
+    dialogue.contents()->addWidget(new Wt::WBreak());
+    
+    // set up the Location Name text entry field with a label
+    Wt::WLabel *locLabel = new Wt::WLabel("Location: \t", dialogue.contents());
+    Wt::WLineEdit *bridgeLocationEdit_ = new Wt::WLineEdit(dialogue.contents());
+    locLabel->setBuddy(bridgeLocationEdit_);
+    dialogue.contents()->addWidget(new Wt::WBreak());
+
+    // set up the Host Name text entry field with a label
+    Wt::WLabel *hostLabel = new Wt::WLabel("Hostname: \t", dialogue.contents());
+    Wt::WLineEdit *hostNameEdit_ = new Wt::WLineEdit(dialogue.contents());
+    hostNameEdit_->setTextSize(15); // set the max length of this field
+    hostNameEdit_->setInputMask("009.009.009.009;_"); // set the input mask to force IP address format
+    hostLabel->setBuddy(hostNameEdit_);
+    dialogue.contents()->addWidget(new Wt::WBreak());
+    
+    // set up the Port Number text entry field with a label
+    Wt::WLabel *portLabel = new Wt::WLabel("Port #: \t", dialogue.contents());
+    Wt::WLineEdit *portNumEdit_ = new Wt::WLineEdit(dialogue.contents());
+    portNumEdit_->setTextSize(5); // set the max length of this field
+    portLabel->setBuddy(portNumEdit_);
+    dialogue.contents()->addWidget(new Wt::WBreak());
+    
+    Wt::WPushButton *confirm_ = new Wt::WPushButton( "Submit", dialogue.contents() );
+    
+    confirm_->clicked().connect(&dialogue, &Wt::WDialog::accept);
+    
+    dialogue.show();
+    
+    // On successful close of the dialogue, do the following:
+    if (dialogue.exec() == Wt::WDialog::Accepted) {
+        // ! TODO: Here is where we create the new Bridge object out of the details fed to the form.
+        
+        /*
+        cout << "Name " << bridgeNameEdit_->text().toUTF8() << endl;
+        cout << "Location " << bridgeLocationEdit_->text().toUTF8() << endl;
+        cout << "Hostname " << hostNameEdit_->text().toUTF8() << endl;
+        cout << "Port " << portNumEdit_->text().toUTF8() << endl;
+        */
+        
+        Bridge b;
+        
+        b.setName(bridgeNameEdit_->text().toUTF8());
+        b.setLocation(bridgeLocationEdit_->text().toUTF8());
+        b.setHostName(hostNameEdit_->text().toUTF8());
+        b.setPort(portNumEdit_->text().toUTF8());
+        
+        
+        cout << "Name " << b.getName() << endl;
+        cout << "Location " << b.getLocation() << endl;
+        cout << "Hostname " << b.getHostName() << endl;
+        cout << "Port " << b.getPort() << endl;
+        
+        curUser_->addBridge(b);
+    }
+}
+
 void HueApplication::handleRequest() {
     Wt::WApplication *app = Wt::WApplication::instance();
     
     if(app->internalPath() == "/") {
         root()->clear();
+        showMainPage();
     }
-    else if(app->internalPath() == "/bridges") {
-        root()->clear();
-        displayBridges();
-    }
-    // handle the case with an integer number 'i' following "/bridges/i"
-    else if(app->internalPath() == "/bridges/") {
-        // LOL how2dothis
+    
+    // "/bridges" is a string of length 8. If the internal path is at least 8 characters, try to resolve the link as follows:
+    else if (app->internalPath().size() >= 8) {
+        // cout << "We found that the path was >= 8\n" << app->internalPath() << "\nIt is " << app->internalPath().size() << " characters long" << endl << endl;
         
-        /*
-        // just a test bridge to pass as a parameter for the IndivBridgeManagerWidget
-        Bridge *b = new Bridge;
-        root()->addWidget(new IndivBridgeManagerWidget("bmanager", b));
-        */
+        // if the internal path is just "/bridges", display a list of all bridges
+        if(app->internalPath() == "/bridges") {
+            root()->clear();
+            displayBridges();
+        }
         
+        // handle the case with an integer number 'i' following "/bridges/"
+        else if(app->internalPath().size() > 9 && app->internalPath().substr(0, 9) == "/bridges/") {
+            // cout << "We got to the substr stuff" << endl << endl;
+            stringstream s;
+            int bridgeNum;
+            Bridge *b;
+            
+            //cout << "remaining curpath: " << app->internalPath().substr(9, app->internalPath().size()) << endl;
+            
+            s << app->internalPath().substr(9, app->internalPath().size());
+            s >> bridgeNum;
+            
+            // !WARNING -- NEED to implement error handling here.
+            
+            b = curUser_->getBridge(bridgeNum);
+            
+            root()->clear();
+            root()->addWidget(new IndivBridgeManagerWidget("bmanager", b));
+        }
     }
     else {
         root()->clear();
