@@ -25,7 +25,8 @@ class Bridge {
         std::string getPort();
         std::string getUsername();
         std::string getStatus();
-        Group getGroup(int element);
+        Group* getGroup(int element);
+        int getNumberOfGroups();
 
         void setName(std::string n);
         void setLocation(std::string l);
@@ -33,10 +34,10 @@ class Bridge {
         void setPort(std::string p);
         void setUsername(std::string u);
         void setStatus(std::string s);
-    private:
+        
         void addGroup(Group g);
         bool removeGroup(int element);
-
+    private:
         std::string name;
         std::string location;
         std::string hostName;

@@ -22,6 +22,8 @@
 #include <Wt/WLabel>
 #include <Wt/WTemplate>
 #include <Wt/WHBoxLayout>
+#include <Wt/WGroupBox>
+#include <Wt/WComboBox>
 
 #include "Bridge.h"
 
@@ -48,8 +50,8 @@ private:
     void connect();
     void connect(Bridge *b);
     void showInformation();
-    void displayGroups(Bridge b);
-    void update(Bridge *b);
+    void displayGroups();
+    void update();
     void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response, Bridge *b) const;
 };
 
