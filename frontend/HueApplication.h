@@ -11,6 +11,7 @@
 #include <Wt/WServer>
 #include <Wt/WGroupBox>
 #include <Wt/WDialog>
+#include <Wt/WComboBox>
 #include <vector>
 
 #include "User.h"
