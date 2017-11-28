@@ -48,9 +48,10 @@ string Group::getName() {
  * @param element The integer position of the desired Light object in the lights vector.
  * @return the desired Light object.
  */
-Light Group::getLight(int element) {
+Light* Group::getLight(int element) {
     try {
-        return lights.at(element);
+        Light *l = &lights.at(element);
+        return l;
     }
     catch(const out_of_range& oor) {
         cerr << element << " is out of range for this Group" << endl;
