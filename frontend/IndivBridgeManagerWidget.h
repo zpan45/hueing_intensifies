@@ -50,7 +50,7 @@ private:
     void showInformation();
     void displayGroups(Bridge b);
     void update(Bridge *b);
-    //bool handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err,const Wt::Http::Message& response) const;
+    bool handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response, Bridge *b) const;
 };
 
 #endif
