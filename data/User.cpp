@@ -44,7 +44,7 @@ User& User::operator=(const User& otherUser)
     User::firstName = otherUser.firstName;
     User::lastName = otherUser.lastName;
     User::password = otherUser.password;
-    //User::bridges = otherUser.bridges;
+    User::bridges = otherUser.bridges;
 
     return *this;
 }

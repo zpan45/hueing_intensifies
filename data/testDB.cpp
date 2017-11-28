@@ -88,6 +88,8 @@ int main(void)
     create users with 3 bridges each and fill the vector
     */
 
+    User randomUser;
+
     for(int i = 0; i < numOfUsers; i++)
     {
         User randomUser;
@@ -185,7 +187,7 @@ int main(void)
             std::cout << tempUser.User::toString() << std::endl;
         }
     }
-/*
+
     ////////////////////////////////////////////////////////////
     //   STEP 2  --> Iterate through vector and write to file  /
     ////////////////////////////////////////////////////////////
@@ -282,10 +284,4 @@ int main(void)
             activeDB.DBFileManager::saveUser(randomUser);
         }
         std::cout << "Writing to filesystem complete. Verify that there are " << currentUsers.std::vector<User>::size() << " users in the USERS/ filesystem." << std::endl;
-
-
-
-
-*/
-
 }
