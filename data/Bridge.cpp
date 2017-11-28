@@ -24,6 +24,8 @@ Bridge::Bridge() {
     location = "";
     hostName = "";
     port = "";
+    username = "";
+    status="";
 }
 
 // ! TODO: Add overloaded constructor for creating a Bridge with fields
@@ -69,21 +71,46 @@ string Bridge::getPort() {
     return port;
 }
 
+/**
+ * Getter for the username of the Bridge object.
+ * @return the username field, a string.
+ */
+string Bridge::getUsername() {
+    return username;
+}
+
+
+/**
+ * Getter for the status of the Bridge object.
+ * @return the status field, a string.
+ */
+string Bridge::getStatus() {
+    return status;
+}
+
 
 /**
  * Accessor method for a specific Group in this Bridge. Throws an out_of_range if attempting to access an element outside of the vector's bounds.
  * @param element The integer position of the desired Group object in the groups vector.
  * @return the desired Group object.
  */
-Group Bridge::getGroup(int element) {
+Group* Bridge::getGroup(int element) {
     try {
-        return groups.at(element);
+        Group *g = &groups.at(element);
+        return g;
     }
     catch(const out_of_range& oor) {
         cerr << element << " is out of range for this Bridge" << endl;
     }
 }
 
+/**
+* Accessor method that returns the number of Lights associated with the Group, which is the length of the vector.
+* @return the number of Lights as an integer.
+*/
+int Bridge::getNumberOfGroups() {
+    return groups.size();
+}
 
 /**
  * Setter for the name field.
@@ -93,14 +120,7 @@ void Bridge::setName(string n) {
     name = n;
 }
 
-/*
-setLocation()
 
-Setter for the location field.
-
-Parameters:
-- string l: A string providing the location of the Bridge.
-*/
 /**
  * Setter for the location field.
  * @param l A string for the location of the Bridge.
@@ -127,6 +147,22 @@ void Bridge::setPort(string p) {
     port = p;
 }
 
+/**
+ * Setter for the username field.
+ * @param p A string representation of the username for the Bridge.
+ */
+void Bridge::setUsername(string u) {
+    username = u;
+}
+
+/**
+ * Setter for the status field.
+ * @param p A string representation of the status for the Bridge.
+ */
+void Bridge::setStatus(string s) {
+    status = s;
+}
+
 std::string Bridge::toString()
 {
     string temp = "";
@@ -145,6 +181,8 @@ std::string Bridge::toString()
 
     return temp;
 }
+
+
 
 // --------------------------------------
 // PRIVATE METHODS

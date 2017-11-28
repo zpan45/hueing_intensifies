@@ -25,7 +25,8 @@ class User {
         std::string getFirstName();
         std::string getLastName();
         std::string getPassword();
-        Bridge getBridge(int element);
+        Bridge* getBridge(int element);
+        int getNumberOfBridges();
         std::vector<Bridge> getAllBridges();
         void setUsername(std::string u);
         void setFirstName(std::string first);
@@ -37,7 +38,6 @@ class User {
         void addBridge(Bridge b);
         bool removeBridge(int element);
     private:
-
         std::string username;
         std::string firstName;
         std::string lastName;

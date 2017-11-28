@@ -110,13 +110,22 @@ string User::getPassword() {
  * @param element The integer position of the desired Bridge object in the bridges vector.
  * @return the desired Bridge object.
  */
-Bridge User::getBridge(int element) {
+Bridge* User::getBridge(int element) {
     try {
-        return bridges.at(element);
+        Bridge *b = &bridges.at(element);
+        return b;
     }
     catch(const out_of_range& oor) {
         cerr << element << " is out of range for this User" << endl;
     }
+}
+
+/**
+* Accessor method that returns the number of Bridges associated with the User, which is the length of the vector.
+* @return the number of Bridges as an integer.
+*/
+int User::getNumberOfBridges() {
+    return bridges.size();
 }
 
 std::vector<Bridge> User::getAllBridges()
@@ -124,7 +133,6 @@ std::vector<Bridge> User::getAllBridges()
     std::vector<Bridge> bridgeList = User::bridges;
     return bridgeList;
 }
-
 
 /**
  * Setter for the username field.

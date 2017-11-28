@@ -20,10 +20,11 @@ class Group {
 
         std::string getName();
         Light getLight(int element);
-    private:
+        int getNumberOfLights();
+        void setName(std::string n);
         void addLight(Light l);
         bool removeLight(int element);
-
+    private:
         std::string name;
         std::vector<Light> lights;
 };

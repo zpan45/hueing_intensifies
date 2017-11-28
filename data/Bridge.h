@@ -23,21 +23,29 @@ class Bridge {
         std::string getLocation();
         std::string getHostName();
         std::string getPort();
-        Group getGroup(int element);
+        std::string getUsername();
+        std::string getStatus();
+        Group* getGroup(int element);
+        int getNumberOfGroups();
 
         void setName(std::string n);
         void setLocation(std::string l);
         void setHostName(std::string hn);
         void setPort(std::string p);
+        void setUsername(std::string u);
+        void setStatus(std::string s);
         std::string toString();
-    private:
+
         void addGroup(Group g);
         bool removeGroup(int element);
-
+    private:
         std::string name;
         std::string location;
         std::string hostName;
         std::string port;
+        std::string username;
+        //status is used to store API response from bridge
+        std::string status;
         std::vector<Group> groups;
 };
 
