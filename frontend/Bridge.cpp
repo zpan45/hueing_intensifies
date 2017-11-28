@@ -104,6 +104,22 @@ Group* Bridge::getGroup(int element) {
     }
 }
 
+
+/**
+ * Accessor method for a specific Light in this Bridge. Throws an out_of_range if attempting to access an element outside of the vector's bounds.
+ * @param element The integer position of the desired Light object in the groups vector.
+ * @return the desired Light object.
+ */
+Light* Bridge::getLight(int element) {
+    try {
+        Light *l = &lights.at(element);
+        return l;
+    }
+    catch(const out_of_range& oor) {
+        cerr << element << " is out of range for this Bridge" << endl;
+    }
+}
+
 /**
 * Accessor method that returns the number of Lights associated with the Group, which is the length of the vector.
 * @return the number of Lights as an integer.
@@ -197,6 +213,13 @@ void Bridge::addGroup(Group g) {
     groups.push_back(g);
 }
 
+/**
+ * Method that adds a Light to the Bridge by adding the Light object to the Bridge class's lights vector.
+ * @param l A Light object to be added to the Bridge.
+ */
+void Bridge::addLight(Light l) {
+    lights.push_back(l);
+}
 
 /**
  * Method to remove a Group at the given position from the Bridge.
@@ -211,6 +234,24 @@ bool Bridge::removeGroup(int element) {
     // else, remove the Group at the specified location
     else {
         groups.erase(groups.begin() + element);
+        return true;
+    }
+}
+
+
+/**
+ * Method to remove a Light at the given lightID from the Bridge.
+ * @param element The integer position of the desired Light object in the lights vector.
+ * @return whether the removal was successful as a boolean.
+ */
+bool Bridge::removeLight(int element) {
+    // if the target Light is outside of the bounds of the groups vector, return false
+    if( (element > lights.size() ) || (element < 0) ) {
+        return false;
+    }
+        // else, remove the Light at the specified location
+    else {
+        lights.erase(lights.begin() + element);
         return true;
     }
 }
