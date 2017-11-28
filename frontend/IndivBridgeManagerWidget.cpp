@@ -15,6 +15,7 @@ IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Brid
     
     b = bridge; // b is a pointer to the current bridge object
     // It HAS to be a pointer because otherwise the changes from the update() method won't persist
+    checkBridge(b);
     
     showInformation();
     
@@ -211,7 +212,7 @@ void IndivBridgeManagerWidget::handleHttpResponse(Wt::Http::Client *client, boos
 
     } else {
         b->setStatus(response.body());
-        cout<<currentStatus<<endl;
+        cout<< "current status:\t\t" << b->getStatus() <<endl;
     }
 
     delete client;

@@ -58,8 +58,8 @@ void HueApplication::showMainPage() {
             bridgeString.std::string::append(std::to_string(i));
             br.setName(bridgeString);
             br.setLocation("dummyLocation");
-            br.setHostName("180.0.0.0");
-            br.setPort("8080");
+            br.setHostName("127.0.0.1");
+            br.setPort("8000");
             
             curUser_->addBridge(br);
         }
