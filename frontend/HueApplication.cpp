@@ -42,10 +42,10 @@ void HueApplication::showMainPage() {
         cont->addWidget(new Wt::WBreak());
         
         Wt::WPushButton *loginButton = new Wt::WPushButton("Login", cont);
-        loginButton->clicked().connect(this, &HueApplication::goToLogIn);
+        loginButton->setLink(Wt::WLink(Wt::WLink::InternalPath, "/login"));
         
         Wt::WPushButton *registerButton = new Wt::WPushButton("Register", cont);
-        registerButton->clicked().connect(this, &HueApplication::goToRegister);
+        registerButton->setLink(Wt::WLink(Wt::WLink::InternalPath, "/register"));
         
         
         // ------------------------------ TESTING FOR INDIVBRIDGEMANAGERWIDGET
@@ -107,7 +107,7 @@ void HueApplication::goToLogIn() {
     //curUser_ = new User("jfryer6@uwo.ca", "pass123", "Jake", "Fryer");
     //cout << curUser_->getFirstName() << endl;
     
-    setInternalPath("/login", true);
+    //setInternalPath("/login", true);
     root()->clear();
     root()->addWidget(new LoginWidget("Login"));
 }
@@ -116,7 +116,7 @@ void HueApplication::goToLogIn() {
 * @todo - Needs to be properly implemented to take the User to the Registration Widget.
 */
 void HueApplication::goToRegister() {
-    setInternalPath("/register", true);
+    //setInternalPath("/register", true);
     root()->clear();
     root()->addWidget(new RegistrationWidget("Registration"));
 }
@@ -257,6 +257,9 @@ void HueApplication::handleRequest() {
         showMainPage();
     }
     
+    else if(app->internalPath() == "/login") {
+        goToLogIn();
+    }
     // "/bridges" is a string of length 8. If the internal path is at least 8 characters, try to resolve the link as follows:
     else if (app->internalPath().size() >= 8) {
         // cout << "We found that the path was >= 8\n" << app->internalPath() << "\nIt is " << app->internalPath().size() << " characters long" << endl << endl;
@@ -266,7 +269,10 @@ void HueApplication::handleRequest() {
             root()->clear();
             displayBridges();
         }
-        
+        // handle go to "/register" internal link
+        else if(app->internalPath() == "/register") {
+            goToRegister();
+        }
         // handle the case with an integer number 'i' following "/bridges/"
         else if(app->internalPath().size() > 9 && app->internalPath().substr(0, 9) == "/bridges/") {
             // cout << "We got to the substr stuff" << endl << endl;

@@ -110,8 +110,9 @@ void IndivBridgeManagerWidget::connect() {
  * @param b Bridge trying to connect to
  */
 void IndivBridgeManagerWidget::connect(Bridge b) {
-    stringstream url_="http://";
-    url_<<b.getHostName()<<":"<<b.getPort()<<"/api/"<<b.getUsername();
+    stringstream url_;
+    
+    url_<< "http://" <<b.getHostName()<<":"<<b.getPort()<<"/api/"<<b.getUsername();
 
     //Wt::Http::Client *client=new Wt::Http::Client(this);
     //client->setTimeout(HTML_CLIENT_TIMEOUT);
