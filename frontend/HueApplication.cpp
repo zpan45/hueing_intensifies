@@ -173,19 +173,15 @@ void HueApplication::displayBridges() {
     
     // if the delete button is clicked, remove the option to remove the Bridge and the Bridge itself
     delButton_->clicked().connect(std::bind([=] () {
-        // THIS IS WHERE YOU ARE. Get the current index, delete the Bridge with the current index using curUser->removeBridge(curIndex), and remove the option using removeItem(curIndex) then refresh. then test to make sure it works... then push... then add registration and login links
-        
         curUser_->removeBridge(cb->currentIndex()); // delete the Bridge with the current index 
         cb->removeItem(cb->currentIndex()); // remove the option to delete a button
         delButton_->setEnabled(false); // disable the delete button
-        
         
         for(int i = 0; i < curUser_->getNumberOfBridges(); i++) {
             cout << curUser_->getBridge(i)->getName() << endl;
         }
         
         groupbox->refresh();
-        // cb->currentIndex();
     }));
 }
 
