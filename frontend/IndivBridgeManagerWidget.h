@@ -35,7 +35,7 @@ class IndivBridgeManagerWidget: public Wt::WContainerWidget {
 public:
     IndivBridgeManagerWidget(const std::string &name, Bridge *b, Wt::WContainerWidget *parent = 0);
     virtual ~IndivBridgeManagerWidget();
-    bool checkBridge(Bridge b);
+    bool checkBridge(Bridge *b);
 
 
 private:
@@ -46,7 +46,7 @@ private:
     Wt::WLineEdit *portNumEdit_;
     
     void connect();
-    void connect(Bridge b);
+    void connect(Bridge *b);
     void showInformation();
     void displayGroups(Bridge b);
     void update(Bridge *b);
