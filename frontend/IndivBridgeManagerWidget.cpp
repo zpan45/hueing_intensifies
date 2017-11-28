@@ -68,29 +68,31 @@ IndivBridgeManagerWidget::~IndivBridgeManagerWidget() {
 
 }
 
-//TODO: Somebody please TEST/modify ALL THESE METHODS wrote by Peter    -Peter
 
 //public methods
 /**
  * Check if the Bridge provided can be reached with specified username.
  * @param b Bridge to be checked
- * @param uName username used for connection
  * @return bool Bridge reached
  */
-bool IndivBridgeManagerWidget::checkBridge(Bridge b, string uName) {
-    string currentStatus="";
-    connect(b, uName);
+bool IndivBridgeManagerWidget::checkBridge(Bridge b) {
+    //connect to Bridge
+    connect(b);
+    //if connection is successful, Bridge's status would be updated by handleHttpResponse()
     for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
+        //check every 100ms for HTML_MESSAGE_CHECK times
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        if(currentStatus!="") return true;
+        //if Bridge's status isn't empty then connected successfully
+        if(b.getStatus()!="") return true;
     }
-    return currentStatus=="";
+    //connection timeout, return false
+    return false;
 }
 
 //private methods
 
 /**
- * Try to connect to bridge using default URL (http://localhost:8000/api/newdeveloper)
+ * WILL BE REMOVED: Try to connect to bridge using default URL (http://localhost:8000/api/newdeveloper)
  *
  */
 void IndivBridgeManagerWidget::connect() {
@@ -104,17 +106,17 @@ void IndivBridgeManagerWidget::connect() {
     //client->get(url_.str());
 }
 /**
- * Try to connect to provided Bridge with specified 'Bridge username'
+ * Try to connect to provided Bridge
  * @param b Bridge trying to connect to
- * @param uName Bridge username
  */
-void IndivBridgeManagerWidget::connect(Bridge b, string uName) {
-    stringstream url_;
-    url_<<"http://"<<b.getHostName()<<":"<<b.getPort()<<"/api/"<<uName;
+void IndivBridgeManagerWidget::connect(Bridge b) {
+    stringstream url_="http://";
+    url_<<b.getHostName()<<":"<<b.getPort()<<"/api/"<<b.getUsername();
 
     //Wt::Http::Client *client=new Wt::Http::Client(this);
     //client->setTimeout(HTML_CLIENT_TIMEOUT);
     //client->setMaximumResponseSize(10*1024);
+    //TODO: here, do we pass a *Bridge to handleHttpResponse?
     //client->done().connect(boost::bind(&IndivBridgeManagerWidget::handleHttpResponse, this, client, _1, _2));
     //client->get(url_.str());
     
@@ -180,7 +182,7 @@ void IndivBridgeManagerWidget::update( Bridge *b ) {
 }
 
 /**
- * Handles Http Response from Bridge. Update currentstatus upon receiving successful response.
+ * Handles Http Response from Bridge. Update Bridge status upon receiving successful response.
  * @param client HTTP client
  * @param err Error code
  * @param response HTTP message received
@@ -193,6 +195,7 @@ void IndivBridgeManagerWidget::handleHttpResponse(Wt::Http::Client *client, boos
         cerr<<"Error: "<<err.message()<<" ,"<<response.status()<<endl;
 
     } else {
+    //TODO: how do we bridge.setStatus(response.body())? Do we pass a *bridge to this method?
         currentStatus=response.body();
         cout<<currentStatus<<endl;
     }

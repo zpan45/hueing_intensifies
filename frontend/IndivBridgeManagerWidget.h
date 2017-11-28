@@ -26,7 +26,7 @@
 
 #define USERNAME "newdeveloper"
 #define HTML_CLIENT_TIMEOUT 5
-#define HTML_MESSAGE_CHECK 10 //check if message received every 100ms * HTML_MESSAGE_CHECK times
+#define HTML_MESSAGE_CHECK 20 //check if message received every 100ms * HTML_MESSAGE_CHECK times
 #define URL "http://localhost:8000/api/"
 
 class IndivBridgeManagerWidget: public Wt::WContainerWidget {
@@ -34,7 +34,7 @@ class IndivBridgeManagerWidget: public Wt::WContainerWidget {
 public:
     IndivBridgeManagerWidget(const std::string &name, Bridge *b, Wt::WContainerWidget *parent = 0);
     virtual ~IndivBridgeManagerWidget();
-    bool checkBridge(Bridge b, std::string uName);
+    bool checkBridge(Bridge b);
 
 
 private:
@@ -45,7 +45,7 @@ private:
     Wt::WLineEdit *portNumEdit_;
     
     void connect();
-    void connect(Bridge b, std::string uName);
+    void connect(Bridge b);
     void displayGroups(Bridge b);
     void update(Bridge *b);
     //bool handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err,const Wt::Http::Message& response) const;
