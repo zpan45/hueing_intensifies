@@ -78,7 +78,8 @@ void IndivBridgeManagerWidget::connect() {
 void IndivBridgeManagerWidget::connect(Bridge *b) {
     //construct URL
     stringstream url_;
-    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/"<<b->getUsername();
+    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/newdeveloper";
+    //"<<b->getUsername();
     Wt::Http::Client *client=new Wt::Http::Client(this);
     client->setTimeout(HTML_CLIENT_TIMEOUT);
     client->setMaximumResponseSize(10*1024);
