@@ -57,6 +57,18 @@ Light Group::getLight(int element) {
     }
 }
 
+/**
+* Accessor method that returns the number of Lights associated with the Group, which is the length of the vector.
+* @return the number of Lights as an integer.
+*/
+int Group::getNumberOfLights() {
+    return lights.size();
+}
+
+void Group::setName(string n) {
+    name = n;
+}
+
 // --------------------------------------
 // PRIVATE METHODS
 // --------------------------------------

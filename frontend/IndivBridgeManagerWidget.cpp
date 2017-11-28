@@ -17,6 +17,18 @@ IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Brid
     // It HAS to be a pointer because otherwise the changes from the update() method won't persist
     checkBridge(b);
     
+    
+    Group g;
+    g.setName("new group1");
+    
+    b->addGroup(g);
+    g.setName("newG2");
+    b->addGroup(g);
+    
+    for(int i = 0; i < b->getNumberOfGroups(); i++) {
+        cout << b->getGroup(i)->getName() << endl;
+    }
+    
     showInformation();
     
     // for testing purposes only -- in the future, the Bridge b will already have details associated with it when passed in
@@ -125,11 +137,13 @@ void IndivBridgeManagerWidget::showInformation() {
     // add the "Update" button for changing a Bridge's information
     Wt::WPushButton *update_ = new Wt::WPushButton("Update", this);
     
+    displayGroups();
+    
     // the update_ button is bound to a lambda function that calls the update()
     // method. Done this way because you cannot pass parameters through Wt's connect()
     // method.
     update_->clicked().connect(bind([&]() {
-        update(b);
+        update();
     }));
 }
 
@@ -137,15 +151,69 @@ void IndivBridgeManagerWidget::showInformation() {
 * in a list with buttons that will allow the user to modify an individual Group.
 * @param b - The Bridge object that contains the vector of Groups to be displayed.
 */
-void IndivBridgeManagerWidget::displayGroups( Bridge b ) {
+void IndivBridgeManagerWidget::displayGroups() {
     // ! TODO -- implement method that displays all Groups associated with the current Bridge
     // use Bridge.cpp's "getGroup()" method?? Iterate from 0 - size of the vector?
+    
+    // Add a new groupbox to display all the Groups associated with the current Bridge
+    Wt::WGroupBox *groupbox = new Wt::WGroupBox(b->getName(), this);
+    
+    for(int i = 0; i < b->getNumberOfGroups(); i++) {
+        groupbox->addWidget(new Wt::WText(b->getGroup(i)->getName() + " (" + to_string(b->getGroup(i)->getNumberOfLights()) + " Lights) "));
+        
+        // The "Click Here to Edit" button will be connected to a method that spawns the IndivBridgeManagerWidget, pass that Bridge as a parameter, and allow you to edit that Bridge's parameters through the new Widget. 
+        
+        //IDEA: Add buttons as links; use internalpath handling for /bridges for the main bridges widget and then /bridges/# for the subsequent bridges. use connect() to connect each button to a link?
+        string s = "Edit " + to_string(i);
+        Wt::WPushButton *button = new Wt::WPushButton(s, groupbox);
+        
+        s = "/groups/" + to_string(i);
+        button->setLink(Wt::WLink(Wt::WLink::InternalPath, s));
+        
+        groupbox->addWidget(new Wt::WBreak());
+    }
+    
+    // add a remove button
+    Wt::WComboBox *cb = new Wt::WComboBox(groupbox);
+    
+    // loop through all Bridges associated with the current User, adding them as selectable options
+    for(int i = 0; i < b->getNumberOfGroups(); i++) {
+        cb->addItem(b->getGroup(i)->getName());
+    }
+    
+    groupbox->addWidget(new Wt::WBreak());
+    
+    Wt::WText *out = new Wt::WText(groupbox); // this is the "Delete?" text
+    
+    groupbox->addWidget(new Wt::WBreak());
+    Wt::WPushButton *delButton_ = new Wt::WPushButton("Delete", groupbox);
+    delButton_->setEnabled(false);
+    
+    // if the selected Bridge was changed:
+    cb->changed().connect(std::bind([=] () {
+        out->setText(Wt::WString::fromUTF8("Delete {1}?").arg(cb->currentText()));
+        delButton_->setEnabled(true);
+    }));
+    
+    // if the delete button is clicked, remove the option to remove the Bridge and the Bridge itself
+    delButton_->clicked().connect(std::bind([=] () {
+        b->removeGroup(cb->currentIndex()); // delete the Bridge with the current index 
+        cb->removeItem(cb->currentIndex()); // remove the option to delete a button
+        delButton_->setEnabled(false); // disable the delete button
+        
+        for(int i = 0; i < b->getNumberOfGroups(); i++) {
+            cout << b->getGroup(i)->getName() << endl;
+        }
+        
+        groupbox->refresh();
+    }));
+    
 }
 
 /** Method to update the current Bridge object with any changes from the text boxes.
 * @param b - The Bridge object to be updated.
 */
-void IndivBridgeManagerWidget::update( Bridge *b ) {
+void IndivBridgeManagerWidget::update() {
     this->addWidget(new Wt::WBreak());
     
     Wt::WHBoxLayout *change = new Wt::WHBoxLayout(this);

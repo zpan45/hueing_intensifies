@@ -7,7 +7,7 @@
 #include <sstream>
 #include <Wt/WString.h>
 #include <Wt/Http/Client>
-#include <Wt/HTTP/Message.h> //Pack the JSONs into Message to send to api
+#include <Wt/Http/Message> //Pack the JSONs into Message to send to api
 
 //
 stringstream url_ = "/api/";
@@ -16,10 +16,10 @@ stringstream url_ = "/api/";
  * Handling API Requests and Response
  */
 
-auto client = addChild(std::make_unique<Http::Client>());
-client->setTimeout(std::chrono::seconds{15});
+Http::Client *client = new Http::Client(this);
+client->setTimeout(15);
 client->setMaximumResponseSize(10 * 1024);
-client->done().connect(std::bind(&MyWidget::handleHttpResponse, this, _1, _2));
+client->done().connect(boost::bind(&MyWidget::handleHttpResponse, this, _1, _2));
 if (client->//GET/POST/PUT/requestDelete Method here)
 {
   WApplication::instance()->deferRendering();

@@ -94,15 +94,23 @@ string Bridge::getStatus() {
  * @param element The integer position of the desired Group object in the groups vector.
  * @return the desired Group object.
  */
-Group Bridge::getGroup(int element) {
+Group* Bridge::getGroup(int element) {
     try {
-        return groups.at(element);
+        Group *g = &groups.at(element);
+        return g;
     }
     catch(const out_of_range& oor) {
         cerr << element << " is out of range for this Bridge" << endl;
     }
 }
 
+/**
+* Accessor method that returns the number of Lights associated with the Group, which is the length of the vector.
+* @return the number of Lights as an integer.
+*/
+int Bridge::getNumberOfGroups() {
+    return groups.size();
+}
 
 /**
  * Setter for the name field.
