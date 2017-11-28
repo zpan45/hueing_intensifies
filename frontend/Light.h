@@ -37,7 +37,7 @@ class Light {
         int brightness;
         std::string colour;
         int schedule;
-        int i;
+        int id;
 };
 
 #endif
