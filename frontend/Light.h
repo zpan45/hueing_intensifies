@@ -20,13 +20,15 @@ class Light {
         std::string getName();
         bool getIsActive();
         int getBrightness();
-        std::string getColour();
+        int getHue();
+        int getSat();
         int getSchedule();
         int getID();
         void setName(std::string n);
         void setIsActive(bool onOff);
         void setBrightness(int b);
-        void setColour(std::string hexcode);
+        void setHue(int h);
+        void setSat(int s);
         void setSchedule(int sched);
         void setID(int id);
     private:
@@ -35,7 +37,8 @@ class Light {
         std::string name;
         bool isActive;
         int brightness;
-        std::string colour;
+        int hue;
+        int sat;
         int schedule;
         int id;
 };
