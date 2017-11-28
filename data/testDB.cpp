@@ -284,4 +284,79 @@ int main(void)
             activeDB.DBFileManager::saveUser(randomUser);
         }
         std::cout << "Writing to filesystem complete. Verify that there are " << currentUsers.std::vector<User>::size() << " users in the USERS/ filesystem." << std::endl;
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //   STEP 6 --> Test DBFileManager addNewUser() and createUser() with e-mail and password from command line   /
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    std::string userin;
+    User someone;
+    Bridge somebridge;
+
+    std::cout << "Enter an e-mail address: " << std::endl;
+    std::cin >> userin;
+    someone.setUsername(userin);
+
+    std::cout << "Enter a first name: " << std::endl;
+    std::cin >> userin;
+    someone.setFirstName(userin);
+
+    std::cout << "Enter a last name: " << std::endl;
+    std::cin >> userin;
+    someone.setLastName(userin);
+
+    std::cout << "Enter a password: " << std::endl;
+    std::cin >> userin;
+    someone.setPassword(userin);
+
+    std::cout << "User created." << std::endl;
+
+    somebridge.setName("somename");
+    somebridge.setLocation("somelocation");
+    somebridge.setHostName("hostname3");
+    somebridge.setPort("sp");
+    someone.addBridge(somebridge);
+
+    std::cout << "Bridge added." << std::endl;
+
+    activeDB.addNewUser(someone);
+    activeDB.saveUser(someone);
+
+    std::cout << "User added to DB." << std::endl;
+    std::cout << "Verify that user " << someone.getUsername() << " exists." << std::endl;
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //   STEP 7 --> Test DBFileManager getUser() and print values; compare command line output to user file to verify   /
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    std::cout << "Finding user oabdelqa" << std::endl;
+
+    User someoneElse = activeDB.getUser("oabdelqa@uwo.ca");
+    Bridge anotherBridge;
+
+    std::cout << "Printing values to verify: " << std::endl;
+
+    std::cout << "Username: " << std::endl;
+    std::cout << "\t" << someoneElse.getUsername() << std::endl;
+    std::cout << "Password: " << std::endl;
+    std::cout << "\t" << someoneElse.getPassword() << std::endl;
+    std::cout << "First Name: " << std::endl;
+    std::cout << "\t" << someoneElse.getFirstName() << std::endl;
+    std::cout << "Last Name: " << std::endl;
+    std::cout << "\t" << someoneElse.getLastName() << std::endl;
+
+    std::vector<Bridge> allBridges(someoneElse.getAllBridges());
+    std::cout << "Bridges: " << std::endl;
+
+    if(allBridges.std::vector<Bridge>::empty())
+    {
+        std::cout << "VECTOR EMPTY" << std::endl;
+    }
+
+    for (std::vector<Bridge>::iterator it = allBridges.begin() ; it != allBridges.end(); ++it)
+    {
+        anotherBridge = *it;
+        std::cout << "\t" << anotherBridge.Bridge::toString() << std::endl;
+    }
 }

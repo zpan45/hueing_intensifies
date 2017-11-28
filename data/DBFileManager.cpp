@@ -34,16 +34,13 @@
 /* CONSTRUCTORS */
 
 /**
- * Default constructor. Initializes output stream to database file.
+ * Default constructor. Creates a HUE_USERS/ directory if none already exist.
  */
 DBFileManager::DBFileManager()
 {
-    //std::ifstream userReadStream;
-    //std::ofstream userWriteStream;
-
-    if(!boost::filesystem::exists("./USERS"))
+    if(!boost::filesystem::exists("./HUE_USERS"))
     {
-        boost::filesystem::create_directory("./USERS");
+        boost::filesystem::create_directory("./HUE_USERS");
     }
 }
 
@@ -113,18 +110,19 @@ bool DBFileManager::removeUser(User currentUser)
 
 User DBFileManager::getUser(std::string username) //this depends on the toString() of user being updated with newline chars
 {
+    User currentUser;
     std::string filepath = DBFileManager::createFilePath(username);
 
     if(!boost::filesystem::exists(filepath))
     {
-        std::cout << "Error: could not find user." << std::endl;
+        currentUser.setUsername("");
     }
     else
     {
-        User currentUser = DBFileManager::readFromFile(filepath);
-        return currentUser;
+        currentUser = DBFileManager::readFromFile(filepath);
     }
 
+    return currentUser;
 }
 
 std::string DBFileManager::createDirPath(std::string username)
@@ -134,7 +132,7 @@ std::string DBFileManager::createDirPath(std::string username)
     ss << usr_hash(username);
     std::string newusername = ss.str();
 
-    std::string dirPath = "USERS";
+    std::string dirPath = "HUE_USERS";
     dirPath.std::string::append("/");
     dirPath.std::string::append(newusername);
 
@@ -148,7 +146,7 @@ std::string DBFileManager::createFilePath(std::string username)
     ss << usr_hash(username);
     std::string newusername = ss.str();
 
-    std::string filepath = "USERS";
+    std::string filepath = "HUE_USERS";
     filepath.std::string::append("/");
     filepath.std::string::append(newusername);
     filepath.std::string::append("/");
@@ -172,6 +170,7 @@ void DBFileManager::writeToFile(User newUser, std::string userPath)
     else
     {
         userWriteStream << newUser.User::toString();
+
         userWriteStream.std::ofstream::close();
         userWriteStream.std::ofstream::clear();
     }
@@ -206,9 +205,19 @@ User DBFileManager::readFromFile(std::string userPath)
 
         while(!userReadStream.std::ifstream::eof())
         {
+            Bridge tempBridge;
+
             std::getline(userReadStream, currentLine);
-            //build new Bridge using info
-            //add Bridge to user bridges
+            tempBridge.Bridge::setName(currentLine);
+
+            std::getline(userReadStream, currentLine);
+            tempBridge.Bridge::setLocation(currentLine);
+
+            std::getline(userReadStream, currentLine);
+            tempBridge.Bridge::setHostName(currentLine);
+
+            std::getline(userReadStream, currentLine);
+            tempBridge.Bridge::setPort(currentLine);
         }
 
         userReadStream.std::ifstream::close();

@@ -21,5 +21,5 @@ DBFileManager.o: DBFileManager.cpp DBFileManager.h User.h
 
 clean:
 	\rm *.o app
-	\rm -r USERS
+	\rm -r HUE_USERS
 	\rm -r Test_Dir
