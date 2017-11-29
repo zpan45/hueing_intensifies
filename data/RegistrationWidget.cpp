@@ -62,7 +62,11 @@ void RegistrationWidget::createUser() {
     this->addWidget(new Wt::WBreak());
 
     ::activeDB.DBFileManager::addNewUser(newUser);
-    ::activeDB.DBFileManager::saveUser(newUser);
+    
+    User *u;
+    
+    u = &newUser;
+    ::activeDB.DBFileManager::saveUser(u);
 
     this->addWidget(new Wt::WText( newUser.constructGreetingString() ));
 }

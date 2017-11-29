@@ -12,6 +12,7 @@
 #include <Wt/WBorderLayout>
 
 #include "User.h"
+#include "HueApplication.h"
 
 class LoginWidget: public Wt::WContainerWidget
 {

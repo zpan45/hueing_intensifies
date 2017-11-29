@@ -12,6 +12,8 @@
 
 #include <Wt/WContainerWidget>
 #include "User.h"
+#include "DBFileManager.h"
+#include "HueApplication.h"
 
 class RegistrationWidget: public Wt::WContainerWidget
 {

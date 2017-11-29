@@ -62,11 +62,11 @@ LoginWidget::LoginWidget(const std::string &name, WContainerWidget *parent)
 
 User LoginWidget::getUserByUsername(Wt::WString username) {
     //User testUser("mkatchab@csd.uwo.ca", "testPW", "Mike", "Katchabaw");
-    User currentUser = ::activeDB.DBFileManager::getUser(username);
+    User currentUser = ::activeDB.DBFileManager::getUser(username.toUTF8());
     // set the password to be the hashed version of the string "testPW"
     //testUser.setPassword( testUser.hashPassword( testUser.getPassword() ) );
 
-    if( (username.toUTF8() == testUser.getUsername()) ) {
+    if( (username.toUTF8() == currentUser.getUsername()) ) {
         return currentUser;
     }
     else {

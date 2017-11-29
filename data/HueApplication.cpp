@@ -32,6 +32,16 @@ HueApplication::HueApplication(const Wt::WEnvironment& env) : Wt::WApplication(e
 
 }
 
+User* HueApplication::getCurrentUser() {
+    return curUser_;
+}
+
+void HueApplication::finalize() {
+    User *u = HueApplication::getCurrentUser();
+    
+    ::activeDB.DBFileManager::saveUser(u);
+}
+
 void HueApplication::showMainPage() {
     // add a new container widget for the "Logged In" dialogue / greeting
     Wt::WContainerWidget *cont = new Wt::WContainerWidget();
@@ -328,7 +338,6 @@ int runRESTful(int argc, char *argv[], Wt::ApplicationCreator createApplication)
             int sig = Wt::WServer::waitForShutdown(argv[0]);
 
             std::cerr << "Shutdown (signal = " << sig << ")" << std::endl;
-            ::activeDB.DBFileManager::saveUser(&HueApplication::curUser_);
             server.stop();
         }
     }
