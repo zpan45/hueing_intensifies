@@ -47,7 +47,7 @@ private:
     bool update();
     void connectRename(std::string newname);
     void connectUpdate();
-    void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response) const;
+    void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response);
 
 };
 #endif //INDIVLIGHTMANAGERWIDGET_H

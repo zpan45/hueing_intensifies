@@ -92,6 +92,7 @@ void HueApplication::showMainPage() {
         Wt::WPushButton *lightButton = new Wt::WPushButton("Test Light", cont);
         lightButton->clicked().connect(std::bind([=] () {
             IndivLightManagerWidget *indiv = new IndivLightManagerWidget("lmanager", curUser_->getBridge(0), curUser_->getBridge(0)->getLight(0));
+            root()->addWidget(indiv);
         }));
         
     }
