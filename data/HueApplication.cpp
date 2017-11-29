@@ -20,16 +20,34 @@ using namespace std;
 * @param env - The WEnvironment variable.
 */
 HueApplication::HueApplication(const Wt::WEnvironment& env) : Wt::WApplication(env) {
+}
+
+User* HueApplication::getCurrentUser() {
+    return curUser_;
+}
+
+void HueApplication::setCurrentUser(User *u) {
+    curUser_ = u;
+}
+
+void HueApplication::initialize() {
+    curUser_ = new User();
+    
     setTitle("CS3307 - Team24 Hue Application");
-
     showMainPage();
-
     Wt::WApplication *app = Wt::WApplication::instance();
-
     app->internalPathChanged().connect(std::bind([=] () {
         handleRequest();
     }));
+    
+}
 
+void HueApplication::finalize() {
+    User *u = HueApplication::getCurrentUser();
+    
+    if(u->getUsername() != "") {
+        ::activeDB.DBFileManager::saveUser(u);
+    }
 }
 
 void HueApplication::showMainPage() {
@@ -50,7 +68,7 @@ void HueApplication::showMainPage() {
         Wt::WPushButton *registerButton = new Wt::WPushButton("Register", cont);
         registerButton->setLink(Wt::WLink(Wt::WLink::InternalPath, "/register"));
 
-
+        /*
         // ------------------------------ TESTING FOR INDIVBRIDGEMANAGERWIDGET
         curUser_ = new User("jfryer6@uwo.ca", "pass123", "Jake", "Fryer");
         Bridge br;
@@ -70,21 +88,22 @@ void HueApplication::showMainPage() {
         for(int j = 0; j < 5; j++) {
             cout << curUser_->getBridge(j)->getName() << endl;
         }
-
-        cont->addWidget(new Wt::WBreak());
-        cont->addWidget(new Wt::WBreak());
-        cont->addWidget(new Wt::WBreak());
-
-        Wt::WPushButton *dispBridgeButton = new Wt::WPushButton("Bridges", cont);
-        dispBridgeButton->setLink(Wt::WLink(Wt::WLink::InternalPath, "/bridges"));
-
-        Wt::WPushButton *addBridgeButton = new Wt::WPushButton("Add Bridge", cont);
-        addBridgeButton->clicked().connect(this, &HueApplication::addBridge);
+        */
     }
     else {
         // if the curUser_ pointer does point to a User, greet the User with a friendly hello!
         cont->addWidget(new Wt::WText("Hello, "));
         cont->addWidget(new Wt::WText( curUser_->getFirstName() ));
+        
+        Wt::WPushButton *dispBridgeButton = new Wt::WPushButton("Bridges", cont);
+        dispBridgeButton->setLink(Wt::WLink(Wt::WLink::InternalPath, "/bridges"));
+
+        cont->addWidget(new Wt::WBreak());
+        cont->addWidget(new Wt::WBreak());
+        cont->addWidget(new Wt::WBreak());
+        
+        Wt::WPushButton *addBridgeButton = new Wt::WPushButton("Add Bridge", cont);
+        addBridgeButton->clicked().connect(this, &HueApplication::addBridge);
     }
 
 }
@@ -94,34 +113,45 @@ void HueApplication::showMainPage() {
 * @return bool - The status of whether there is a User logged into this session.
 */
 bool HueApplication::testLoggedInStatus() {
-    if( curUser_ == nullptr ) {
-        return false;
+    if( curUser_->getUsername() == "" ) {
+        return false; // Not logged in
     }
     else {
-        return true;
+        return true; // Logged in
     }
 }
 
 /** Method that displays the Log In Widget to the User.
-* @todo - Needs to be properly implemented to take the User to the Log In Widget.
 */
 void HueApplication::goToLogIn() {
-    // Currently, method just sets the curUser_ pointer to point to a new User object.
-    //curUser_ = new User("jfryer6@uwo.ca", "pass123", "Jake", "Fryer");
-    //cout << curUser_->getFirstName() << endl;
-
-    //setInternalPath("/login", true);
     root()->clear();
-    root()->addWidget(new LoginWidget("Login"));
+    LoginWidget *login = new LoginWidget("Login", curUser_, root());
+    
+    login->loggedIn().connect( this, &HueApplication::loggedIn_ );
+}
+
+void HueApplication::loggedIn_(User u) {
+    curUser_->setUsername(u.getUsername());
+    curUser_->setPassword(u.getPassword());
+    curUser_->setFirstName(u.getFirstName());
+    curUser_->setLastName(u.getLastName());
+    
+    // ! TODO -- need to extract all bridges from User u and attach them to curUser_
+    /* MAYBE something like this??? untested code :
+    
+    for(int i = 0; i < u.getNumberOfBridges(); i++ {
+        curUser->addBridge( u.getBridge(i) ); 
+    }
+    
+    */
+    
 }
 
 /** Method that displays the Registration Widget to the User.
-* @todo - Needs to be properly implemented to take the User to the Registration Widget.
 */
 void HueApplication::goToRegister() {
-    //setInternalPath("/register", true);
     root()->clear();
-    root()->addWidget(new RegistrationWidget("Registration"));
+    root()->addWidget(new RegistrationWidget("Registration", curUser_));
 }
 
 /** This method displays a list of ALL bridges associated with the current
@@ -328,7 +358,6 @@ int runRESTful(int argc, char *argv[], Wt::ApplicationCreator createApplication)
             int sig = Wt::WServer::waitForShutdown(argv[0]);
 
             std::cerr << "Shutdown (signal = " << sig << ")" << std::endl;
-            ::activeDB.DBFileManager::saveUser(&HueApplication::curUser_);
             server.stop();
         }
     }

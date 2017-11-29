@@ -227,5 +227,3 @@ User DBFileManager::readFromFile(std::string userPath)
     }
 
 }
-
-

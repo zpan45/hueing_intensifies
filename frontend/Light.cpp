@@ -19,17 +19,32 @@ using namespace std;
 /**
  * Default constructor for Light class. Initializes all fields to have no values.
  */
-Light::Light() {
-    name = "";
-    isActive = false; //on
-    brightness = 0;   //bri
-    hue = 0;          //hue
-    sat = 0;          //sat
-    schedule = 0;
-    id = "";
+Light::Light(): name(""), isActive(false),  brightness(0), hue(0), sat(0), id("") {
+    // name = "";
+    // isActive = false; //on
+    // brightness = 0;   //bri
+    // hue = 0;          //hue
+    // sat = 0;          //sat
+    // id = "";
 }
 
-// ! TODO: Add overloaded constructor for creating a Light with fields
+/**
+ * Overload constructor for Light class.
+ * @param n for name.
+ * @param i for isActive.
+ * @param b for brightness.
+ * @param h for hue.
+ * @param s for sat.
+ * @param id for id.
+ */
+Light::Light(string n, bool i, int b, int h, int s, string id): name(n), isActive(i),  brightness(b), hue(h), sat(s), id(id) {
+    // name = "";
+    // isActive = false; //on
+    // brightness = 0;   //bri
+    // hue = 0;          //hue
+    // sat = 0;          //sat
+    // id = "";
+}
 
 // --------------------------------------
 // PUBLIC METHODS
@@ -80,15 +95,6 @@ int Light::getSat() {
     return sat;
 }
 
-// TODO: Should this be returning an integer? Perhaps look into a different way of implementing the schedules.
-/**
- * Getter for the scheduled time for the Light to be turned on.
- * @return a schedule for when the Light should be turned on, an int.
- */
-int Light::getSchedule() {
-    return schedule;
-}
-
 /**
  * Getter for the ID field.
  * @return Light ID in string.
@@ -135,25 +141,15 @@ void Light::setHue(int h) {
 
 /**
  * Setter for the sat field.
- * @param h An integer representation of the light's sat.
+ * @param s An integer representation of the light's sat.
  */
 void Light::setSat(int s) {
     sat = s;
 }
 
-// TODO: Determine how to represent the schedule properly. See "getSchedule()"
-
-/**
- * Setter for the schedule field.
- * @param sched An integer representation of when the Light should turn on.
- */
-void Light::setSchedule(int sched) {
-    schedule = sched;
-}
-
 /**
  * Setter for the ID field.
- * @param id An integer representation of Light ID.
+ * @param i An integer representation of Light ID.
  */
 void Light::setID(string i) {
     id = i;

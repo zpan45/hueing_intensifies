@@ -19,17 +19,32 @@
  /**
   * Default constructor for Schedule class. Initializes all fields to have no values.
   */
- Schedule::Schedule() {
-
-     name = "";
-     description = "";
-     command = NULL;
-     stime = "";
-     localTime = "";
-     status = "";
+ Schedule::Schedule(): name(""), description(""), command(NULL), stime(""), localTime(""), status("") {
+     // name = "";
+     // description = "";
+     // command = NULL;
+     // stime = "";
+     // localTime = "";
+     // status = "";
  }
 
- // ! TODO: Add overloaded constructor for creating a Light with fields
+ /**
+  * Overload constructor for Schedule class.
+  * @param n for name.
+  * @param d for description.
+  * @param pointer c for command.
+  * @param st for stime.
+  * @param l for localTime.
+  * @param s for status.
+  */
+ Schedule::Schedule(string n, string d, Command* c, string st, string l, string s): name(n), description(d), command(c), stime(st), localTime(l), status(s) {
+     // name = "";
+     // description = "";
+     // command = NULL;
+     // stime = "";
+     // localTime = "";
+     // status = "";
+ }
 
  // --------------------------------------
  // PUBLIC METHODS
@@ -54,9 +69,9 @@
 
  /**
   * Getter for the command of the Schedule object.
-  * @return the command, an object containing "address", "method", and "body".
+  * @return pointer to command, an object containing "address", "method", and "body".
   */
- Command Schedule::getCommand() {
+ Command* Schedule::getCommand() {
      return command;
 
 }

@@ -19,17 +19,33 @@ using namespace std;
 /**
  * Default constructor for Bridge class. Initializes all fields to have no values.
  */
-Bridge::Bridge() {
-    name = "";
-    location = "";
-    hostName = "";
-    port = "";
-    username = "";
-    status="";
+Bridge::Bridge(): name(""), location(""), hostName(""), port(""), username(""), status("") {
+    // name = "";
+    // location = "";
+    // hostName = "";
+    // port = "";
+    // username = "";
+    // status = "";
 }
 
-// ! TODO: Add overloaded constructor for creating a Bridge with fields
 
+/**
+ * Overload constructor for Bridge class.
+ * @param n for name.
+ * @param l for location.
+ * @param h for hostName.
+ * @param p for port.
+ * @param u for username.
+ * @param s for status.
+ */
+Bridge::Bridge(string n, string l, string h, string p, string u, string s): name(n), location(l), hostName(h), port(p), username(u), status(s) {
+    // name = "";
+    // location = "";
+    // hostName = "";
+    // port = "";
+    // username = "";
+    // status = "";
+}
 
 // --------------------------------------
 // PUBLIC METHODS
@@ -102,6 +118,7 @@ Group* Bridge::getGroup(int element) {
     catch(const out_of_range& oor) {
         cerr << element << " is out of range for this Bridge" << endl;
     }
+    return 0;
 }
 
 
@@ -118,6 +135,7 @@ Light* Bridge::getLight(int element) {
     catch(const out_of_range& oor) {
         cerr << element << " is out of range for this Bridge" << endl;
     }
+    return 0;
 }
 
 /**

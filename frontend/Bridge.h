@@ -19,6 +19,7 @@
 class Bridge {
     public:
         Bridge();
+        Bridge(std::string n, std::string l, std::string h, std::string p, std::string u, std::string s);
 
         std::string getName();
         std::string getLocation();
