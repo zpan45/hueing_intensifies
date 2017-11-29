@@ -43,9 +43,30 @@ bool IndivLightManagerWidget::rename(std::string newname) {
     return false;
 }
 
+/**
+ * Update the Light status. (on, bri, hue, sat)
+ * @return true if updated successfully
+ */
+bool IndivLightManagerWidget::update() {
+    //initialize request success flag
+    requestSuccess=false;
+    //connect to Bridge
+    connectUpdate();
+    //if connection is successful, requestSuccess flag would be updated by handleHttpResponse()
+    for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
+        //check every 100ms for HTML_MESSAGE_CHECK times
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        //if Bridge's status isn't empty then connected successfully, change local Light name
+        if(requestSuccess) {
+            return true;
+        }
+    }
+    //connection timeout, return false
+    return false;
+}
 
 /**
- * Send a POST request to bridge to rename the Light
+ * Send a PUT request to bridge to rename the Light
  * @param newname new name for the Light
  */
 void IndivLightManagerWidget::connectRename(std::string newname) {
@@ -57,8 +78,6 @@ void IndivLightManagerWidget::connectRename(std::string newname) {
     client->setMaximumResponseSize(10*1024);
     //bind done signal with handling method
     client->done().connect(boost::bind(&IndivLightManagerWidget::handleHttpResponse, this, client, _1, _2));
-    //send get request
-    //client->get(url_.str());
     //build PUT message
     Wt::Http::Message message=new Wt::Http::Message();
     stringstream body= "{";
@@ -67,6 +86,36 @@ void IndivLightManagerWidget::connectRename(std::string newname) {
     message.addBodyText(body.str());
     //set header
     message.setHeader("Content-Type", "application/json");
+    client->put(url_.str(), message);
+
+}
+
+
+/**
+ * Send a PUT request to bridge to update the Light status (on, bri, hue, sat)
+ *
+ */
+void IndivLightManagerWidget::connectUpdate() {
+    //construct URL
+    stringstream url_;
+    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/"<<b->getUsername()<<"/lights/"<<l->getID()<<"/state";
+    Wt::Http::Client *client=new Wt::Http::Client(this);
+    client->setTimeout(HTML_CLIENT_TIMEOUT);
+    client->setMaximumResponseSize(10*1024);
+    //bind done signal with handling method
+    client->done().connect(boost::bind(&IndivLightManagerWidget::handleHttpResponse, this, client, _1, _2));
+    //build PUT message
+    Wt::Http::Message message=new Wt::Http::Message();
+    stringstream body= "{";
+    //set on
+    body<<"\"on\":"<<boost::lexical_cast<std::string>(l->getIsActive())<< ",";
+    body<<"\"bri\":"<<l->getBrightness()<<",";
+    body<<"\"hue\":"<<l->getHue()<<",";
+    body<<"\"sat\":"<<l->getSat()<<"}";
+    message.addBodyText(body.str());
+    //set header
+    message.setHeader("Content-Type", "application/json");
+    //send request
     client->put(url_.str(), message);
 
 }

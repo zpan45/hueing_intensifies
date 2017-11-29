@@ -40,9 +40,9 @@ private:
     Light *l;
     bool requestSuccess;
     bool rename(std::string newname);
+    bool update();
     void connectRename(std::string newname);
-    //bool update();
-    //void connect();
+    void connectUpdate();
     void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response) const;
 
 };
