@@ -360,7 +360,7 @@ bool IndivBridgeManagerWidget::updateGroups() {
         //set Group name
         newgroup.setName(groupJSON.get("name"));
 
-        Wt::Json::Array& lightsInGroupJSONArray=lgroupJSON.get("lights");
+        Wt::Json::Array& lightsInGroupJSONArray=groupJSON.get("lights");
         //for every lightID in the Group
         for (auto itl=lightsInGroupJSONArray.begin();itl!=lightsInGroupJSONArray.end();++itl) {
             //add the light
