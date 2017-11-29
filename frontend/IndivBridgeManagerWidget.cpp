@@ -35,7 +35,7 @@ IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Brid
     Group *group;
     group = b->getGroup(0);
     
-    this->addWidget(new IndivGroupManagerWidget("gmanager", group));
+    this->addWidget(new IndivGroupManagerWidget("gmanager", b, group));
     
     // for testing purposes only -- in the future, the Bridge b will already have details associated with it when passed in
     /*

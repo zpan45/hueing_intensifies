@@ -8,8 +8,8 @@ using namespace std;
 * @param parent -
 * @param g - The Group object whose properties this Widget will allow the user to display and edit.
 */
-IndivGroupManagerWidget::IndivGroupManagerWidget(const std::string &name, Group *group, Wt::WContainerWidget *parent) : Wt::WContainerWidget(parent){
-    
+IndivGroupManagerWidget::IndivGroupManagerWidget(const std::string &name, Bridge *bridge, Group *group, Wt::WContainerWidget *parent) : Wt::WContainerWidget(parent){
+    b = bridge; // b is a pointer to the current bridge object
     g = group; // g is a pointer to the current group object
     // It HAS to be a pointer because otherwise the changes from the update() method won't persist
     
@@ -161,24 +161,145 @@ void IndivGroupManagerWidget::update() {
 }
 
 /**
- * Handles Http Response from Bridge. Update Bridge status upon receiving successful response.
- * @param client HTTP client
- * @param err Error code
- * @param response HTTP message received
- * @param b pointer to current Bridge
- *
+ * Update the Group attributes stored in bridge hardware (Group name and consisting LightIDs)
+ * @param groupID the groupID of the group being updated
+ * @return true on group updated successfully
+ */
+bool IndivGroupManagerWidget::updateGroup(int groupID) {
+    //initialize request success flag
+    requestSuccess=false;
+    //connect to Bridge
+    connectUpdateGroup(groupID);
+    //if connection is successful, requestSuccess flag would be updated by handleHttpResponse()
+    for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
+        //check every 100ms for HTML_MESSAGE_CHECK times
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        //if flag's set then connected successfully, update groups stored in the vector
+        if(requestSuccess) {
+            //TODO: how to call IndivBridgeManagerWidget::updateGroups()?;
+            return true;
+        }
+    }
+    //connection timeout, return false
+    return false;
+}
 
+/**
+ * Update the state of Lights belong to this Group. (on, bri, hue, sat, transTime)
+ * @param groupID the groupID of the group being updated
+ * @param on bool state of Lights: on/off
+ * @param bri int brightness of Lights
+ * @param hue int hue of Lights
+ * @param sat int sat of Lights
+ * @param transTime int transition time specified (*100ms)
+ * @return true on state successfully set
+ */
+bool IndivGroupManagerWidget::updateState(int groupID, bool on, int bri, int hue, int sat, int transTime) {
+    //initialize request success flag
+    requestSuccess=false;
+    //connect to Bridge
+    connectUpdateState(groupID, on, bri, hue, sat, transTime);
+    //if connection is successful, requestSuccess flag would be updated by handleHttpResponse()
+    for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
+        //check every 100ms for HTML_MESSAGE_CHECK times
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        //if flag's set then connected successfully, update groups stored in the vector
+        if(requestSuccess) {
+            return true;
+        }
+    }
+    //connection timeout, return false
+    return false;
+}
 
-void IndivGroupManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err,
-                                                  const Wt::Http::Message &response, Bridge *b) const {
+/**
+ * Send a PUT request to bridge to update the Group attributes (Group name and consisting LightIDs). Called by updateGroup().
+ * @param groupID the groupID of the group being updated
+ */
+void IndivGroupManagerWidget::connectUpdateGroup(int groupID) {
+    //construct URL
+    stringstream url_;
+    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/"<<"newdeveloper"<<"/groups/"<<groupID;
+    Wt::Http::Client *client=new Wt::Http::Client(this);
+    client->setTimeout(HTML_CLIENT_TIMEOUT);
+    client->setMaximumResponseSize(10*1024);
+    //bind done signal with handling method
+    client->done().connect(boost::bind(&IndivGroupManagerWidget::handleHttpResponse, this, client, _1, _2));
+    //build PUT message
+    Wt::Http::Message message;
+    stringstream body;
+    //Set name
+    body << "{" << "\"name\":\"" << g->getName() << "\",";
+    //for each consisting light, add to message body
+    body<<"\"lights\": [";
+    for(int i=0; i<g->getNumberOfLights(); i++) {
+        body<<"\""<<g->getLight(i)<<"\"";
+        if(i<(g->getNumberOfLights()-1)) body<<",";
+    }
+    body<<"]}";
+    message.addBodyText(body.str());
+    //set header
+    message.setHeader("Content-Type", "application/json");
+    //send request
+    client->put(url_.str(), message);
+}
+
+/**
+ * Send a PUT request to bridge to update the state of Lights belong to this Group. Called by updateState().
+ * @param groupID the groupID of the group being updated
+ * @param on bool state of Lights: on/off
+ * @param bri int brightness of Lights
+ * @param hue int hue of Lights
+ * @param sat int sat of Lights
+ * @param transTime int transition time specified (*100ms)
+ */
+void IndivGroupManagerWidget::connectUpdateState(int groupID, bool on, int bri, int hue, int sat, int transTime) {
+    //construct URL
+    stringstream url_;
+    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/"<<"newdeveloper"<<"/groups/"<<groupID<<"/action";
+    Wt::Http::Client *client=new Wt::Http::Client(this);
+    client->setTimeout(HTML_CLIENT_TIMEOUT);
+    client->setMaximumResponseSize(10*1024);
+    //bind done signal with handling method
+    client->done().connect(boost::bind(&IndivGroupManagerWidget::handleHttpResponse, this, client, _1, _2));
+    //build PUT message
+    Wt::Http::Message message;
+    stringstream body;
+    body<< "{" <<"\"on\":"<<boost::lexical_cast<std::string>(on)<< ",";
+    body<<"\"bri\":"<<bri<<",";
+    body<<"\"hue\":"<<hue<<",";
+    body<<"\"sat\":"<<sat<<",";
+    body<<"\"transitiontime\":"<<transTime<<"}";
+    message.addBodyText(body.str());
+    //set header
+    message.setHeader("Content-Type", "application/json");
+    //send request
+    client->put(url_.str(), message);
+}
+
+/**
+* Handles Http Response from Bridge. Update requestSuccess flag upon receiving successful response.
+* @param client HTTP client
+* @param err Error code
+* @param response HTTP message received
+*
+*/
+void IndivGroupManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message &response) {
     if(err||response.status()!=200) {
         cerr<<"Error: "<<err.message()<<" ,"<<response.status()<<endl;
 
     } else {
-        b->setStatus(response.body());
-        cout<< "current status:\t\t" << b->getStatus() <<endl;
+        Wt::Json::Object result;
+        //try to parse response string to JSON object
+        try {
+            Wt::Json::parse(response.body(), result);
+        } catch (exception e)
+        {
+            cout<<"JSON parse failure."<<endl;
+            return;
+        }
+        //if response contains "success" then request was successful, set requestSuccess to true
+        requestSuccess=result.contains("success");
     }
-
     delete client;
 }
-*/
