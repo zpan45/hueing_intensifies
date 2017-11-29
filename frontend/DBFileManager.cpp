@@ -1,22 +1,3 @@
-// NOTES
-// File Manager needs to:
-//        1. Create a usable database at runtime (load users)
-//        2. Manipulate database during runtime (add, remove, update a user)
-//        3. Convert the runtime database to a text file for persistence (save users)
-//        4. clear the file after loading so as to write to blank file
-
-// Methods to implement:
-
-//    1. Write to file     saveUsers()
-//    2. Clear file
-
-//    3. Read from file --> to where?     loadUsers()
-//        - how do you know when a line is done?
-//    4. Search file!!!! some sort of tree implementation
-
-//    5. Add user
-//    6. Remove user
-
 /**
  * @file DBFileManager.cpp
  * Database file manager.
@@ -75,10 +56,10 @@ bool DBFileManager::addNewUser(User newUser)
  * at the end of the session, since the output file stream overwrites the file contents.
  * @param newUser a new user object
  */
-bool DBFileManager::saveUser(User currentUser)
+bool DBFileManager::saveUser(User* currentUser)
 {
-    std::string dirPath = DBFileManager::createDirPath(currentUser.User::getUsername());
-    std::string filepath = DBFileManager::createFilePath(currentUser.User::getUsername());
+    std::string dirPath = DBFileManager::createDirPath(currentUser->User::getUsername());
+    std::string filepath = DBFileManager::createFilePath(currentUser->User::getUsername());
 
     if(!boost::filesystem::exists(dirPath))
     {
@@ -87,7 +68,7 @@ bool DBFileManager::saveUser(User currentUser)
     }
     else
     {
-        DBFileManager::writeToFile(currentUser, filepath);
+        DBFileManager::writeToFile(*currentUser, filepath);
         return 0;
     }
 }
@@ -227,3 +208,5 @@ User DBFileManager::readFromFile(std::string userPath)
     }
 
 }
+
+

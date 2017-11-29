@@ -292,8 +292,8 @@ void IndivGroupManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost
         //try to parse response string to JSON object
         try {
             Wt::Json::parse(response.body(), result);
-        } catch (exception e)
-        {
+        }
+        catch (exception e) {
             cout<<"JSON parse failure."<<endl;
             return;
         }
