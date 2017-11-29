@@ -25,7 +25,7 @@ class DBFileManager
         DBFileManager();
 
         bool addNewUser(User newUser);
-        bool saveUser(User newUser); //check for existence in filesystem, build path and write info to file
+        bool saveUser(User* newUser); //check for existence in filesystem, build path and write info to file
         bool removeUser(User currentUser); //check for existence in filesystem and delete directory associated with user
         User getUser(std::string username); //check for existence in filesystem
         std::string createDirPath(std::string username);

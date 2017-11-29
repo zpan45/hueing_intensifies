@@ -18,11 +18,16 @@
 #include "RegistrationWidget.h"
 #include "LoginWidget.h"
 #include "IndivBridgeManagerWidget.h"
+#include "DBFileManager.h"
+
+extern DBFileManager activeDB;
 
 class HueApplication : public Wt::WApplication {
 public:
     HueApplication(const Wt::WEnvironment& env);
-
+    User* getCurrentUser();
+    void finalize();
+    
 private:
     User *curUser_ = nullptr;
     

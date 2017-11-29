@@ -56,10 +56,10 @@ bool DBFileManager::addNewUser(User newUser)
  * at the end of the session, since the output file stream overwrites the file contents.
  * @param newUser a new user object
  */
-bool DBFileManager::saveUser(User currentUser)
+bool DBFileManager::saveUser(User* currentUser)
 {
-    std::string dirPath = DBFileManager::createDirPath(currentUser.User::getUsername());
-    std::string filepath = DBFileManager::createFilePath(currentUser.User::getUsername());
+    std::string dirPath = DBFileManager::createDirPath(currentUser->User::getUsername());
+    std::string filepath = DBFileManager::createFilePath(currentUser->User::getUsername());
 
     if(!boost::filesystem::exists(dirPath))
     {
@@ -68,7 +68,7 @@ bool DBFileManager::saveUser(User currentUser)
     }
     else
     {
-        DBFileManager::writeToFile(currentUser, filepath);
+        DBFileManager::writeToFile(*currentUser, filepath);
         return 0;
     }
 }
