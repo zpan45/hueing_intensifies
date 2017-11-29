@@ -20,7 +20,12 @@
 #include <Wt/WHBoxLayout>
 #include <Wt/WGroupBox>
 #include <Wt/WComboBox>
+#include <Wt/Json/Object>
+#include <Wt/Json/Parser>
+#include <Wt/Json/Serializer>
+#include <Wt/Json/Array>
 
+#include "Bridge.h"
 #include "Group.h"
 
 #define USERNAME "newdeveloper"

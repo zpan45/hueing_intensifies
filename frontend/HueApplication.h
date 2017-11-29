@@ -18,18 +18,25 @@
 #include "RegistrationWidget.h"
 #include "LoginWidget.h"
 #include "IndivBridgeManagerWidget.h"
-#include "IndivLightManagerWidget.h"
+#include "DBFileManager.h"
+
+extern DBFileManager activeDB;
 
 class HueApplication : public Wt::WApplication {
 public:
     HueApplication(const Wt::WEnvironment& env);
-
+    User* getCurrentUser();
+    void setCurrentUser(User* u);
+    void initialize();
+    void finalize();
+    
 private:
-    User *curUser_ = nullptr;
+    User *curUser_;
     
     void showMainPage();
     bool testLoggedInStatus();
     void goToLogIn();
+    void loggedIn_(User u);
     void goToRegister();
     void displayBridges();
     void addBridge();

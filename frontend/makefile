@@ -36,3 +36,4 @@ IndivLightManagerWidget.o: IndivLightManagerWidget.cpp IndivLightManagerWidget.h
 
 clean:
 	\rm *.o frontend
+	\rm -r HUE_USERS
