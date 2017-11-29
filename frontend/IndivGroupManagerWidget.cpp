@@ -174,9 +174,8 @@ bool IndivGroupManagerWidget::updateGroup(int groupID) {
     for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
         //check every 100ms for HTML_MESSAGE_CHECK times
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        //if flag's set then connected successfully, update groups stored in the vector
+        //if flag's set then connected successfully
         if(requestSuccess) {
-            //TODO: how to call IndivBridgeManagerWidget::updateGroups()?;
             return true;
         }
     }
