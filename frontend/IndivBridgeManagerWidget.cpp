@@ -359,10 +359,10 @@ bool IndivBridgeManagerWidget::updateGroups() {
         Group newgroup;
         //set Group name
         newgroup.setName(groupJSON.get("name"));
-        Wt::Json::Value lightsInGroupJSON=groupJSON.get("lights");
-        Wt::Json::Array& lightsInGroupJSONArray=lightsInGroupJSON;
+
+        Wt::Json::Array& lightsInGroupJSONArray=lgroupJSON.get("lights");
         //for every lightID in the Group
-        for (auto itl=lightsInGroupJSONArray.begin();itl!=lightsInGroupJSONArray.end();++it) {
+        for (auto itl=lightsInGroupJSONArray.begin();itl!=lightsInGroupJSONArray.end();++itl) {
             //add the light
             newgroup.addLight(b->getLight(atoi(*itl)-1)); //light store at vector<lights>[lightID-1]
         }
