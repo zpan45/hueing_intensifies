@@ -55,7 +55,7 @@ IndivBridgeManagerWidget::~IndivBridgeManagerWidget() {
 
 //public methods
 /**
- * Check if the Bridge provided can be reached with specified username.
+ * Check if the Bridge provided can be reached. Bridge status would be updated at the same time.
  * @return bool Bridge reached
  */
 bool IndivBridgeManagerWidget::checkBridge() {
@@ -87,7 +87,6 @@ void IndivBridgeManagerWidget::connect() {
     Wt::Http::Client *client=new Wt::Http::Client(this);
     client->setTimeout(HTML_CLIENT_TIMEOUT);
     client->setMaximumResponseSize(10*1024);
-    //TODO: here, do we pass a *Bridge to handleHttpResponse?
     //bind done signal with handling method
     client->done().connect(boost::bind(&IndivBridgeManagerWidget::handleHttpResponse, this, client, _1, _2));
     //send get request
@@ -141,7 +140,7 @@ void IndivBridgeManagerWidget::showInformation() {
 
 /** Method that consults the current Bridge object for all associated groups, and displays them
 * in a list with buttons that will allow the user to modify an individual Group.
-* @param b - The Bridge object that contains the vector of Groups to be displayed.
+ *
 */
 void IndivBridgeManagerWidget::displayGroups() {
     // ! TODO -- implement method that displays all Groups associated with the current Bridge
@@ -207,7 +206,7 @@ void IndivBridgeManagerWidget::displayGroups() {
 }
 
 /** Method to update the current Bridge object with any changes from the text boxes.
-* @param b - The Bridge object to be updated.
+ *
 */
 void IndivBridgeManagerWidget::update() {
     this->addWidget(new Wt::WBreak());
@@ -266,7 +265,6 @@ void IndivBridgeManagerWidget::update() {
  * @param client HTTP client
  * @param err Error code
  * @param response HTTP message received
- * @param b pointer to current Bridge
  *
  */
 

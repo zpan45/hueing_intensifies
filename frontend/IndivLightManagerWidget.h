@@ -24,16 +24,26 @@
 
 #include "Light.h"
 
+#define HTML_CLIENT_TIMEOUT 5
+#define HTML_MESSAGE_CHECK 20 //check if message received every 100ms * HTML_MESSAGE_CHECK times
+
 class IndivLightManagerWidget: public Wt::WContainerWidget {
 
 public:
-    IndivLightManagerWidget(const std::string &name, Light *l, Wt::WContainerWidget *parent = 0);
+    IndivLightManagerWidget(const std::string &name, Bridge *b, Light *l, Wt::WContainerWidget *parent = 0);
     virtual ~IndivLightManagerWidget();
 
 
 
 private:
+    Bridge *b;
     Light *l;
+    bool requestSuccess;
+    bool rename(std::string newname);
+    void connectRename(std::string newname);
+    //bool update();
+    //void connect();
+    void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response) const;
 
 };
 #endif //INDIVLIGHTMANAGERWIDGET_H
