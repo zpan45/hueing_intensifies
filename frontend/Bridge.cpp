@@ -102,6 +102,7 @@ Group* Bridge::getGroup(int element) {
     catch(const out_of_range& oor) {
         cerr << element << " is out of range for this Bridge" << endl;
     }
+    return 0;
 }
 
 
@@ -118,6 +119,7 @@ Light* Bridge::getLight(int element) {
     catch(const out_of_range& oor) {
         cerr << element << " is out of range for this Bridge" << endl;
     }
+    return 0;
 }
 
 /**

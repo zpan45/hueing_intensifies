@@ -56,6 +56,7 @@ Light* Group::getLight(int element) {
     catch(const out_of_range& oor) {
         cerr << element << " is out of range for this Group" << endl;
     }
+    return 0;
 }
 
 /**

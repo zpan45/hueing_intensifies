@@ -118,6 +118,7 @@ Bridge* User::getBridge(int element) {
     catch(const out_of_range& oor) {
         cerr << element << " is out of range for this User" << endl;
     }
+    return 0;
 }
 
 /**
