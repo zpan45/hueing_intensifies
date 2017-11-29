@@ -32,12 +32,12 @@
   * Overload constructor for Schedule class.
   * @param n for name.
   * @param d for description.
-  * @param c for command.
+  * @param pointer c for command.
   * @param st for stime.
   * @param l for localTime.
   * @param s for status.
   */
- Schedule::Schedule(string n, string d, Command c, string st, string l, string s): name(n), description(d), command(c), stime(st), localTime(l), status(s) {
+ Schedule::Schedule(string n, string d, Command* c, string st, string l, string s): name(n), description(d), command(c), stime(st), localTime(l), status(s) {
      // name = "";
      // description = "";
      // command = NULL;
@@ -69,9 +69,9 @@
 
  /**
   * Getter for the command of the Schedule object.
-  * @return the command, an object containing "address", "method", and "body".
+  * @return pointer to command, an object containing "address", "method", and "body".
   */
- Command Schedule::getCommand() {
+ Command* Schedule::getCommand() {
      return command;
 
 }

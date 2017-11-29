@@ -21,7 +21,7 @@ using namespace std;
  * Default constructor for Group class. Initializes all fields to have no values.
  * Takes no parameters.
  */
-Group::Group(): name(""), act(NULL), state(NULL), type("LightGroup"), groupClass("Other") {
+Group::Group(): name(""), act(NULL), groupState(NULL), type("LightGroup"), groupClass("Other") {
     // name = "";
     // act = NULL;
     // state = NULL;
@@ -32,12 +32,12 @@ Group::Group(): name(""), act(NULL), state(NULL), type("LightGroup"), groupClass
 /**
  * Overload constructor for Group class.
  * @param n for name.
- * @param a for act.
- * @param s for state.
+ * @param a pointer for act.
+ * @param s pointer for state.
  * @param t for type.
  * @param c for groupClass.
  */
-Group::Group(string n, Action a, State s, string t, string c): name(n), act(a), state(s), type(t), groupClass(c) {
+Group::Group(string n, Action* a, State* s, string t, string c): name(n), act(a), groupState(s), type(t), groupClass(c) {
     // name = "";
     // act = NULL;
     // state = NULL;
@@ -48,6 +48,16 @@ Group::Group(string n, Action a, State s, string t, string c): name(n), act(a), 
 // --------------------------------------
 // PUBLIC METHODS
 // --------------------------------------
+
+
+/**
+ * Getter for the Action of the Group.
+ * Takes no parameters.
+ * @return pointer to act object.
+ */
+Action* Group::getAction() {
+    return act;
+}
 
 
 /**
@@ -63,9 +73,9 @@ string Group::getName() {
 /**
  * Getter for the state of the Group.
  * Takes no parameters.
- * @return state as a string.
+ * @return pointer to groupState object.
  */
-State Group::getState() {
+State* Group::getState() {
     return groupState;
 }
 
@@ -129,7 +139,7 @@ void Group::setName(string n) {
  * Setter for the state field.
  * @param s A string of the group state.
  */
-void Group::setState(State s) {
+void Group::setState(State* s) {
     groupState = s;
 }
 
