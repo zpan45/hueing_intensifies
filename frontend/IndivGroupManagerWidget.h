@@ -31,17 +31,25 @@
 class IndivGroupManagerWidget: public Wt::WContainerWidget {
 
 public:
-    IndivGroupManagerWidget(const std::string &name, Group *g, Wt::WContainerWidget *parent = 0);
+    IndivGroupManagerWidget(const std::string &name, Bridge *b, Group *g, Wt::WContainerWidget *parent = 0);
     virtual ~IndivGroupManagerWidget();
 
 private:
     Group *g;
+    Bridge *b;
     Wt::WLineEdit *groupNameEdit_;
-    
+    bool requestSuccess;
+
     void showInformation();
     void displayLights();
     void update();
-    //void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response, Group *g) const;
+    bool updateGroup(int groupID);
+    bool updateState(int groupID, bool on, int bri, int hue, int sat, int transTime);
+    void connectUpdateGroup(int groupID);
+    void connectUpdateState(int groupID, bool on, int bri, int hue, int sat, int transTime);
+    void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response);
+
+
 };
 
 #endif
