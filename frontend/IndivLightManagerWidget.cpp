@@ -80,7 +80,7 @@ bool IndivLightManagerWidget::update() {
 void IndivLightManagerWidget::connectRename(std::string newname) {
     //construct URL
     stringstream url_;
-    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/"<<b->getUsername()<<"/lights/"<<l->getID();
+    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/"<<"newdeveloper"<<"/lights/"<<l->getID();
     Wt::Http::Client *client=new Wt::Http::Client(this);
     client->setTimeout(HTML_CLIENT_TIMEOUT);
     client->setMaximumResponseSize(10*1024);
@@ -135,8 +135,7 @@ void IndivLightManagerWidget::connectUpdate() {
  * @param response HTTP message received
  *
  */
-void IndivLightManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err,
-                                                 const Wt::Http::Message &response) const {
+void IndivLightManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message &response) {
     if(err||response.status()!=200) {
         cerr<<"Error: "<<err.message()<<" ,"<<response.status()<<endl;
 

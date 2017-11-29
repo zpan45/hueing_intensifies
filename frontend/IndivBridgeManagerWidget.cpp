@@ -308,8 +308,16 @@ bool IndivBridgeManagerWidget::updateLights() {
         Light newlight;
         newlight.setID(*it);
         
-        Wt::WString s = lightsJSON.get(*it);
-        cout << s << endl;
+        Wt::Json::Object lightJSON =lightsJSON.get(*it);
+        newlight.setName(lightJSON.get("name"));
+        Wt::Json::Object lightStateJSON =lightJSON.get("state");
+        newlight.setIsActive(lightStateJSON.get("on"));
+        newlight.setBrightness(lightStateJSON.get("bri"));
+        newlight.setHue(lightStateJSON.get("hue"));
+        newlight.setSat(lightStateJSON.get("sat"));
+        
+        //Wt::WString s = lightsJSON.get(*it);
+        //cout << s << endl;
         
         //newlight.setName(lightsJSON.get(*it).get("name").toString().orIfNull("empty string");
         //newlight.setIsActive(lightsJSON.get(*it).get("state").get("on").toBool().orIfNull(false));
