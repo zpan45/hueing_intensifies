@@ -20,7 +20,7 @@ using namespace std;
 /** Initializes and constructs the Registration Widget to be called by
  * Hue main application.
  */
-RegistrationWidget::RegistrationWidget(const std::string &name, WContainerWidget *parent)
+RegistrationWidget::RegistrationWidget(const std::string &name, User* current, WContainerWidget *parent)
 : WContainerWidget(parent), name_(name) {
     setContentAlignment(AlignCenter);
 

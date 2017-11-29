@@ -26,10 +26,12 @@ class HueApplication : public Wt::WApplication {
 public:
     HueApplication(const Wt::WEnvironment& env);
     User* getCurrentUser();
+    void setCurrentUser(User* u);
+    void initialize();
     void finalize();
     
 private:
-    User *curUser_ = nullptr;
+    User *curUser_;
     
     void showMainPage();
     bool testLoggedInStatus();

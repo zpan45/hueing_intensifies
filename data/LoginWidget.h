@@ -17,7 +17,7 @@
 class LoginWidget: public Wt::WContainerWidget
 {
 public:
-    LoginWidget(const std::string &name, Wt::WContainerWidget *parent = 0);
+    LoginWidget(const std::string &name, User* current, Wt::WContainerWidget *parent = 0);
 
 private:
     Wt::WText        *title;
@@ -26,6 +26,7 @@ private:
     Wt::WContainerWidget *loginDisplay;
     Wt::WLineEdit *usernameEdit;
     Wt::WLineEdit *passwordEdit;
+    User* cur;
 
     User getUserByUsername(Wt::WString username);
     bool checkPassword(User u, Wt::WString passInput);

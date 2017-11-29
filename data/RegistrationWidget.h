@@ -18,7 +18,7 @@
 class RegistrationWidget: public Wt::WContainerWidget
 {
 public:
-    RegistrationWidget(const std::string &name, Wt::WContainerWidget *parent = 0);
+    RegistrationWidget(const std::string &name, User* current, Wt::WContainerWidget *parent = 0);
 
 private:
     Wt::WText        *title;
