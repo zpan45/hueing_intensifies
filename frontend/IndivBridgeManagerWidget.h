@@ -60,7 +60,7 @@ private:
     bool updateLights();
     bool updateGroups();
     bool createGroup(std::string name, std::vector<int> lightIDs);
-    void deleteGroup(int groupID);
+    bool deleteGroup(int groupID);
     void connectCreateGroup(std::string name, std::vector<int> lightIDs);
     void connectDeleteGroup(int groupID);
     void handleHttpResponseGroup(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response) const;

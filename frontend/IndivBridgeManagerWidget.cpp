@@ -356,10 +356,10 @@ bool IndivBridgeManagerWidget::updateGroups() {
     //for each groupID, construct group with their lights, and store them in vector bridge.groups[groupID-1]
     for (auto it=groupIDs.begin();it!=groupIDs.end();++it) {
         Wt::Json::Object groupJSON =groupsJSON.get(*it);
-        Group newgroup=new Group();
+        Group newgroup;
         //set Group name
         newgroup.setName(groupJSON.get("name"));
-        Wt::Json::Array lightsInGroupJSON=groupJSON.get("lights");
+        std::set<std::string> lightsInGroupJSON=groupJSON.get("lights");
         //for every lightID in the Group
         for (auto itl=lightsInGroupJSON.begin();itl!=lightsInGroupJSON.end();++it) {
             //add the light
@@ -487,7 +487,7 @@ void IndivBridgeManagerWidget::connectDeleteGroup(int groupID) {
  * @param response HTTP message received
  *
  */
-void IndivBridgeManagerWidget::handleHttpResponseGroup(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message &response) {
+void IndivBridgeManagerWidget::handleHttpResponseGroup(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message &response) const{
     if(err||response.status()!=200) {
         cerr<<"Error: "<<err.message()<<" ,"<<response.status()<<endl;
 
