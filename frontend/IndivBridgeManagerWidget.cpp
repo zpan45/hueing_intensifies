@@ -17,6 +17,7 @@ IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Brid
     // It HAS to be a pointer because otherwise the changes from the update() method won't persist
     checkBridge();
 
+    /* DEBUGGING STUFF -- CAN BE DELETED SAFELY
     Group g;
     g.setName("new group1");
 
@@ -25,24 +26,18 @@ IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Brid
     b->addGroup(g);
 
 
-
     for(int i = 0; i < b->getNumberOfGroups(); i++) {
         cout << b->getGroup(i)->getName() << endl;
     }
-
+    */
+    
     showInformation();
 
+    /* DEBUGGING STUFF -- CAN BE DELETED SAFELY
     Group *group;
     group = b->getGroup(0);
 
     this->addWidget(new IndivGroupManagerWidget("gmanager", b, group));
-
-    // for testing purposes only -- in the future, the Bridge b will already have details associated with it when passed in
-    /*
-    b->setName("new bridge");
-    b->setLocation("in a place");
-    b->setHostName("255.255.255.0");
-    b->setPort("8080");
     */
 }
 
@@ -99,19 +94,19 @@ void IndivBridgeManagerWidget::connect() {
 */
 void IndivBridgeManagerWidget::showInformation() {
     // set up the "Bridge Name" text entry field with a label
-    Wt::WLabel *nameLabel = new Wt::WLabel("Bridge Name: \t", this);
+    Wt::WLabel *nameLabel = new Wt::WLabel("Bridge Name: ", this);
     bridgeNameEdit_ = new Wt::WLineEdit(b->getName(), this);
     nameLabel->setBuddy(bridgeNameEdit_);
     this->addWidget(new Wt::WBreak());
 
     // set up the Location Name text entry field with a label
-    Wt::WLabel *locLabel = new Wt::WLabel("Location: \t", this);
+    Wt::WLabel *locLabel = new Wt::WLabel("Location: ", this);
     bridgeLocationEdit_ = new Wt::WLineEdit(b->getLocation(), this);
     locLabel->setBuddy(bridgeLocationEdit_);
     this->addWidget(new Wt::WBreak());
 
     // set up the Host Name text entry field with a label
-    Wt::WLabel *hostLabel = new Wt::WLabel("Hostname: \t", this);
+    Wt::WLabel *hostLabel = new Wt::WLabel("Hostname: ", this);
     hostNameEdit_ = new Wt::WLineEdit(b->getHostName(), this);
     hostNameEdit_->setTextSize(15); // set the max length of this field
     hostNameEdit_->setInputMask("009.009.009.009;_"); // set the input mask to force IP address format
@@ -119,7 +114,7 @@ void IndivBridgeManagerWidget::showInformation() {
     this->addWidget(new Wt::WBreak());
 
     // set up the Port Number text entry field with a label
-    Wt::WLabel *portLabel = new Wt::WLabel("Port #: \t", this);
+    Wt::WLabel *portLabel = new Wt::WLabel("Port #: ", this);
     portNumEdit_ = new Wt::WLineEdit(b->getPort(), this);
     portNumEdit_->setTextSize(5); // set the max length of this field
     portLabel->setBuddy(portNumEdit_);
@@ -127,14 +122,19 @@ void IndivBridgeManagerWidget::showInformation() {
 
     // add the "Update" button for changing a Bridge's information
     Wt::WPushButton *update_ = new Wt::WPushButton("Update", this);
-
-    displayGroups();
-
+    
+    this->addWidget(new Wt::WBreak());
+    Wt::WPushButton *showGroups_ = new Wt::WPushButton("Show Groups", this);
+    
     // the update_ button is bound to a lambda function that calls the update()
     // method. Done this way because you cannot pass parameters through Wt's connect()
     // method.
     update_->clicked().connect(bind([&]() {
         update();
+    }));
+    showGroups_->clicked().connect(bind([&]() {
+        // Show all the current Groups associated with the Bridge
+        displayGroups();
     }));
 }
 
@@ -145,6 +145,7 @@ void IndivBridgeManagerWidget::showInformation() {
 void IndivBridgeManagerWidget::displayGroups() {
     // ! TODO -- implement method that displays all Groups associated with the current Bridge
     // use Bridge.cpp's "getGroup()" method?? Iterate from 0 - size of the vector?
+    updateGroups();
 
     // Add a new groupbox to display all the Groups associated with the current Bridge
     Wt::WGroupBox *groupbox = new Wt::WGroupBox(b->getName(), this);
@@ -371,6 +372,8 @@ bool IndivBridgeManagerWidget::updateGroups() {
             newgroup.addLight(l); //light store at vector<lights>[lightID-1]
         }
         //add newgroup to Bridge
+        cout << "\n\n\n\n" << newgroup.getName() << "\n\n\n\n" << endl;
+        
         b->addGroup(newgroup);
     }
     return true;
