@@ -91,7 +91,7 @@ void IndivLightManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost
         } catch (exception e)
         {
             cout<<"JSON parse failure."<<endl;
-            return false;
+            return;
         }
         //if response contains "success" then request was successful, set requestSuccess to true
         requestSuccess=result.contains("success");
