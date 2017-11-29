@@ -1,5 +1,5 @@
-frontend : User.o Bridge.o Group.o Light.o HueApplication.o RegistrationWidget.o LoginWidget.o IndivBridgeManagerWidget.o IndivGroupManagerWidget.o DBFileManager.o
-	g++ -std=c++11 User.o Bridge.o Group.o Light.o HueApplication.o RegistrationWidget.o LoginWidget.o IndivBridgeManagerWidget.o IndivGroupManagerWidget.o DBFileManager.o -o frontend -lwthttp -lwt -lboost_random -lboost_regex -lboost_signals -lboost_system -lboost_thread -lboost_filesystem -lboost_program_options -lboost_date_time
+frontend : User.o Bridge.o Group.o Light.o HueApplication.o RegistrationWidget.o LoginWidget.o IndivBridgeManagerWidget.o IndivGroupManagerWidget.o IndivLightManagerWidget.o DBFileManager.o
+	g++ -std=c++11 User.o Bridge.o Group.o Light.o HueApplication.o RegistrationWidget.o LoginWidget.o IndivBridgeManagerWidget.o IndivGroupManagerWidget.o IndivLightManagerWidget.o DBFileManager.o -o frontend -lwthttp -lwt -lboost_random -lboost_regex -lboost_signals -lboost_system -lboost_thread -lboost_filesystem -lboost_program_options -lboost_date_time
 
 User.o: User.cpp User.h Bridge.h
 	g++ -std=c++11 -Wall -c User.cpp
@@ -30,6 +30,9 @@ DBFileManager.o: DBFileManager.cpp DBFileManager.h User.h
 
 IndivGroupManagerWidget.o: IndivGroupManagerWidget.cpp IndivGroupManagerWidget.h Group.h
 	g++ -std=c++11 -Wall -c IndivGroupManagerWidget.cpp
+
+IndivLightManagerWidget.o: IndivLightManagerWidget.cpp IndivLightManagerWidget.h Light.h
+	g++ -std=c++11 -Wall -c IndivLightManagerWidget.cpp
 
 clean:
 	\rm *.o frontend

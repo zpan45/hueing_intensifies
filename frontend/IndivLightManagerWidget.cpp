@@ -5,8 +5,13 @@
 #include "IndivLightManagerWidget.h"
 
 //constructor
-IndivLightManagerWidget::IndivLightManagerWidget(const std::string &name, Bridge *b, Light *l, Wt::WContainerWidget *parent) {
-
+IndivLightManagerWidget::IndivLightManagerWidget(const std::string &name, Bridge *b, Light *light, Wt::WContainerWidget *parent) {
+    l = light;
+    
+    Wt::WPushButton *update = new Wt::WPushButton("Update", this);
+    update->clicked().connect() {
+        l->rename("new string");
+    }
 }
 
 //destructor

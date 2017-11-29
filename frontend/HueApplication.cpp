@@ -77,6 +77,23 @@ void HueApplication::showMainPage() {
         
         Wt::WPushButton *addBridgeButton = new Wt::WPushButton("Add Bridge", cont);
         addBridgeButton->clicked().connect(this, &HueApplication::addBridge);
+        
+        //========================= TESTING INDIVLIGHTMANAGER Request
+        
+        cont->addWidget(new Wt::WBreak());
+        cont->addWidget(new Wt::WBreak());
+        cont->addWidget(new Wt::WBreak());
+        
+        Light light;
+        light.setName("testLight");
+        
+        curUser_->getBridge(0)->addLight(light);
+        
+        Wt::WPushButton *lightButton = new Wt::WPushButton("Test Light", cont);
+        lightButton->clicked().connect(std::bind([=] () {
+            IndivLightManagerWidget *indiv = new IndivLightManagerWidget("lmanager", curUser_->getBridge(0), curUser_->getBridge(0)->getLight(0));
+        }));
+        
     }
     else {
         // if the curUser_ pointer does point to a User, greet the User with a friendly hello!

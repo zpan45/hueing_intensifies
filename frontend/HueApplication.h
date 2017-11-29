@@ -18,6 +18,7 @@
 #include "RegistrationWidget.h"
 #include "LoginWidget.h"
 #include "IndivBridgeManagerWidget.h"
+#include "IndivLightManagerWidget.h"
 
 class HueApplication : public Wt::WApplication {
 public:

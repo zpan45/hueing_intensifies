@@ -24,6 +24,9 @@
 #include <Wt/WHBoxLayout>
 #include <Wt/WGroupBox>
 #include <Wt/WComboBox>
+#include <Wt/Json/Object>
+#include <Wt/Json/Parser>
+#include <Wt/Json/Serializer>
 
 #include "Bridge.h"
 #include "IndivGroupManagerWidget.h"
@@ -53,7 +56,7 @@ private:
     void displayGroups();
     void update();
     void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response) const;
-    void updateLights();
+    bool updateLights();
 };
 
 #endif

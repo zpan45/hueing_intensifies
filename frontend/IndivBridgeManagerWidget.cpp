@@ -288,8 +288,8 @@ bool IndivBridgeManagerWidget::updateLights() {
     //drop all saved lights in the bridge
     b->clearLights();
     //try to connect to the Bridge; if connected, checkBridge returns true and bridge status is set
-    if (!checkBridge(b)) return false;
-    Wt::Json::Object result= new Wt::Json::Object;
+    if (!checkBridge()) return false;
+    Wt::Json::Object result;
     //try to parse bridge status string to JSON object
     try {
         Wt::Json::parse(b->getStatus(), result);
@@ -299,13 +299,13 @@ bool IndivBridgeManagerWidget::updateLights() {
         return false;
     }
     //JSON object lightsJSON contains all the lights JSON
-    Wt::Json::Object lightsJSON= new Wt::Json::Object;
+    Wt::Json::Object lightsJSON;
     lightsJSON=result.get("lights");
     //set<string> contains all the lightIDs
     std::set<std::string> lightIDs=lightsJSON.names();
     //for each lightID, get light status and store them in vector bridge.lights
     for (auto it=lightIDs.begin();it!=lightIDs.end();++it) {
-        Light newlight= new Light();
+        Light newlight;
         newlight.setID(*it);
         newlight.setName(lightsJSON.get(*it).get("name"));
         newlight.setIsActive(lightsJSON.get(*it).get("state").get("on"));
