@@ -27,6 +27,7 @@
 #include <Wt/Json/Object>
 #include <Wt/Json/Parser>
 #include <Wt/Json/Serializer>
+#include <Wt/Json/Array>
 
 #include "Bridge.h"
 #include "IndivGroupManagerWidget.h"
