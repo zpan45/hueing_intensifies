@@ -18,7 +18,7 @@
 class LoginWidget: public Wt::WContainerWidget
 {
 public:
-    LoginWidget(const std::string &name, User* current, Wt::WContainerWidget *parent = 0);
+    LoginWidget(const std::string &name, Wt::WContainerWidget *parent = 0);
     Wt::Signal<User>& loggedIn();
 
 private:
@@ -28,7 +28,6 @@ private:
     Wt::WContainerWidget *loginDisplay;
     Wt::WLineEdit *usernameEdit;
     Wt::WLineEdit *passwordEdit;
-    User* cur;
     
     Wt::Signal<User> loggedInSignal_;
 

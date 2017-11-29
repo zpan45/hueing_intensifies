@@ -125,7 +125,7 @@ bool HueApplication::testLoggedInStatus() {
 */
 void HueApplication::goToLogIn() {
     root()->clear();
-    LoginWidget *login = new LoginWidget("Login", curUser_, root());
+    LoginWidget *login = new LoginWidget("Login", root());
 
     login->loggedIn().connect( this, &HueApplication::loggedIn_ );
 }

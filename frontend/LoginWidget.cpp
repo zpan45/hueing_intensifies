@@ -21,20 +21,10 @@ using namespace std;
  *Intializes and constructs the Login Widget to be called by
  *Hue main application.
  */
-LoginWidget::LoginWidget(const std::string &name, User* current, WContainerWidget *parent)
+LoginWidget::LoginWidget(const std::string &name, WContainerWidget *parent)
 : WContainerWidget(parent), name_(name) {
     setContentAlignment(AlignCenter);
-
-    Wt::WApplication *app = Wt::WApplication::instance();
-
-    cur = current;
-
-    User * u = new User("jake", "testPW", "j", "f");
-
-    current = u;
-
-    cout << "The current user is " << cur << " and the username is '" << cur->getUsername() << "'" << endl;
-
+    
     // add the Username entry textbox
     this->addWidget(new Wt::WText("Username: "));
     usernameEdit = new WLineEdit(this);
@@ -95,8 +85,6 @@ bool LoginWidget::checkPassword(User u, Wt::WString passInput) {
 /**This method is to clear the widget after user has succesfully logged in.
 */
 void LoginWidget::login() {
-    User *usrPtr = new User();
-
     loginDisplay->clear();
 
     User u = getUserByUsername(usernameEdit->text());
