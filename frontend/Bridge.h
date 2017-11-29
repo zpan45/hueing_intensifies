@@ -41,6 +41,7 @@ class Bridge {
 
         void addGroup(Group g);
         void addLight(Light l);
+        void clearGroups();
         void clearLights();
         bool removeGroup(int element);
         bool removeLight(int element);

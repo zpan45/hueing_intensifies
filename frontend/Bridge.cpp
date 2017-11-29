@@ -280,3 +280,10 @@ bool Bridge::removeLight(int element) {
 void Bridge::clearLights() {
     lights.clear();
 }
+
+/**
+ * Method to drop all stored groups in the bridge.
+ */
+void Bridge::clearGroups() {
+    groups.clear();
+}

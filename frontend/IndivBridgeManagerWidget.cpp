@@ -330,3 +330,44 @@ bool IndivBridgeManagerWidget::updateLights() {
 
 }
 
+/**
+* Connect to the bridge hardware and update the Group objects stored in the bridge's vector.
+* @return false if Bridge cannot be reached
+*/
+bool IndivBridgeManagerWidget::updateGroups() {
+    //drop all saved groups in the bridge
+    b->clearGroups();
+    //try to connect to the Bridge; if connected, checkBridge returns true and bridge status is set
+    if (!checkBridge()) return false;
+    Wt::Json::Object result;
+    //try to parse bridge status string to JSON object
+    try {
+        Wt::Json::parse(b->getStatus(), result);
+    } catch (exception e)
+    {
+        cout<<"JSON parse failure."<<endl;
+        return false;
+    }
+    //JSON object groupsJSON contains all the groups JSON
+    Wt::Json::Object groupsJSON;
+    groupsJSON=result.get("groups");
+    //set<string> contains all the groupIDs
+    std::set<std::string> groupIDs=groupsJSON.names();
+    //for each groupID, construct group with their lights, and store them in vector bridge.groups[groupID-1]
+    for (auto it=groupIDs.begin();it!=groupIDs.end();++it) {
+        Wt::Json::Object groupJSON =groupsJSON.get(*it);
+        Group newgroup=new Group();
+        //set Group name
+        newgroup.setName(groupJSON.get("name"));
+        Wt::Json::Array lightsInGroupJSON=groupJSON.get("lights");
+        //for every lightID in the Group
+        for (auto itl=lightsInGroupJSON.begin();itl!=lightsInGroupJSON.end();++it) {
+            //add the light
+            newgroup.addLight(b->getLight(*itl-1)); //light store at vector<lights>[lightID-1]
+        }
+        //add newgroup to Bridge
+        b->addGroup(newgroup);
+    }
+    return true;
+
+}
