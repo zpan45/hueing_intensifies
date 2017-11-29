@@ -27,6 +27,7 @@
 #include <Wt/Json/Object>
 #include <Wt/Json/Parser>
 #include <Wt/Json/Serializer>
+#include <Wt/Json/Array>
 
 #include "Bridge.h"
 #include "IndivGroupManagerWidget.h"
@@ -50,6 +51,7 @@ private:
     Wt::WLineEdit *bridgeLocationEdit_;
     Wt::WLineEdit *hostNameEdit_;
     Wt::WLineEdit *portNumEdit_;
+    bool requestSuccess;
     
     void connect();
     void showInformation();
@@ -57,6 +59,12 @@ private:
     void update();
     void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response) const;
     bool updateLights();
+    bool updateGroups();
+    bool createGroup(std::string name, std::vector<int> lightIDs);
+    bool deleteGroup(int groupID);
+    void connectCreateGroup(std::string name, std::vector<int> lightIDs);
+    void connectDeleteGroup(int groupID);
+    void handleHttpResponseGroup(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response);
 };
 
 #endif

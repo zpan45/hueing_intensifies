@@ -19,6 +19,7 @@
 class Bridge {
     public:
         Bridge();
+        Bridge(std::string n, std::string l, std::string h, std::string p, std::string u, std::string s);
 
         std::string getName();
         std::string getLocation();
@@ -40,6 +41,7 @@ class Bridge {
 
         void addGroup(Group g);
         void addLight(Light l);
+        void clearGroups();
         void clearLights();
         bool removeGroup(int element);
         bool removeLight(int element);
@@ -51,7 +53,9 @@ class Bridge {
         std::string username;
         //status is used to store API response from bridge
         std::string status;
+        //group stores at groups[groupID-1]
         std::vector<Group> groups;
+        //light stores at lights[lightID-1]
         std::vector<Light> lights;
 };
 

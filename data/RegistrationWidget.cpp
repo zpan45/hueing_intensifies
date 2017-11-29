@@ -33,6 +33,7 @@ RegistrationWidget::RegistrationWidget(const std::string &name, User* current, W
     // add the Password entry textbox
     this->addWidget(new Wt::WText("Password: "));
     passwordEdit = new WLineEdit(this);
+    passwordEdit->setEchoMode(Wt::WLineEdit::EchoMode::Password);
     this->addWidget(new Wt::WBreak());
 
     // add the first and last name entry text boxes
@@ -62,9 +63,9 @@ void RegistrationWidget::createUser() {
     this->addWidget(new Wt::WBreak());
 
     ::activeDB.DBFileManager::addNewUser(newUser);
-    
+
     User *u;
-    
+
     u = &newUser;
     ::activeDB.DBFileManager::saveUser(u);
 

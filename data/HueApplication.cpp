@@ -32,19 +32,19 @@ void HueApplication::setCurrentUser(User *u) {
 
 void HueApplication::initialize() {
     curUser_ = new User();
-    
+
     setTitle("CS3307 - Team24 Hue Application");
     showMainPage();
     Wt::WApplication *app = Wt::WApplication::instance();
     app->internalPathChanged().connect(std::bind([=] () {
         handleRequest();
     }));
-    
+
 }
 
 void HueApplication::finalize() {
     User *u = HueApplication::getCurrentUser();
-    
+
     if(u->getUsername() != "") {
         ::activeDB.DBFileManager::saveUser(u);
     }
@@ -94,14 +94,14 @@ void HueApplication::showMainPage() {
         // if the curUser_ pointer does point to a User, greet the User with a friendly hello!
         cont->addWidget(new Wt::WText("Hello, "));
         cont->addWidget(new Wt::WText( curUser_->getFirstName() ));
-        
+
         Wt::WPushButton *dispBridgeButton = new Wt::WPushButton("Bridges", cont);
         dispBridgeButton->setLink(Wt::WLink(Wt::WLink::InternalPath, "/bridges"));
 
         cont->addWidget(new Wt::WBreak());
         cont->addWidget(new Wt::WBreak());
         cont->addWidget(new Wt::WBreak());
-        
+
         Wt::WPushButton *addBridgeButton = new Wt::WPushButton("Add Bridge", cont);
         addBridgeButton->clicked().connect(this, &HueApplication::addBridge);
     }
@@ -126,7 +126,7 @@ bool HueApplication::testLoggedInStatus() {
 void HueApplication::goToLogIn() {
     root()->clear();
     LoginWidget *login = new LoginWidget("Login", curUser_, root());
-    
+
     login->loggedIn().connect( this, &HueApplication::loggedIn_ );
 }
 
@@ -135,16 +135,16 @@ void HueApplication::loggedIn_(User u) {
     curUser_->setPassword(u.getPassword());
     curUser_->setFirstName(u.getFirstName());
     curUser_->setLastName(u.getLastName());
-    
+
     // ! TODO -- need to extract all bridges from User u and attach them to curUser_
     /* MAYBE something like this??? untested code :
-    
+
     for(int i = 0; i < u.getNumberOfBridges(); i++ {
-        curUser->addBridge( u.getBridge(i) ); 
+        curUser->addBridge( u.getBridge(i) );
     }
-    
+
     */
-    
+
 }
 
 /** Method that displays the Registration Widget to the User.
@@ -279,6 +279,7 @@ void HueApplication::addBridge() {
         cout << "Port " << b.getPort() << endl;
 
         curUser_->addBridge(b);
+        ::activeDB.DBFileManager::saveUser(curUser_);
     }
 }
 

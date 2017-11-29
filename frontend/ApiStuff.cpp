@@ -133,7 +133,7 @@ post(url_, Message);
 // 		"2"
 // 	],
 // 	"name": "bedroom",
-//         "type": "LightGroup"
+//  "type": "LightGroup"
 // }
 //
 // {

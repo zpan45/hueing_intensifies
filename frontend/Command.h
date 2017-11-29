@@ -17,6 +17,7 @@
 class Command {
     public:
         Command();
+        Command(std::string a, std::string m, std::string b);
 
         std::string getAddress();
         std::string getMethod();
