@@ -7,36 +7,36 @@
 using namespace std;
 
 /** Constructor
-* @param name - 
+* @param name -
 * @param parent -
 * @param b - The Bridge object whose properties this Widget will allow the user to display and edit.
 */
 IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Bridge *bridge, Wt::WContainerWidget *parent) : Wt::WContainerWidget(parent){
-    
+
     b = bridge; // b is a pointer to the current bridge object
     // It HAS to be a pointer because otherwise the changes from the update() method won't persist
     checkBridge();
-    
+
     Group g;
     g.setName("new group1");
-    
+
     b->addGroup(g);
     g.setName("newG2");
     b->addGroup(g);
-    
-    
-    
+
+
+
     for(int i = 0; i < b->getNumberOfGroups(); i++) {
         cout << b->getGroup(i)->getName() << endl;
     }
-    
+
     showInformation();
-    
+
     Group *group;
     group = b->getGroup(0);
-    
+
     this->addWidget(new IndivGroupManagerWidget("gmanager", group));
-    
+
     // for testing purposes only -- in the future, the Bridge b will already have details associated with it when passed in
     /*
     b->setName("new bridge");
@@ -91,7 +91,7 @@ void IndivBridgeManagerWidget::connect() {
     client->done().connect(boost::bind(&IndivBridgeManagerWidget::handleHttpResponse, this, client, _1, _2));
     //send get request
     client->get(url_.str());
-    
+
     cout << url_.str() << endl << endl;
 }
 
@@ -103,7 +103,7 @@ void IndivBridgeManagerWidget::showInformation() {
     bridgeNameEdit_ = new Wt::WLineEdit(b->getName(), this);
     nameLabel->setBuddy(bridgeNameEdit_);
     this->addWidget(new Wt::WBreak());
-    
+
     // set up the Location Name text entry field with a label
     Wt::WLabel *locLabel = new Wt::WLabel("Location: \t", this);
     bridgeLocationEdit_ = new Wt::WLineEdit(b->getLocation(), this);
@@ -117,19 +117,19 @@ void IndivBridgeManagerWidget::showInformation() {
     hostNameEdit_->setInputMask("009.009.009.009;_"); // set the input mask to force IP address format
     hostLabel->setBuddy(hostNameEdit_);
     this->addWidget(new Wt::WBreak());
-    
+
     // set up the Port Number text entry field with a label
     Wt::WLabel *portLabel = new Wt::WLabel("Port #: \t", this);
     portNumEdit_ = new Wt::WLineEdit(b->getPort(), this);
     portNumEdit_->setTextSize(5); // set the max length of this field
     portLabel->setBuddy(portNumEdit_);
     this->addWidget(new Wt::WBreak());
-    
+
     // add the "Update" button for changing a Bridge's information
     Wt::WPushButton *update_ = new Wt::WPushButton("Update", this);
-    
+
     displayGroups();
-    
+
     // the update_ button is bound to a lambda function that calls the update()
     // method. Done this way because you cannot pass parameters through Wt's connect()
     // method.
@@ -145,64 +145,64 @@ void IndivBridgeManagerWidget::showInformation() {
 void IndivBridgeManagerWidget::displayGroups() {
     // ! TODO -- implement method that displays all Groups associated with the current Bridge
     // use Bridge.cpp's "getGroup()" method?? Iterate from 0 - size of the vector?
-    
+
     // Add a new groupbox to display all the Groups associated with the current Bridge
     Wt::WGroupBox *groupbox = new Wt::WGroupBox(b->getName(), this);
-    
+
     for(int i = 0; i < b->getNumberOfGroups(); i++) {
         groupbox->addWidget(new Wt::WText(b->getGroup(i)->getName() + " (" + to_string(b->getGroup(i)->getNumberOfLights()) + " Lights) "));
-        
-        // The "Click Here to Edit" button will be connected to a method that spawns the IndivBridgeManagerWidget, pass that Bridge as a parameter, and allow you to edit that Bridge's parameters through the new Widget. 
-        
+
+        // The "Click Here to Edit" button will be connected to a method that spawns the IndivBridgeManagerWidget, pass that Bridge as a parameter, and allow you to edit that Bridge's parameters through the new Widget.
+
         //IDEA: Add buttons as links; use internalpath handling for /bridges for the main bridges widget and then /bridges/# for the subsequent bridges. use connect() to connect each button to a link?
         string s = "Edit " + to_string(i);
         Wt::WPushButton *button = new Wt::WPushButton(s, groupbox);
-        
+
         //Wt::WApplication *app = Wt::WApplication::instance();
         //s = app->internalPath() + "/groups/" + to_string(i);
         s = "/groups/" + to_string(i);
         //delete app;
-        
+
         button->setLink(Wt::WLink(Wt::WLink::InternalPath, s));
-        
+
         groupbox->addWidget(new Wt::WBreak());
     }
-    
+
     // add a remove button
     Wt::WComboBox *cb = new Wt::WComboBox(groupbox);
-    
+
     // loop through all Groups associated with the current Bridge, adding them as selectable options
     for(int i = 0; i < b->getNumberOfGroups(); i++) {
         cb->addItem(b->getGroup(i)->getName());
     }
-    
+
     groupbox->addWidget(new Wt::WBreak());
-    
+
     Wt::WText *out = new Wt::WText(groupbox); // this is the "Delete?" text
-    
+
     groupbox->addWidget(new Wt::WBreak());
     Wt::WPushButton *delButton_ = new Wt::WPushButton("Delete", groupbox);
     delButton_->setEnabled(false);
-    
+
     // if the selected Group was changed:
     cb->changed().connect(std::bind([=] () {
         out->setText(Wt::WString::fromUTF8("Delete {1}?").arg(cb->currentText()));
         delButton_->setEnabled(true);
     }));
-    
+
     // if the delete button is clicked, remove the option to remove the Group and the Group itself
     delButton_->clicked().connect(std::bind([=] () {
-        b->removeGroup(cb->currentIndex()); // delete the Group with the current index 
+        b->removeGroup(cb->currentIndex()); // delete the Group with the current index
         cb->removeItem(cb->currentIndex()); // remove the option to delete a button
         delButton_->setEnabled(false); // disable the delete button
-        
+
         for(int i = 0; i < b->getNumberOfGroups(); i++) {
             cout << b->getGroup(i)->getName() << endl;
         }
-        
+
         groupbox->refresh();
     }));
-    
+
 }
 
 /** Method to update the current Bridge object with any changes from the text boxes.
@@ -210,10 +210,10 @@ void IndivBridgeManagerWidget::displayGroups() {
 */
 void IndivBridgeManagerWidget::update() {
     this->addWidget(new Wt::WBreak());
-    
+
     Wt::WHBoxLayout *change = new Wt::WHBoxLayout(this);
     //this->addWidget(change);
-    
+
     Wt::WContainerWidget *old = new Wt::WContainerWidget();
     change->addWidget(old);
     old->addWidget(new Wt::WText("<b>Old Stuff:</b>"));
@@ -225,26 +225,26 @@ void IndivBridgeManagerWidget::update() {
     old->addWidget(new Wt::WText(b->getHostName()));
     old->addWidget(new Wt::WBreak());
     old->addWidget(new Wt::WText(b->getPort()));
-    
+
     if( b->getName() != bridgeNameEdit_->text().toUTF8() ) {
         b->setName(bridgeNameEdit_->text().toUTF8());
     }
-    
+
     if ( b->getLocation() != bridgeLocationEdit_->text().toUTF8() ) {
         b->setLocation(bridgeLocationEdit_->text().toUTF8());
     }
-    
+
     if ( b->getHostName() != hostNameEdit_->text().toUTF8() ) {
         b->setHostName(hostNameEdit_->text().toUTF8());
     }
-    
+
     if ( b->getPort() != portNumEdit_->text().toUTF8() ) {
         b->setPort(portNumEdit_->text().toUTF8());
     }
-    
+
     this->addWidget(new Wt::WBreak());
     this->addWidget(new Wt::WBreak());
-    
+
     // didn't want to call the variable "new" so we named the display of things that have changed, "changed"
     Wt::WContainerWidget *changed = new Wt::WContainerWidget();
     change->addWidget(changed);
@@ -257,7 +257,7 @@ void IndivBridgeManagerWidget::update() {
     changed->addWidget(new Wt::WText(b->getHostName()));
     changed->addWidget(new Wt::WBreak());
     changed->addWidget(new Wt::WText(b->getPort()));
-    
+
 }
 
 /**
@@ -307,7 +307,7 @@ bool IndivBridgeManagerWidget::updateLights() {
     for (auto it=lightIDs.begin();it!=lightIDs.end();++it) {
         Light newlight;
         newlight.setID(*it);
-        
+
         Wt::Json::Object lightJSON =lightsJSON.get(*it);
         newlight.setName(lightJSON.get("name"));
         Wt::Json::Object lightStateJSON =lightJSON.get("state");
@@ -315,10 +315,10 @@ bool IndivBridgeManagerWidget::updateLights() {
         newlight.setBrightness(lightStateJSON.get("bri"));
         newlight.setHue(lightStateJSON.get("hue"));
         newlight.setSat(lightStateJSON.get("sat"));
-        
+
         //Wt::WString s = lightsJSON.get(*it);
         //cout << s << endl;
-        
+
         //newlight.setName(lightsJSON.get(*it).get("name").toString().orIfNull("empty string");
         //newlight.setIsActive(lightsJSON.get(*it).get("state").get("on").toBool().orIfNull(false));
         //newlight.setBrightness(lightsJSON.get(*it).get("state").get("bri").toString().orIfNull(""));
@@ -362,10 +362,21 @@ bool IndivBridgeManagerWidget::updateGroups() {
         Wt::Json::Value lightsInGroupJSON=groupJSON.get("lights");
         Wt::Json::Array& lightsInGroupJSONArray=lightsInGroupJSON;
         //for every lightID in the Group
-        for (auto itl=lightsInGroupJSONArray.begin();itl!=lightsInGroupJSONArray.end();++it) {
-            //add the light
-            newgroup.addLight(b->getLight(atoi(*itl)-1)); //light store at vector<lights>[lightID-1]
-        }
+        for (auto it=groupIDs.begin();it!=groupIDs.end();++it) {
+                Wt::Json::Object groupJSON =groupsJSON.get(*it);
+                Group newgroup;
+                //set Group name
+                newgroup.setName(groupJSON.get("name"));
+
+                Wt::Json::Array& lightsInGroupJSONArray=groupJSON.get("lights");
+                //for every lightID in the Group
+                for (auto itl=lightsInGroupJSONArray.begin();itl!=lightsInGroupJSONArray.end();++itl) {
+                    //add the light
+                    newgroup.addLight(b->getLight(atoi(*itl)-1)); //light store at vector<lights>[lightID-1]
+                }
+                //add newgroup to Bridge
+                b->addGroup(newgroup);
+            }
         //add newgroup to Bridge
         b->addGroup(newgroup);
     }
