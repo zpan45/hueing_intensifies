@@ -24,26 +24,12 @@ using namespace std;
  * Default constructor for User class. Initializes all fields to have no values.
  * Takes no parameters.
  */
-User::User(): username(""), password(""), firstName(""), lastName("") {
-    // username = "";
-    // password = "";
-    // firstName = "";
-    // lastName = "";
+User::User() {
+    username = "";
+    password = "";
+    firstName = "";
+    lastName = "";
 }
-
-// /**
-//  * Overload constructor for User class.
-//  * @param u for username.
-//  * @param p for password.
-//  * @param f for firstName.
-//  * @param l for lastName.
-//  */
-// User::User(string u, string p, string f, string l): username(u), password(p), firstName(f), lastName(l) {
-//     // username = "";
-//     // password = "";
-//     // firstName = "";
-//     // lastName = "";
-// }
 
 
 /**
@@ -132,7 +118,6 @@ Bridge* User::getBridge(int element) {
     catch(const out_of_range& oor) {
         cerr << element << " is out of range for this User" << endl;
     }
-    return 0;
 }
 
 /**
