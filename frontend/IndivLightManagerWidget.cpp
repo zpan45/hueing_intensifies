@@ -41,7 +41,7 @@ bool IndivLightManagerWidget::rename(std::string newname) {
     for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
         //check every 100ms for HTML_MESSAGE_CHECK times
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        //if Bridge's status isn't empty then connected successfully, change local Light name
+        //if flag's set then connected successfully, change local Light name
         if(requestSuccess) {
             l->setName(newname);
             return true;
@@ -64,7 +64,7 @@ bool IndivLightManagerWidget::update() {
     for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
         //check every 100ms for HTML_MESSAGE_CHECK times
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        //if Bridge's status isn't empty then connected successfully, change local Light name
+        //if flag's set then connected successfully, change local Light name
         if(requestSuccess) {
             return true;
         }
@@ -87,7 +87,7 @@ bool IndivLightManagerWidget::update(int transTime) {
     for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
         //check every 100ms for HTML_MESSAGE_CHECK times
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        //if Bridge's status isn't empty then connected successfully, change local Light name
+        //if flag's set then connected successfully, change local Light name
         if(requestSuccess) {
             return true;
         }

@@ -50,6 +50,7 @@ private:
     Wt::WLineEdit *bridgeLocationEdit_;
     Wt::WLineEdit *hostNameEdit_;
     Wt::WLineEdit *portNumEdit_;
+    bool requestSuccess;
     
     void connect();
     void showInformation();
@@ -58,6 +59,11 @@ private:
     void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response) const;
     bool updateLights();
     bool updateGroups();
+    bool createGroup(std::string name, std::vector<int> lightIDs);
+    void deleteGroup(int groupID);
+    void connectCreateGroup(std::string name, std::vector<int> lightIDs);
+    void connectDeleteGroup(int groupID);
+    void handleHttpResponseGroup(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response) const;
 };
 
 #endif

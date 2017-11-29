@@ -371,3 +371,138 @@ bool IndivBridgeManagerWidget::updateGroups() {
     return true;
 
 }
+
+/**
+ * Connect to the bridge hardware and create a new group; after creation, update groups vector
+ * @param name new group's name
+ * @param lightIDs a vector of int containing the lightIDs in the group
+ * @return true on group created successfully
+ */
+bool IndivBridgeManagerWidget::createGroup(std::string name, std::vector<int> lightIDs) {
+    //initialize request success flag
+    requestSuccess=false;
+    //connect to Bridge
+    connectCreateGroup(name, lightIDs);
+    //if connection is successful, requestSuccess flag would be updated by handleHttpResponseGroup()
+    for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
+        //check every 100ms for HTML_MESSAGE_CHECK times
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        //if flag's set then created successfully, update groups vector
+        if(requestSuccess) {
+            updateGroups();
+            return true;
+        }
+    }
+    //connection timeout, return false
+    return false;
+}
+
+/**
+ * Connect to the bridge hardware and delete a specified group; after deletion, update groups vector
+ * @param groupID the groupID of the group we want to delete as an int
+ * @return true on group deleted successfully
+ */
+bool IndivBridgeManagerWidget::deleteGroup(int groupID) {
+    //initialize request success flag
+    requestSuccess=false;
+    //connect to Bridge
+    connectDeleteGroup(groupID);
+    //if connection is successful, requestSuccess flag would be updated by handleHttpResponseGroup()
+    for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
+        //check every 100ms for HTML_MESSAGE_CHECK times
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        //if flag's set then created successfully, update groups vector
+        if(requestSuccess) {
+            updateGroups();
+            return true;
+        }
+    }
+    //connection timeout, return false
+    return false;
+}
+
+
+/**
+ * Send a POST message to the bridge hardware to create a new group. Called by createGroup().
+ * @param name new group's name
+ * @param lightIDs lightIDs a vector of int containing the lightIDs in the group
+ */
+void IndivBridgeManagerWidget::connectCreateGroup(std::string name, std::vector<int> lightIDs) {
+    //construct URL
+    stringstream url_;
+    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/newdeveloper";
+    //"<<b->getUsername();
+    url_<<"/groups";
+    Wt::Http::Client *client=new Wt::Http::Client(this);
+    client->setTimeout(HTML_CLIENT_TIMEOUT);
+    client->setMaximumResponseSize(10*1024);
+    //bind done signal with handling method
+    client->done().connect(boost::bind(&IndivBridgeManagerWidget::handleHttpResponseGroup, this, client, _1, _2));
+
+    //build POST message
+    Wt::Http::Message message;
+    stringstream body;
+    //set body
+    body<< "{" <<"\"lights\":"<< "[";
+    //for each lightID, add to message body
+    for (auto it=lightIDs.begin();it!=lightIDs.end();++it) {
+        body<<"\""<<*it<<"\"";
+        //if we haven't reached the last lightID, add "," in middle
+        if(it!=lightIDs.end()) body<<",";
+    }
+    body<<"],"<<"\"name\":\""<<name<<"\"}";
+
+    message.addBodyText(body.str());
+    //set header
+    message.setHeader("Content-Type", "application/json");
+    //send request
+    client->post(url_.str(), message);
+}
+
+/**
+ * Send a DELETE message to the bridge hardware to delete a specified group. Called by deleteGroup().
+ * @param groupID the groupID of the group we want to delete as an int
+ */
+void IndivBridgeManagerWidget::connectDeleteGroup(int groupID) {
+    //construct URL
+    stringstream url_;
+    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/newdeveloper";
+    //"<<b->getUsername();
+    url_<<"/groups/"<<groupID;
+    Wt::Http::Client *client=new Wt::Http::Client(this);
+    client->setTimeout(HTML_CLIENT_TIMEOUT);
+    client->setMaximumResponseSize(10*1024);
+    //bind done signal with handling method
+    client->done().connect(boost::bind(&IndivBridgeManagerWidget::handleHttpResponseGroup, this, client, _1, _2));
+    //send request
+    Wt::Http::Message message;
+    client->deleteRequest(url_.str(), message);
+}
+
+
+/**
+ * Handles Http Response from Bridge. Update requestSuccess flag upon receiving successful response.
+ * @param client HTTP client
+ * @param err Error code
+ * @param response HTTP message received
+ *
+ */
+void IndivBridgeManagerWidget::handleHttpResponseGroup(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message &response) {
+    if(err||response.status()!=200) {
+        cerr<<"Error: "<<err.message()<<" ,"<<response.status()<<endl;
+
+    } else {
+        Wt::Json::Object result;
+        //try to parse response string to JSON object
+        try {
+            Wt::Json::parse(response.body(), result);
+        } catch (exception e)
+        {
+            cout<<"JSON parse failure."<<endl;
+            return;
+        }
+        //if response contains "success" then request was successful, set requestSuccess to true
+        requestSuccess=result.contains("success");
+    }
+    delete client;
+}

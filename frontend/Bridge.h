@@ -53,7 +53,9 @@ class Bridge {
         std::string username;
         //status is used to store API response from bridge
         std::string status;
+        //group stores at groups[groupID-1]
         std::vector<Group> groups;
+        //light stores at lights[lightID-1]
         std::vector<Light> lights;
 };
 
