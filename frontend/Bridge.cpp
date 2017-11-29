@@ -25,7 +25,7 @@ Bridge::Bridge() {
     hostName = "";
     port = "";
     username = "";
-    status="";
+    status= "";
 }
 
 // ! TODO: Add overloaded constructor for creating a Bridge with fields

@@ -22,14 +22,12 @@ class Light {
         int getBrightness();
         int getHue();
         int getSat();
-        int getSchedule();
         std::string getID();
         void setName(std::string n);
         void setIsActive(bool onOff);
         void setBrightness(int b);
         void setHue(int h);
         void setSat(int s);
-        void setSchedule(int sched);
         void setID(std::string i);
     private:
         void convertHexcodeToCoords(std::string col);

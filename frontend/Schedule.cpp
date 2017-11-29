@@ -29,7 +29,7 @@
      status = "";
  }
 
- // ! TODO: Add overloaded constructor for creating a Light with fields
+ // ! TODO: Add overloaded constructor for creating a Schedule with fields
 
  // --------------------------------------
  // PUBLIC METHODS

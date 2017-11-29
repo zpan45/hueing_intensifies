@@ -25,7 +25,6 @@ Light::Light() {
     brightness = 0;   //bri
     hue = 0;          //hue
     sat = 0;          //sat
-    schedule = 0;
     id = "";
 }
 
@@ -80,15 +79,6 @@ int Light::getSat() {
     return sat;
 }
 
-// TODO: Should this be returning an integer? Perhaps look into a different way of implementing the schedules.
-/**
- * Getter for the scheduled time for the Light to be turned on.
- * @return a schedule for when the Light should be turned on, an int.
- */
-int Light::getSchedule() {
-    return schedule;
-}
-
 /**
  * Getter for the ID field.
  * @return Light ID in string.
@@ -135,25 +125,15 @@ void Light::setHue(int h) {
 
 /**
  * Setter for the sat field.
- * @param h An integer representation of the light's sat.
+ * @param s An integer representation of the light's sat.
  */
 void Light::setSat(int s) {
     sat = s;
 }
 
-// TODO: Determine how to represent the schedule properly. See "getSchedule()"
-
-/**
- * Setter for the schedule field.
- * @param sched An integer representation of when the Light should turn on.
- */
-void Light::setSchedule(int sched) {
-    schedule = sched;
-}
-
 /**
  * Setter for the ID field.
- * @param id An integer representation of Light ID.
+ * @param i An integer representation of Light ID.
  */
 void Light::setID(string i) {
     id = i;
