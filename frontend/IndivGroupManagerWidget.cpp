@@ -81,7 +81,7 @@ void IndivGroupManagerWidget::displayLights() {
     Wt::WGroupBox *groupbox = new Wt::WGroupBox(g->getName(), this);
     
     for(int i = 0; i < g->getNumberOfLights(); i++) {
-        groupbox->addWidget(new Wt::WText(g->getLight(i)->getName() + " (ID: " + to_string(g->getLight(i)->getID()) + ") "));
+        groupbox->addWidget(new Wt::WText(g->getLight(i)->getName() + " (ID: " + g->getLight(i)->getID() + ") "));
         
         //IDEA: Add buttons as links; use internalpath handling for /bridges for the main bridges widget and then /bridges/# for the subsequent bridges. use connect() to connect each button to a link?
         string s = "Edit " + to_string(i);

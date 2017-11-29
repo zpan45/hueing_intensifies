@@ -4,14 +4,17 @@
 #define _GLIBCXX_USE_CXX11_ABI 1
 #include "IndivLightManagerWidget.h"
 
+using namespace std;
+
 //constructor
-IndivLightManagerWidget::IndivLightManagerWidget(const std::string &name, Bridge *b, Light *light, Wt::WContainerWidget *parent) {
+IndivLightManagerWidget::IndivLightManagerWidget(const std::string &name, Bridge *bridge, Light *light, Wt::WContainerWidget *parent) {
+    b = bridge;
     l = light;
     
     Wt::WPushButton *update = new Wt::WPushButton("Update", this);
-    update->clicked().connect() {
-        l->rename("new string");
-    }
+    update->clicked().connect(std::bind([=] () {
+        rename("new string");
+    }));
 }
 
 //destructor
@@ -84,10 +87,10 @@ void IndivLightManagerWidget::connectRename(std::string newname) {
     //bind done signal with handling method
     client->done().connect(boost::bind(&IndivLightManagerWidget::handleHttpResponse, this, client, _1, _2));
     //build PUT message
-    Wt::Http::Message message=new Wt::Http::Message();
-    stringstream body= "{";
+    Wt::Http::Message message;
+    stringstream body;
     //Set name
-    body << "\"name\":\"" << newname << "\"}";
+    body << "{" << "\"name\":\"" << newname << "\"}";
     message.addBodyText(body.str());
     //set header
     message.setHeader("Content-Type", "application/json");
@@ -110,10 +113,10 @@ void IndivLightManagerWidget::connectUpdate() {
     //bind done signal with handling method
     client->done().connect(boost::bind(&IndivLightManagerWidget::handleHttpResponse, this, client, _1, _2));
     //build PUT message
-    Wt::Http::Message message=new Wt::Http::Message();
-    stringstream body= "{";
+    Wt::Http::Message message;
+    stringstream body;
     //set on
-    body<<"\"on\":"<<boost::lexical_cast<std::string>(l->getIsActive())<< ",";
+    body<< "{" <<"\"on\":"<<boost::lexical_cast<std::string>(l->getIsActive())<< ",";
     body<<"\"bri\":"<<l->getBrightness()<<",";
     body<<"\"hue\":"<<l->getHue()<<",";
     body<<"\"sat\":"<<l->getSat()<<"}";
@@ -138,7 +141,7 @@ void IndivLightManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost
         cerr<<"Error: "<<err.message()<<" ,"<<response.status()<<endl;
 
     } else {
-        Wt::Json::Object result= new Wt::Json::Object;
+        Wt::Json::Object result;
         //try to parse response string to JSON object
         try {
             Wt::Json::parse(response.body(), result);

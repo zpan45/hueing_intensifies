@@ -21,7 +21,11 @@
 #include <Wt/Http/Client>
 #include <Wt/WLabel>
 #include <Wt/WTemplate>
+#include <Wt/Json/Object>
+#include <Wt/Json/Parser>
+#include <Wt/Json/Serializer>
 
+#include "Bridge.h"
 #include "Light.h"
 
 #define HTML_CLIENT_TIMEOUT 5
