@@ -125,7 +125,26 @@ bool HueApplication::testLoggedInStatus() {
 */
 void HueApplication::goToLogIn() {
     root()->clear();
-    root()->addWidget(new LoginWidget("Login", curUser_));
+    LoginWidget *login = new LoginWidget("Login", curUser_, root());
+    
+    login->loggedIn().connect( this, &HueApplication::loggedIn_ );
+}
+
+void HueApplication::loggedIn_(User u) {
+    curUser_->setUsername(u.getUsername());
+    curUser_->setPassword(u.getPassword());
+    curUser_->setFirstName(u.getFirstName());
+    curUser_->setLastName(u.getLastName());
+    
+    // ! TODO -- need to extract all bridges from User u and attach them to curUser_
+    /* MAYBE something like this??? untested code :
+    
+    for(int i = 0; i < u.getNumberOfBridges(); i++ {
+        curUser->addBridge( u.getBridge(i) ); 
+    }
+    
+    */
+    
 }
 
 /** Method that displays the Registration Widget to the User.

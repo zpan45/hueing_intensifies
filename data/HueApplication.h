@@ -36,6 +36,7 @@ private:
     void showMainPage();
     bool testLoggedInStatus();
     void goToLogIn();
+    void loggedIn_(User u);
     void goToRegister();
     void displayBridges();
     void addBridge();

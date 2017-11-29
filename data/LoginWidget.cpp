@@ -25,7 +25,13 @@ LoginWidget::LoginWidget(const std::string &name, User* current, WContainerWidge
 : WContainerWidget(parent), name_(name) {
     setContentAlignment(AlignCenter);
     
+    Wt::WApplication *app = Wt::WApplication::instance();
+    
     cur = current;
+    
+    User * u = new User("jake", "testPW", "j", "f");
+    
+    current = u;
     
     cout << "The current user is " << cur << " and the username is '" << cur->getUsername() << "'" << endl; 
     
@@ -49,6 +55,10 @@ LoginWidget::LoginWidget(const std::string &name, User* current, WContainerWidge
     this->addWidget(loginDisplay);
 
     loginButton->clicked().connect(this, &LoginWidget::login);
+}
+
+Wt::Signal<User>& LoginWidget::loggedIn(){
+    return loggedInSignal_;
 }
 
 User LoginWidget::getUserByUsername(Wt::WString username) {
@@ -98,10 +108,7 @@ void LoginWidget::login() {
     if(u.getUsername() != "") {
         if(checkPassword(u, passwordEdit->text()) == true) {
             loginDisplay->addWidget(new Wt::WText(u.constructGreetingString()));
-            /*
-            usrPtr = &u;
-            HueApplication::setCurrentUser(usrPtr);
-            */
+            loggedInSignal_.emit(u);
         }
         else {
             loginDisplay->addWidget(new Wt::WText("ERROR: The entered password did not match!"));
