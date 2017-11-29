@@ -10,6 +10,7 @@
  */
 
 #include "HueApplication.h"
+#include "DBFileManager.h"
 
 DBFileManager activeDB;
 
@@ -327,7 +328,7 @@ int runRESTful(int argc, char *argv[], Wt::ApplicationCreator createApplication)
             int sig = Wt::WServer::waitForShutdown(argv[0]);
 
             std::cerr << "Shutdown (signal = " << sig << ")" << std::endl;
-            ::activeDB.DBFileManager::saveUser(curUser_);
+            ::activeDB.DBFileManager::saveUser(&HueApplication::curUser_);
             server.stop();
         }
     }
