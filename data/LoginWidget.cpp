@@ -24,17 +24,17 @@ using namespace std;
 LoginWidget::LoginWidget(const std::string &name, User* current, WContainerWidget *parent)
 : WContainerWidget(parent), name_(name) {
     setContentAlignment(AlignCenter);
-    
+
     Wt::WApplication *app = Wt::WApplication::instance();
-    
+
     cur = current;
-    
+
     User * u = new User("jake", "testPW", "j", "f");
-    
+
     current = u;
-    
-    cout << "The current user is " << cur << " and the username is '" << cur->getUsername() << "'" << endl; 
-    
+
+    cout << "The current user is " << cur << " and the username is '" << cur->getUsername() << "'" << endl;
+
     // add the Username entry textbox
     this->addWidget(new Wt::WText("Username: "));
     usernameEdit = new WLineEdit(this);
@@ -96,7 +96,7 @@ bool LoginWidget::checkPassword(User u, Wt::WString passInput) {
 */
 void LoginWidget::login() {
     User *usrPtr = new User();
-    
+
     loginDisplay->clear();
 
     User u = getUserByUsername(usernameEdit->text());
@@ -106,6 +106,9 @@ void LoginWidget::login() {
     loginDisplay->addWidget(new Wt::WBreak());
 
     if(u.getUsername() != "") {
+            std::cout << "Stored password: " << u.getPassword() << std::endl;
+            std::cout << "Entered password: " << u.hashPassword(passwordEdit->text().toUTF8()) << std::endl;
+            std::cout << "Entered and hashed: " << u.hashPassword(passwordEdit->text().toUTF8()) << std::endl;
         if(checkPassword(u, passwordEdit->text()) == true) {
             loginDisplay->addWidget(new Wt::WText(u.constructGreetingString()));
             loggedInSignal_.emit(u);
