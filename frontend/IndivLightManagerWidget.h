@@ -45,8 +45,10 @@ private:
     bool requestSuccess;
     bool rename(std::string newname);
     bool update();
+    bool update(int transTime);
     void connectRename(std::string newname);
     void connectUpdate();
+    void connectUpdate(int transTime);
     void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response);
 
 };
