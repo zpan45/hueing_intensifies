@@ -10,6 +10,7 @@
 #include <Wt/WPushButton>
 #include <Wt/WText>
 #include <Wt/WBorderLayout>
+#include <Wt/WSignal>
 
 #include "User.h"
 #include "HueApplication.h"
@@ -18,6 +19,7 @@ class LoginWidget: public Wt::WContainerWidget
 {
 public:
     LoginWidget(const std::string &name, User* current, Wt::WContainerWidget *parent = 0);
+    Wt::Signal<User>& loggedIn();
 
 private:
     Wt::WText        *title;
@@ -27,6 +29,8 @@ private:
     Wt::WLineEdit *usernameEdit;
     Wt::WLineEdit *passwordEdit;
     User* cur;
+    
+    Wt::Signal<User> loggedInSignal_;
 
     User getUserByUsername(Wt::WString username);
     bool checkPassword(User u, Wt::WString passInput);
