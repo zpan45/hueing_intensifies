@@ -278,7 +278,7 @@ void HueApplication::addBridge() {
         cout << "Hostname " << b.getHostName() << endl;
         cout << "Port " << b.getPort() << endl;
 
-        curUser_->addBridge(b);'
+        curUser_->addBridge(b);
         ::activeDB.DBFileManager::saveUser(curUser_);
     }
 }
