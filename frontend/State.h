@@ -17,6 +17,7 @@
 class State {
     public:
       State();
+      State(bool any, bool all);
 
       bool getAny_On();
       bool getAll_On();

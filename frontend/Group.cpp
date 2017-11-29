@@ -21,15 +21,29 @@ using namespace std;
  * Default constructor for Group class. Initializes all fields to have no values.
  * Takes no parameters.
  */
-Group::Group() {
-    name = "";
-    act = NULL;
-    state = NULL;
-    type = "LightGroup";
-    groupClass = "Other";
+Group::Group(): name(""), act(NULL), state(NULL), type("LightGroup"), groupClass("Other") {
+    // name = "";
+    // act = NULL;
+    // state = NULL;
+    // type = "LightGroup"; //Default value
+    // groupClass = "Other"; //Default value
 }
 
-// ! TODO: Add overloaded constructor for creating a Group with fields
+/**
+ * Overload constructor for Group class.
+ * @param n for name.
+ * @param a for act.
+ * @param s for state.
+ * @param t for type.
+ * @param c for groupClass.
+ */
+Group::Group(string n, Action a, State s, string t, string c): name(n), act(a), state(s), type(t), groupClass(c) {
+    // name = "";
+    // act = NULL;
+    // state = NULL;
+    // type = "LightGroup"; //Default value
+    // groupClass = "Other"; //Default value
+}
 
 // --------------------------------------
 // PUBLIC METHODS

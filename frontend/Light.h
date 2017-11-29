@@ -16,6 +16,7 @@
 class Light {
     public:
         Light();
+        Light(std::string n, bool i, int b, int h, int s, std::string id);
 
         std::string getName();
         bool getIsActive();

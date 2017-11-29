@@ -15,16 +15,30 @@
  // CONSTRUCTORS
  // --------------------------------------
 
-
  /**
   * Default constructor for Command class. Initializes all fields to have no values.
   */
- Schedule::Schedule() {
-
-     address = "";
-     method = "";
-     body = "";
+ Command::Command(): address(""), method(""), body("") {
+     // address = "";
+     // method = "";
+     // body = "";
  }
+
+ /**
+  * Overload constructor for Command class.
+  * @param a for address.
+  * @param m for method.
+  * @param b for body.
+  */
+ Command::Command(string a, string m, string b): address(a), method(m), body(b) {
+     // address = "";
+     // method = "";
+     // body = "";
+ }
+
+ // --------------------------------------
+ // PUBLIC METHODS
+ // --------------------------------------
 
  /**
   * Getter for the address of the Command object.

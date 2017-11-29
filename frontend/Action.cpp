@@ -19,14 +19,26 @@ using namespace std;
 /**
  * Default constructor for Action class. Initializes all fields to have no values.
  */
-Action::Action() {
-    isActive = false; //on
-    brightness = 0;   //bri
-    hue = 0;          //hue
-    sat = 0;          //sat
+Action::Action(): isActive(false), brightness(0), hue(0), sat(0) {
+    // isActive = false; //on
+    // brightness = 0;   //bri
+    // hue = 0;          //hue
+    // sat = 0;          //sat
 }
 
-// ! TODO: Add overloaded constructor for creating a Action with fields
+/**
+ * Overload constructor for Action class.
+ * @param i for isActive.
+ * @param b for brightness.
+ * @param h for hue.
+ * @param s for sat.
+ */
+Action::Action(bool i, int b, int h, int s): isActive(i), brightness(b), hue(h), sat(s) {
+    // isActive = false; //on
+    // brightness = 0;   //bri
+    // hue = 0;          //hue
+    // sat = 0;          //sat
+}
 
 // --------------------------------------
 // PUBLIC METHODS

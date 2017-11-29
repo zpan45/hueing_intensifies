@@ -21,12 +21,17 @@ using namespace std;
  * any_on "false" if all lamps are on, "true" if at least one lamp is on
  * all_on "false" if all lamps ore off, "true" if all amps are on
  */
-State::State() {
-      any_on = false;
-      all_on = false;
+State::State(): any_on(false), all_on(false) {
 }
 
-// ! TODO: Add overloaded constructor for creating a Action with fields
+/**
+ * Overload constructor for State class.
+ * @param any for any_on.
+ * @param all for all_on.
+ */
+State::State(bool any, bool all): any_on(any), all_on(all) {
+}
+
 
 // --------------------------------------
 // PUBLIC METHODS

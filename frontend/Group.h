@@ -19,6 +19,7 @@
 class Group {
     public:
         Group();
+        Group(std::string n, Action a, State s, std::string t, std::string c);
 
         Action getAction();
         std::string getName();

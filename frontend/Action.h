@@ -16,6 +16,7 @@
 class Action {
     public:
       Action();
+      Action(bool i, int b, int h, int s);
 
       bool getIsActive();
       int getBrightness();

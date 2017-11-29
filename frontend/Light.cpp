@@ -19,16 +19,32 @@ using namespace std;
 /**
  * Default constructor for Light class. Initializes all fields to have no values.
  */
-Light::Light() {
-    name = "";
-    isActive = false; //on
-    brightness = 0;   //bri
-    hue = 0;          //hue
-    sat = 0;          //sat
-    id = "";
+Light::Light(): name(""), isActive(false),  brightness(0), hue(0), sat(0), id("") {
+    // name = "";
+    // isActive = false; //on
+    // brightness = 0;   //bri
+    // hue = 0;          //hue
+    // sat = 0;          //sat
+    // id = "";
 }
 
-// ! TODO: Add overloaded constructor for creating a Light with fields
+/**
+ * Overload constructor for Light class.
+ * @param n for name.
+ * @param i for isActive.
+ * @param b for brightness.
+ * @param h for hue.
+ * @param s for sat.
+ * @param id for id.
+ */
+Light::Light(string n, bool i, int b, int h, int s, string id): name(n), isActive(i),  brightness(b), hue(h), sat(s), id(id) {
+    // name = "";
+    // isActive = false; //on
+    // brightness = 0;   //bri
+    // hue = 0;          //hue
+    // sat = 0;          //sat
+    // id = "";
+}
 
 // --------------------------------------
 // PUBLIC METHODS
