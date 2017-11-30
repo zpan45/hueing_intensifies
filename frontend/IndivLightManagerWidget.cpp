@@ -11,6 +11,8 @@ IndivLightManagerWidget::IndivLightManagerWidget(const std::string &name, Bridge
     b = bridge;
     l = light;
     
+    showInformation();
+    
     Wt::WPushButton *update = new Wt::WPushButton("Update", this);
     update->clicked().connect(std::bind([=] () {
         rename("new string");
@@ -26,6 +28,42 @@ IndivLightManagerWidget::~IndivLightManagerWidget() {
 
 
 //private methods
+
+/**
+*/
+void IndivLightManagerWidget::showInformation() {
+    // set up the "Light Name" text entry field with a label
+    Wt::WLabel *nameLabel = new Wt::WLabel("Light Name: ", this);
+    nameEdit_ = new Wt::WLineEdit(l->getName(), this);
+    nameLabel->setBuddy(nameEdit_);
+    this->addWidget(new Wt::WBreak());
+    
+    // Add a dropdown menu switch for on or off as a WComboBox
+    Wt::WLabel *onOffLabel = new Wt::WLabel("Light State: ", this);
+    onOffSwitch_ = new Wt::WComboBox(this);
+    onOffSwitch_->addItem("On");
+    onOffSwitch_->addItem("Off");
+    onOffSwitch_->setCurrentIndex(1);
+    this->addWidget(new Wt::WBreak());
+    
+    // brightness field
+    Wt::WLabel *briLabel = new Wt::WLabel("Brightness: ", this);
+    brightnessEdit_ = new Wt::WLineEdit(to_string(l->getBrightness()), this);
+    briLabel->setBuddy(brightnessEdit_);
+    this->addWidget(new Wt::WBreak());
+    
+    // set up a "Hue" text entry field with a label
+    Wt::WLabel *hueLabel = new Wt::WLabel("Hue: ", this);
+    hueEdit_ = new Wt::WLineEdit(to_string(l->getHue()), this);
+    hueLabel->setBuddy(hueEdit_);
+    this->addWidget(new Wt::WBreak());
+    
+    // saturation field
+    Wt::WLabel *satLabel = new Wt::WLabel("Saturation: ", this);
+    satEdit_ = new Wt::WLineEdit(to_string(l->getSat()), this);
+    satLabel->setBuddy(satEdit_);
+    this->addWidget(new Wt::WBreak());
+}
 
 /**
  * Rename the Light to provided new name.
