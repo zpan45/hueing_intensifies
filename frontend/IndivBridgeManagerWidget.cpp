@@ -368,10 +368,14 @@ bool IndivBridgeManagerWidget::updateGroups() {
     }
     //JSON object groupsJSON contains all the groups JSON
     Wt::Json::Object groupsJSON;
+    Wt::Json::Object lightsJSON;
+    
     groupsJSON=result.get("groups");
+    lightsJSON = result.get("lights");
 
     //set<string> contains all the groupIDs
     std::set<std::string> groupIDs=groupsJSON.names();
+    //std::set<std::string> lightIDs = lightsJSON.names();
     
     //for each groupID, construct group with their lights, and store them in vector bridge.groups[groupID-1]
     for (auto it=groupIDs.begin();it!=groupIDs.end();it++) {
@@ -380,7 +384,7 @@ bool IndivBridgeManagerWidget::updateGroups() {
         //set Group name
         newgroup.setName(groupJSON.get("name"));
         
-        /*
+        
         const Wt::Json::Array& lightsInGroupJSONArray = groupJSON.get("lights");
         
         int i = 0; // loop counter
@@ -391,9 +395,25 @@ bool IndivBridgeManagerWidget::updateGroups() {
         }
         
         for(int j = 0; j < ary.size(); j++) {
+            Light newlight;
+            Wt::Json::Object l = lightsJSON.get( ary[j] );
+            
+            newlight.setName(l.get("name"));
+            
+            Wt::Json::Object lightStateJSON =l.get("state");
+            newlight.setIsActive(lightStateJSON.get("on"));
+            newlight.setBrightness(lightStateJSON.get("bri"));
+            newlight.setHue(lightStateJSON.get("hue"));
+            newlight.setSat(lightStateJSON.get("sat"));
+            
+            newgroup.addLight(newlight);
+            
+            Wt::Json::Value val = l.get("name");
+            string valStr = val.toString();
+            cout << valStr << endl;
             
         }
-        */
+        
         //add newgroup to Bridge
         b->addGroup(newgroup);
     }
