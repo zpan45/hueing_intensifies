@@ -27,6 +27,7 @@
 
 #include "Bridge.h"
 #include "Group.h"
+#include "IndivLightManagerWidget.h"
 
 #define USERNAME "newdeveloper"
 #define HTML_CLIENT_TIMEOUT 5

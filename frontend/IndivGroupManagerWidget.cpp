@@ -89,7 +89,7 @@ void IndivGroupManagerWidget::displayLights() {
         
         s = "/lights/" + to_string(i);
         
-        button->setLink(Wt::WLink(Wt::WLink::InternalPath, s));
+        button->setLink(Wt::WLink(Wt::WLink::InternalPath, Wt::WApplication::instance()->internalPath() + s));
         
         groupbox->addWidget(new Wt::WBreak());
     }
