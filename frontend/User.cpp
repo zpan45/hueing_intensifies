@@ -236,21 +236,21 @@ string User::bridgesToString()  {
  */
 string User::hashPassword(string pass) {
 
-    /*std::hash<std::string> str_hash;
+    std::hash<std::string> str_hash;
 
     std::stringstream ss;
 
     ss << str_hash(pass);
 
-    return ss.str();*/
-    std::string temp;
+    return ss.str();
+/*    std::string temp;
 
     for(char& c : pass)
     {
         int a = c;
         temp.std::string::append(std::to_string(a));
     }
-    return temp;
+    return temp;*/
 }
 
 
