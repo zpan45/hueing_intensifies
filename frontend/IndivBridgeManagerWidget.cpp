@@ -175,12 +175,8 @@ void IndivBridgeManagerWidget::displayGroups() {
         b->removeGroup(cb->currentIndex()); // delete the Group with the current index
         connectDeleteGroup(cb->currentIndex() + 1);
         
-        cb->removeItem(cb->currentIndex()); // remove the option to delete a button
+        cb->removeItem(cb->currentIndex()); // remove the option to delete the current item
         delButton_->setEnabled(false); // disable the delete button
-
-        for(int i = 0; i < b->getNumberOfGroups(); i++) {
-            cout << b->getGroup(i)->getName() << endl;
-        }
 
         displayGroups();
     }));
@@ -402,13 +398,10 @@ bool IndivBridgeManagerWidget::updateGroups() {
             newlight.setBrightness(lightStateJSON.get("bri"));
             newlight.setHue(lightStateJSON.get("hue"));
             newlight.setSat(lightStateJSON.get("sat"));
+            
+            newlight.setID( ary[j] ); // set the id to match what was retrieved from the API
 
             newgroup.addLight(newlight);
-
-            Wt::Json::Value val = l.get("name");
-            string valStr = val.toString();
-            cout << valStr << endl;
-
         }
 
         //add newgroup to Bridge

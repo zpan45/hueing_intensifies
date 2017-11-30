@@ -28,17 +28,6 @@ IndivGroupManagerWidget::IndivGroupManagerWidget(const std::string &name, Bridge
     g = group; // g is a pointer to the current group object
     // It HAS to be a pointer because otherwise the changes from the update() method won't persist
     
-    Light l;
-    l.setName("new light1");
-    
-    g->addLight(l);
-    l.setName("newL2");
-    g->addLight(l);
-    
-    for(int i = 0; i < g->getNumberOfLights(); i++) {
-        cout << g->getLight(i)->getName() << endl;
-    }
-    
     showInformation();
     
     // for testing purposes only -- in the future, the Bridge b will already have details associated with it when passed in
