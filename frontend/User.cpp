@@ -130,7 +130,14 @@ int User::getNumberOfBridges() {
 
 std::vector<Bridge> User::getAllBridges()
 {
-    std::vector<Bridge> bridgeList = User::bridges;
+    std::vector<Bridge> bridgeList;
+    Bridge tempBridge;
+
+    for (std::vector<Bridge>::iterator it = User::bridges.begin() ; it != User::bridges.end(); ++it)
+    {
+        tempBridge = *it;
+        bridgeList.std::vector<Bridge>::push_back(tempBridge);
+    }
     return bridgeList;
 }
 
@@ -184,9 +191,9 @@ string User::constructGreetingString() {
  * Returns user info in a singe string.
  * @return user as string
  */
-string User::toString()  {
+string User::infoToString()  {
+
     string temp = "";
-    Bridge tempBridge;
 
     temp.std::string::append(User::username);
     temp.std::string::append("\n");
@@ -200,14 +207,22 @@ string User::toString()  {
     temp.std::string::append(User::lastName);
     temp.std::string::append("\n");
 
+    return temp;
+}
+
+string User::bridgesToString()  {
+    string temp = "";
+    Bridge tempBridge;
+
     for (std::vector<Bridge>::iterator it = User::bridges.begin() ; it != User::bridges.end(); ++it)
     {
         tempBridge = *it;
         temp.std::string::append(tempBridge.toString());
     }
     return temp;
-
 }
+
+
 
 // --------------------------------------
 // PRIVATE METHODS

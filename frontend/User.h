@@ -33,7 +33,8 @@ class User {
         void setLastName(std::string last);
         void setPassword(std::string pass);
         std::string constructGreetingString();
-        std::string toString();
+        std::string infoToString();
+        std::string bridgesToString();
         std::string hashPassword(std::string pass);
         void addBridge(Bridge b);
         bool removeBridge(int element);

@@ -46,7 +46,7 @@ void HueApplication::finalize() {
     User *u = HueApplication::getCurrentUser();
 
     if(u->getUsername() != "") {
-        ::activeDB.DBFileManager::saveUser(u);
+        ::activeDB.DBFileManager::saveBridges(u);
     }
 }
 
@@ -141,7 +141,7 @@ void HueApplication::loggedIn_(User u) {
 
     for(int i = 0; i < u.getNumberOfBridges(); i++) {
         Bridge b( u.getBridge(i)->getName(), u.getBridge(i)->getLocation(), u.getBridge(i)->getHostName(), u.getBridge(i)->getPort(), u.getBridge(i)->getUsername(), u.getBridge(i)->getStatus() );
-        
+
         curUser_->addBridge( b );
     }
 }
@@ -278,7 +278,7 @@ void HueApplication::addBridge() {
         cout << "Port " << b.getPort() << endl;
 
         curUser_->addBridge(b);
-        ::activeDB.DBFileManager::saveUser(curUser_);
+        ::activeDB.DBFileManager::saveBridges(curUser_);
     }
 }
 
