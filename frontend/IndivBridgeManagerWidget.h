@@ -43,8 +43,6 @@ class IndivBridgeManagerWidget: public Wt::WContainerWidget {
 public:
     IndivBridgeManagerWidget(const std::string &name, Bridge *b, Wt::WContainerWidget *parent = 0);
     virtual ~IndivBridgeManagerWidget();
-    bool checkBridge();
-
 
 private:
     Bridge *b;
@@ -52,7 +50,9 @@ private:
     Wt::WLineEdit *bridgeLocationEdit_;
     Wt::WLineEdit *hostNameEdit_;
     Wt::WLineEdit *portNumEdit_;
-    bool requestSuccess;
+    //bool requestSuccess;
+    Wt::WGroupBox *groupbox; // display area
+    
     
     void connect();
     void showInformation();
@@ -63,8 +63,6 @@ private:
     void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response) const;
     bool updateLights();
     bool updateGroups();
-    bool createGroup(std::string name);
-    bool deleteGroup(int groupID);
     void connectCreateGroup(std::string name);
     void connectDeleteGroup(int groupID);
     void handleHttpResponseGroup(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response);

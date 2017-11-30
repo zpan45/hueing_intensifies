@@ -15,58 +15,16 @@ IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Brid
 
     b = bridge; // b is a pointer to the current bridge object
     // It HAS to be a pointer because otherwise the changes from the update() method won't persist
-    checkBridge();
+    connect();
 
-    /* DEBUGGING STUFF -- CAN BE DELETED SAFELY
-    Group g;
-    g.setName("new group1");
-
-    b->addGroup(g);
-    g.setName("newG2");
-    b->addGroup(g);
-
-
-    for(int i = 0; i < b->getNumberOfGroups(); i++) {
-        cout << b->getGroup(i)->getName() << endl;
-    }
-    */
-    
+    groupbox = new Wt::WGroupBox(b->getName()); // initialize area to display the list of groups associated with this Bridge -- Widget gets added in showInformation();
     showInformation();
-
-    /* DEBUGGING STUFF -- CAN BE DELETED SAFELY
-    Group *group;
-    group = b->getGroup(0);
-
-    this->addWidget(new IndivGroupManagerWidget("gmanager", b, group));
-    */
 }
 
 
 //destructor
 IndivBridgeManagerWidget::~IndivBridgeManagerWidget() {
 
-}
-
-
-//public methods
-/**
- * Check if the Bridge provided can be reached. Bridge status would be updated at the same time.
- * @return bool Bridge reached
- */
-bool IndivBridgeManagerWidget::checkBridge() {
-    //clean stored Bridge status
-    b->setStatus("");
-    //connect to Bridge
-    connect();
-    //if connection is successful, Bridge's status would be updated by handleHttpResponse()
-    for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
-        //check every 100ms for HTML_MESSAGE_CHECK times
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        //if Bridge's status isn't empty then connected successfully
-        if(b->getStatus()!="") return true;
-    }
-    //connection timeout, return false
-    return false;
 }
 
 //private methods
@@ -129,6 +87,8 @@ void IndivBridgeManagerWidget::showInformation() {
     Wt::WPushButton *addGroupButton = new Wt::WPushButton("Add Group", this);
     addGroupButton->clicked().connect(this, &IndivBridgeManagerWidget::addGroupToBridge);
     
+    this->addWidget(groupbox);
+    
     // the update_ button is bound to a lambda function that calls the update()
     // method. Done this way because you cannot pass parameters through Wt's connect()
     // method.
@@ -151,7 +111,7 @@ void IndivBridgeManagerWidget::displayGroups() {
     updateGroups();
 
     // Add a new groupbox to display all the Groups associated with the current Bridge
-    Wt::WGroupBox *groupbox = new Wt::WGroupBox(b->getName(), this);
+    groupbox->clear();
 
     for(int i = 0; i < b->getNumberOfGroups(); i++) {
         groupbox->addWidget(new Wt::WText(b->getGroup(i)->getName() + " (" + to_string(b->getGroup(i)->getNumberOfLights()) + " Lights) "));
@@ -197,6 +157,8 @@ void IndivBridgeManagerWidget::displayGroups() {
     // if the delete button is clicked, remove the option to remove the Group and the Group itself
     delButton_->clicked().connect(std::bind([=] () {
         b->removeGroup(cb->currentIndex()); // delete the Group with the current index
+        connectDeleteGroup(cb->currentIndex() + 1);
+        
         cb->removeItem(cb->currentIndex()); // remove the option to delete a button
         delButton_->setEnabled(false); // disable the delete button
 
@@ -204,7 +166,7 @@ void IndivBridgeManagerWidget::displayGroups() {
             cout << b->getGroup(i)->getName() << endl;
         }
 
-        groupbox->refresh();
+        displayGroups();
     }));
 }
 
@@ -226,15 +188,11 @@ void IndivBridgeManagerWidget::addGroupToBridge() {
     // On successful close of the dialogue, do the following:
     if (dialogue.exec() == Wt::WDialog::Accepted) {
         Group g;
-
         g.setName(groupNameEdit_->text().toUTF8());
-
-
-        cout << "Name " << g.getName() << endl;
         
-        if(createGroup( g.getName() ) == true) {
-            b->addGroup(g);
-        }
+        connectCreateGroup(g.getName());
+        b->addGroup(g);
+        displayGroups();
     }
 }
 
@@ -322,7 +280,7 @@ bool IndivBridgeManagerWidget::updateLights() {
     //drop all saved lights in the bridge
     b->clearLights();
     //try to connect to the Bridge; if connected, checkBridge returns true and bridge status is set
-    if (!checkBridge()) return false;
+    connect();
     Wt::Json::Object result;
     //try to parse bridge status string to JSON object
     try {
@@ -372,96 +330,70 @@ bool IndivBridgeManagerWidget::updateGroups() {
     //drop all saved groups in the bridge
     b->clearGroups();
     //try to connect to the Bridge; if connected, checkBridge returns true and bridge status is set
-    if (!checkBridge()) return false;
+    connect();
     Wt::Json::Object result;
     //try to parse bridge status string to JSON object
     try {
         Wt::Json::parse(b->getStatus(), result);
     } catch (exception e)
     {
-        cout<<"JSON parse failure."<<endl;
+        cout<<"JSON parse failure (inside updateGroups())"<<endl;
         return false;
     }
     //JSON object groupsJSON contains all the groups JSON
     Wt::Json::Object groupsJSON;
+    Wt::Json::Object lightsJSON;
+    
     groupsJSON=result.get("groups");
+    lightsJSON = result.get("lights");
+
     //set<string> contains all the groupIDs
     std::set<std::string> groupIDs=groupsJSON.names();
+    //std::set<std::string> lightIDs = lightsJSON.names();
+    
     //for each groupID, construct group with their lights, and store them in vector bridge.groups[groupID-1]
-    for (auto it=groupIDs.begin();it!=groupIDs.end();++it) {
+    for (auto it=groupIDs.begin();it!=groupIDs.end();it++) {
         Wt::Json::Object groupJSON =groupsJSON.get(*it);
         Group newgroup;
         //set Group name
         newgroup.setName(groupJSON.get("name"));
-
+        
+        
         const Wt::Json::Array& lightsInGroupJSONArray = groupJSON.get("lights");
         
         int i = 0; // loop counter
+        vector<string> ary;
         //for every lightID in the Group
-        for (auto itl=lightsInGroupJSONArray.begin();itl!=lightsInGroupJSONArray.end();++itl, ++i) {
-            Light l(b->getLight(i)->getName(), b->getLight(i)->getIsActive(), b->getLight(i)->getBrightness(), b->getLight(i)->getHue(), b->getLight(i)->getSat(), b->getLight(i)->getID());
-            
-            //add the light
-            newgroup.addLight(l); //light store at vector<lights>[lightID-1]
+        for (auto itl=lightsInGroupJSONArray.begin();itl!=lightsInGroupJSONArray.end();itl++, i++) {
+            ary.push_back(lightsInGroupJSONArray[i]);
         }
-        //add newgroup to Bridge
-        cout << "\n\n\n\n" << newgroup.getName() << "\n\n\n\n" << endl;
         
+        for(int j = 0; j < ary.size(); j++) {
+            Light newlight;
+            Wt::Json::Object l = lightsJSON.get( ary[j] );
+            
+            newlight.setName(l.get("name"));
+            
+            Wt::Json::Object lightStateJSON =l.get("state");
+            newlight.setIsActive(lightStateJSON.get("on"));
+            newlight.setBrightness(lightStateJSON.get("bri"));
+            newlight.setHue(lightStateJSON.get("hue"));
+            newlight.setSat(lightStateJSON.get("sat"));
+            
+            newgroup.addLight(newlight);
+            
+            Wt::Json::Value val = l.get("name");
+            string valStr = val.toString();
+            cout << valStr << endl;
+            
+        }
+        
+        //add newgroup to Bridge
         b->addGroup(newgroup);
     }
+    
     return true;
-
 }
-
-/**
- * Connect to the bridge hardware and create a new group; after creation, update groups vector
- * @param name new group's name
- * @param lightIDs a vector of int containing the lightIDs in the group
- * @return true on group created successfully
- */
-bool IndivBridgeManagerWidget::createGroup(std::string name) {
-    //initialize request success flag
-    requestSuccess=false;
-    //connect to Bridge
-    connectCreateGroup(name);
-    //if connection is successful, requestSuccess flag would be updated by handleHttpResponseGroup()
-    for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
-        //check every 100ms for HTML_MESSAGE_CHECK times
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        //if flag's set then created successfully, update groups vector
-        if(requestSuccess) {
-            updateGroups();
-            return true;
-        }
-    }
-    //connection timeout, return false
-    return false;
-}
-
-/**
- * Connect to the bridge hardware and delete a specified group; after deletion, update groups vector
- * @param groupID the groupID of the group we want to delete as an int
- * @return true on group deleted successfully
- */
-bool IndivBridgeManagerWidget::deleteGroup(int groupID) {
-    //initialize request success flag
-    requestSuccess=false;
-    //connect to Bridge
-    connectDeleteGroup(groupID);
-    //if connection is successful, requestSuccess flag would be updated by handleHttpResponseGroup()
-    for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
-        //check every 100ms for HTML_MESSAGE_CHECK times
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        //if flag's set then created successfully, update groups vector
-        if(requestSuccess) {
-            updateGroups();
-            return true;
-        }
-    }
-    //connection timeout, return false
-    return false;
-}
-
 
 /**
  * Send a POST message to the bridge hardware to create a new group. Called by createGroup().
@@ -474,11 +406,6 @@ void IndivBridgeManagerWidget::connectCreateGroup(std::string name) {
     url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/newdeveloper";
     //"<<b->getUsername();
     url_<<"/groups";
-    Wt::Http::Client *client=new Wt::Http::Client(this);
-    client->setTimeout(HTML_CLIENT_TIMEOUT);
-    client->setMaximumResponseSize(10*1024);
-    //bind done signal with handling method
-    client->done().connect(boost::bind(&IndivBridgeManagerWidget::handleHttpResponseGroup, this, client, _1, _2));
 
     //build POST message
     Wt::Http::Message message;
@@ -489,8 +416,17 @@ void IndivBridgeManagerWidget::connectCreateGroup(std::string name) {
     message.addBodyText(body.str());
     //set header
     message.setHeader("Content-Type", "application/json");
+    
+    Wt::Http::Client *clientPost=new Wt::Http::Client(this);
+    clientPost->setTimeout(HTML_CLIENT_TIMEOUT);
+    clientPost->setMaximumResponseSize(10*1024);
+    //bind done signal with handling method
+    clientPost->done().connect(boost::bind(&IndivBridgeManagerWidget::handleHttpResponseGroup, this, clientPost, _1, _2));
     //send request
-    client->post(url_.str(), message);
+    if(clientPost->post(url_.str(), message)) {
+        cout << "posted" << endl;
+        Wt::WApplication::instance()->deferRendering();
+    }
 }
 
 /**
@@ -515,28 +451,38 @@ void IndivBridgeManagerWidget::connectDeleteGroup(int groupID) {
 
 
 /**
- * Handles Http Response from Bridge. Update requestSuccess flag upon receiving successful response.
+ * Handles Http Response from Bridge. Update this->requestSuccess flag upon receiving successful response.
  * @param client HTTP client
  * @param err Error code
  * @param response HTTP message received
  *
  */
 void IndivBridgeManagerWidget::handleHttpResponseGroup(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message &response) {
+    Wt::WApplication::instance()->resumeRendering();
+    
     if(err||response.status()!=200) {
         cerr<<"Error: "<<err.message()<<" ,"<<response.status()<<endl;
 
     } else {
-        Wt::Json::Object result;
+        Wt::Json::Array result;
+        cout << response.body() << endl;
         //try to parse response string to JSON object
         try {
+            
             Wt::Json::parse(response.body(), result);
-        } catch (exception e)
-        {
-            cout<<"JSON parse failure."<<endl;
+            Wt::Json::Value val = result[0];
+            
+            Wt::Json::Object obj = val;
+        }
+        catch ( Wt::Json::TypeException t) {
+            cerr << "type exception" << endl;
             return;
         }
-        //if response contains "success" then request was successful, set requestSuccess to true
-        requestSuccess=result.contains("success");
+        catch (exception e) {
+            cout<<"JSON parse failure (inside handleHttpResponseGroup()).\n" << e.what() <<endl;
+            return;
+        }
     }
+    
     delete client;
 }
