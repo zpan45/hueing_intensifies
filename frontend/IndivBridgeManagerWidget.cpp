@@ -1,16 +1,27 @@
-//
-// Created by Peter on 2017/11/21.
-//
+/**
+ * @file IndivBridgeManagerWidget.cpp
+ * A widget for managing a Bridge object, allows user to display and edit properties of a Bridge.
+ * It has methods to try to connect to a Bridge hardware and confirm it is reachable;
+ * update the Lights and Groups stored in the Bridge object;
+ * create/delete Groups stored in the Bridge object and send API calls to the hardware for this purpose.
+ *
+ * @brief Individual Bridge Manager Widget
+ * @author Zhengyang Pan (zpan45)
+ *
+ */
 #define _GLIBCXX_USE_CXX11_ABI 1
 #include "IndivBridgeManagerWidget.h"
 
 using namespace std;
 
-/** Constructor
-* @param name -
-* @param parent -
-* @param b - The Bridge object whose properties this Widget will allow the user to display and edit.
-*/
+//constructor
+/**
+ * Constructor.
+ * @brief Constructor
+ * @param name String name of this widget
+ * @param parent WContainerWidget pointer to parent container widget
+ * @param bridge pointer to the Bridge object whose properties this Widget will allow the user to display and edit.
+ */
 IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Bridge *bridge, Wt::WContainerWidget *parent) : Wt::WContainerWidget(parent){
 
     b = bridge; // b is a pointer to the current bridge object
@@ -31,7 +42,8 @@ IndivBridgeManagerWidget::~IndivBridgeManagerWidget() {
 //private methods
 
 /**
- * Try to connect to provided Bridge
+ * Try to connect to provided Bridge.
+ * @brief Connect to Bridge
  */
 void IndivBridgeManagerWidget::connect() {
     //construct URL
@@ -50,7 +62,9 @@ void IndivBridgeManagerWidget::connect() {
 }
 
 /**
-*/
+ * Show user and allow user to modify the properties of a Bridge.
+ * @brief Show Bridge Information
+ */
 void IndivBridgeManagerWidget::showInformation() {
     // set up the "Bridge Name" text entry field with a label
     Wt::WLabel *nameLabel = new Wt::WLabel("Bridge Name: ", this);
@@ -102,10 +116,11 @@ void IndivBridgeManagerWidget::showInformation() {
     }));
 }
 
-/** Method that consults the current Bridge object for all associated groups, and displays them
-* in a list with buttons that will allow the user to modify an individual Group.
- *
-*/
+/**
+ * Method that consults the current Bridge object for all associated groups, and displays them
+ * in a list with buttons that will allow the user to modify an individual Group.
+ * @brief Show Bridge Groups
+ */
 void IndivBridgeManagerWidget::displayGroups() {
     // ! TODO -- implement method that displays all Groups associated with the current Bridge
     // use Bridge.cpp's "getGroup()" method?? Iterate from 0 - size of the vector?
@@ -171,6 +186,10 @@ void IndivBridgeManagerWidget::displayGroups() {
     }));
 }
 
+/**
+ * Method that shows a dialogue box and allows user to add a new Group to the Bridge
+ * @brief Add Group To Bridge
+ */
 void IndivBridgeManagerWidget::addGroupToBridge() {
     Wt::WDialog dialogue("Add New Group...");
 
@@ -199,9 +218,10 @@ void IndivBridgeManagerWidget::addGroupToBridge() {
 }
 
 
-/** Method to update the current Bridge object with any changes from the text boxes.
- *
-*/
+/**
+ * Method to update the current Bridge object with any changes from the text boxes.
+ * @brief Update Bridge
+ */
 void IndivBridgeManagerWidget::update() {
     this->addWidget(new Wt::WBreak());
 
@@ -256,12 +276,12 @@ void IndivBridgeManagerWidget::update() {
 
 /**
  * Handles Http Response from Bridge. Update Bridge status upon receiving successful response.
+ * @brief Handle HTTP Response
  * @param client HTTP client
  * @param err Error code
  * @param response HTTP message received
  *
  */
-
 void IndivBridgeManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message &response) const {
     if(err||response.status()!=200) {
         cerr<<"Error: "<<err.message()<<" ,"<<response.status()<<endl;
@@ -276,6 +296,7 @@ void IndivBridgeManagerWidget::handleHttpResponse(Wt::Http::Client *client, boos
 
 /**
  * Connect to the bridge hardware and update the Lights objects stored in the bridge.
+ * @brief Update Bridge Lights
  * @return false if Bridge cannot be reached
  */
 bool IndivBridgeManagerWidget::updateLights() {
@@ -321,13 +342,13 @@ bool IndivBridgeManagerWidget::updateLights() {
         b->addLight(newlight);
     }
     return true;
-
 }
 
 /**
-* Connect to the bridge hardware and update the Group objects stored in the bridge's vector.
-* @return false if Bridge cannot be reached
-*/
+ * Connect to the bridge hardware and update the Group objects stored in the bridge's vector.
+ * @brief Update Bridge Groups
+ * @return false if Bridge cannot be reached
+ */
 bool IndivBridgeManagerWidget::updateGroups() {
     //drop all saved groups in the bridge
     b->clearGroups();
@@ -399,6 +420,7 @@ bool IndivBridgeManagerWidget::updateGroups() {
 
 /**
  * Send a POST message to the bridge hardware to create a new group. Called by createGroup().
+ * @brief Connect Create Group
  * @param name new group's name
  * @param lightIDs lightIDs a vector of int containing the lightIDs in the group
  */
@@ -433,6 +455,7 @@ void IndivBridgeManagerWidget::connectCreateGroup(std::string name) {
 
 /**
  * Send a DELETE message to the bridge hardware to delete a specified group. Called by deleteGroup().
+ * @brief Connect Delete Group
  * @param groupID the groupID of the group we want to delete as an int
  */
 void IndivBridgeManagerWidget::connectDeleteGroup(int groupID) {
@@ -454,6 +477,7 @@ void IndivBridgeManagerWidget::connectDeleteGroup(int groupID) {
 
 /**
  * Handles Http Response from Bridge. Update this->requestSuccess flag upon receiving successful response.
+ * @brief Handle Http Response for Group
  * @param client HTTP client
  * @param err Error code
  * @param response HTTP message received

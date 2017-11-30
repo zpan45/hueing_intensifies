@@ -1,6 +1,10 @@
-//
-// Created by Peter on 2017/11/21.
-//
+/**
+ * @file IndivBridgeManagerWidget.h
+ * Head file for IndivBridgeManagerWidget.cpp
+ *
+ * @brief Head file for IndivBridgeManagerWidget.cpp
+ * @author Zhengyang Pan (zpan45)
+ */
 
 #ifndef INDIVBRIDGEMANAGERWIDGET_H
 #define INDIVBRIDGEMANAGERWIDGET_H

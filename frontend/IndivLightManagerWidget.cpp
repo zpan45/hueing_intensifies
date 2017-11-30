@@ -1,12 +1,27 @@
-//
-// Created by peter on 11/27/17.
-//
+/**
+ * @file IndivLightManagerWidget.cpp
+ * A widget for managing a Light object, allows user to display and edit properties of a Light.
+ * It has methods to rename a Light and
+ * update the Light's state (on/off, Brightness, Hue, Saturation, Transition Time for switching states).
+ *
+ * @brief Individual Light Manager Widget
+ * @author Zhengyang Pan (zpan45)
+ *
+ */
 #define _GLIBCXX_USE_CXX11_ABI 1
 #include "IndivLightManagerWidget.h"
 
 using namespace std;
 
 //constructor
+/**
+ * Constructor.
+ * @brief Constructor
+ * @param name String name of this widget
+ * @param parent WContainerWidget pointer to parent container widget
+ * @param bridge pointer to the Bridge object where the Light object belongs
+ * @param light pointer to the Light object whose properties this Widget will allow the user to display and edit.
+ */
 IndivLightManagerWidget::IndivLightManagerWidget(const std::string &name, Bridge *bridge, Light *light, Wt::WContainerWidget *parent) {
     b = bridge;
     l = light;
@@ -67,6 +82,7 @@ void IndivLightManagerWidget::showInformation() {
 
 /**
  * Rename the Light to provided new name.
+ * @brief Rename Light
  * @param newname new name for the Light.
  * @return true if renamed successfully
  */
@@ -91,6 +107,7 @@ bool IndivLightManagerWidget::rename(std::string newname) {
 
 /**
  * Update the Light status using default transition time(4). (on, bri, hue, sat)
+ * @brief Update Light State
  * @return true if updated successfully
  */
 bool IndivLightManagerWidget::update() {
@@ -113,6 +130,7 @@ bool IndivLightManagerWidget::update() {
 
 /**
  * Update the Light status with specified transition time. (on, bri, hue, sat)
+ * Update Light State with TransTime
  * @param transTime * 100ms = transition time
  * @return true if updated successfully
  */
@@ -137,6 +155,7 @@ bool IndivLightManagerWidget::update(int transTime) {
 
 /**
  * Send a PUT request to bridge to rename the Light
+ * @brief Connect Rename
  * @param newname new name for the Light
  */
 void IndivLightManagerWidget::connectRename(std::string newname) {
@@ -163,7 +182,7 @@ void IndivLightManagerWidget::connectRename(std::string newname) {
 
 /**
  * Send a PUT request to bridge to update the Light status using default transition time (on, bri, hue, sat)
- *
+ * @brief Connect Update
  */
 void IndivLightManagerWidget::connectUpdate() {
     //construct URL
@@ -192,6 +211,7 @@ void IndivLightManagerWidget::connectUpdate() {
 
 /**
  * Send a PUT request to bridge to update the Light status with specified transition time (on, bri, hue, sat)
+ * @brief Connect Update with TransTime
  * @param transTime * 100ms = transition time
  */
 void IndivLightManagerWidget::connectUpdate(int transTime) {
@@ -222,6 +242,7 @@ void IndivLightManagerWidget::connectUpdate(int transTime) {
 
 /**
  * Handles Http Response from Bridge. Update requestSuccess flag upon receiving successful response.
+ * @brief Handle HTTP Response
  * @param client HTTP client
  * @param err Error code
  * @param response HTTP message received
