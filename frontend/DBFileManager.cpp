@@ -1,11 +1,12 @@
 /**
- * @class DBFileManager
+ * @file DBFileManager.cpp
+ * Database file manager.
+ *
+ * @brief Database file manager
  * Database is implemented as a filesystem using Boost's filesystem library. Each user has a their own directory
  * containing two files, one for user info and one for bridge info. Both files are read to create a User object.
  * A user directory and info file are created on registration and never modified. Bridge files are created on
  * adding a new bridge and are modified whenever a bridge is updated or added.
- *
- * @brief Database file manager
  * @author Jacob Fryer (jfryer6), Anthony Tran (atran94), Omar Abdel-Qader (oabdelqa), Usant Kajendirarajah (ukajendi), Zhengyang Pan (zpan45)
  */
 
@@ -40,7 +41,7 @@ DBFileManager::DBFileManager()
 bool DBFileManager::addNewUser(User newUser)
 {
     std::string username = newUser.User::getUsername();
-    std::string dirPath = DBFileManager::createDirPath(username);
+    std::string dirPath = DBFileManager::createDirPath(username); //creates a path to the directory using the username
 
     if(boost::filesystem::exists(dirPath))
     {
@@ -49,9 +50,9 @@ bool DBFileManager::addNewUser(User newUser)
     }
     else
     {
-        boost::filesystem::create_directory(dirPath);
-        dirPath = DBFileManager::createUserFilePath(username);
-        std::ofstream userWriteStream(dirPath);
+        boost::filesystem::create_directory(dirPath); //create a directory for specified user
+        dirPath = DBFileManager::createUserFilePath(username); //create a path to the user info file
+        std::ofstream userWriteStream(dirPath); //open a write stream to user info file
 
         if(!userWriteStream.std::ofstream::is_open()) //check that file is open
         {
@@ -59,9 +60,9 @@ bool DBFileManager::addNewUser(User newUser)
         }
         else
         {
-            userWriteStream << newUser.User::infoToString() << std::endl;
+            userWriteStream << newUser.User::infoToString() << std::endl; //write user's info to file; this is only done once
 
-            userWriteStream.std::ofstream::close();
+            userWriteStream.std::ofstream::close();//close and clear file stream
             userWriteStream.std::ofstream::clear();
         }
         return 0;
@@ -76,8 +77,8 @@ bool DBFileManager::addNewUser(User newUser)
  */
 bool DBFileManager::saveBridges(User* currentUser)
 {
-    std::string dirPath = DBFileManager::createDirPath(currentUser->User::getUsername());
-    std::string filepath = DBFileManager::createBridgeFilePath(currentUser->User::getUsername());
+    std::string dirPath = DBFileManager::createDirPath(currentUser->User::getUsername()); //creates a path to the directory using the username
+    std::string filepath = DBFileManager::createBridgeFilePath(currentUser->User::getUsername()); //creates a path to the user's bridge file
 
     if(!boost::filesystem::exists(dirPath))
     {
@@ -86,7 +87,7 @@ bool DBFileManager::saveBridges(User* currentUser)
     }
     else
     {
-        DBFileManager::writeToFile(*currentUser, filepath);
+        DBFileManager::writeToFile(*currentUser, filepath); //call on writeToFile method to write bridges to file
         return 0;
     }
 }
@@ -98,7 +99,7 @@ bool DBFileManager::saveBridges(User* currentUser)
  */
 bool DBFileManager::removeUser(User currentUser)
 {
-    std::string filepath = DBFileManager::createDirPath(currentUser.User::getUsername());
+    std::string filepath = DBFileManager::createDirPath(currentUser.User::getUsername()); //creates a path to the directory using the username
 
     if(!boost::filesystem::exists(filepath))
     {
@@ -107,7 +108,7 @@ bool DBFileManager::removeUser(User currentUser)
     }
     else
     {
-        boost::filesystem::remove_all(filepath);
+        boost::filesystem::remove_all(filepath); //remove all directories associated with the user
         return 0;
     }
 }
@@ -120,16 +121,17 @@ bool DBFileManager::removeUser(User currentUser)
 User DBFileManager::getUser(std::string username)
 {
     User currentUser;
-    std::string userFile = DBFileManager::createUserFilePath(username);
-    std::string bridgeFile = DBFileManager::createBridgeFilePath(username);
+    std::string userFile = DBFileManager::createUserFilePath(username); //creates a path to the user's info file
+    std::string bridgeFile = DBFileManager::createBridgeFilePath(username); //creates a path to the user's bridge file
+
 
     if(!boost::filesystem::exists(userFile))
     {
-        currentUser.setUsername("");
+        currentUser.setUsername(""); //returns a user with empty name if user doesn't exist
     }
     else
     {
-        currentUser = DBFileManager::readFromFile(userFile, bridgeFile);
+        currentUser = DBFileManager::readFromFile(userFile, bridgeFile); //call to readFromFile to build a user
     }
 
     return currentUser;
@@ -145,7 +147,7 @@ std::string DBFileManager::createDirPath(std::string username)
     std::hash<std::string> usr_hash;
     std::stringstream ss;
     ss << usr_hash(username);
-    std::string newusername = ss.str();
+    std::string newusername = ss.str(); //username is hashed for security purposes
 
     std::string dirPath = "HUE_USERS";
     dirPath.std::string::append("/");
@@ -164,7 +166,7 @@ std::string DBFileManager::createUserFilePath(std::string username)
     std::hash<std::string> usr_hash;
     std::stringstream ss;
     ss << usr_hash(username);
-    std::string newusername = ss.str();
+    std::string newusername = ss.str(); //username is hashed for security purposes
 
     std::string filepath = "HUE_USERS";
     filepath.std::string::append("/");
@@ -186,7 +188,7 @@ std::string DBFileManager::createBridgeFilePath(std::string username)
     std::hash<std::string> usr_hash;
     std::stringstream ss;
     ss << usr_hash(username);
-    std::string newusername = ss.str();
+    std::string newusername = ss.str(); //username is hashed for security purposes
 
     std::string filepath = "HUE_USERS";
     filepath.std::string::append("/");
@@ -214,9 +216,9 @@ void DBFileManager::writeToFile(User newUser, std::string bridgePath)
     else
     {
 
-        bridgesWriteStream << newUser.User::bridgesToString();
+        bridgesWriteStream << newUser.User::bridgesToString(); //loop through user's bridges and write to file
 
-        bridgesWriteStream.std::ofstream::close();
+        bridgesWriteStream.std::ofstream::close(); //close and clear file stream
         bridgesWriteStream.std::ofstream::clear();
     }
 }
@@ -239,9 +241,7 @@ User DBFileManager::readFromFile(std::string userPath, std::string bridgePath)
     }
     else
     {
-        std::cout << "Reading useer info" << std::endl;
-        //this will follow the exact format of the toString method to ensure
-            //the right values are stored in the right places
+        //set username, password, first and last names from info file
         std::getline(userReadStream, currentLine);
         currentUser.User::setUsername(currentLine);
 
@@ -254,7 +254,7 @@ User DBFileManager::readFromFile(std::string userPath, std::string bridgePath)
         std::getline(userReadStream, currentLine);
         currentUser.User::setLastName(currentLine);
 
-        userReadStream.std::ifstream::close();
+        userReadStream.std::ifstream::close(); //close and clear file stream
         userReadStream.std::ifstream::clear();
     }
 
@@ -270,6 +270,7 @@ User DBFileManager::readFromFile(std::string userPath, std::string bridgePath)
         {
             Bridge tempBridge;
 
+            //set bridge name, location, hostname, and port from bridge file
             std::getline(bridgeReadStream, currentLine);
             tempBridge.Bridge::setName(currentLine);
 
@@ -282,10 +283,10 @@ User DBFileManager::readFromFile(std::string userPath, std::string bridgePath)
             std::getline(bridgeReadStream, currentLine);
             tempBridge.Bridge::setPort(currentLine);
 
-            currentUser.User::addBridge(tempBridge);
+            currentUser.User::addBridge(tempBridge); //add the bridge to the user
         }
 
-        bridgeReadStream.std::ifstream::close();
+        bridgeReadStream.std::ifstream::close(); //close and clear file stream
         bridgeReadStream.std::ifstream::clear();
     }
 
