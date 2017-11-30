@@ -4,8 +4,8 @@
  * It has methods to rename a Group; display and update the Lights in the Group and
  * update the Group's all containing Lights' state (on/off, Brightness, Hue, Saturation, Transition Time for switching states).
  *
- * @brief Individual Light Manager Widget
- * @author Zhengyang Pan (zpan45)
+ * @brief Individual Group Manager Widget
+ * @author Jacob Fryer (jfryer6)
  *
  */
 
