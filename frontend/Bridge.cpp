@@ -197,6 +197,10 @@ void Bridge::setStatus(string s) {
     status = s;
 }
 
+/**
+ * Returns bridge info in a single string.
+ * @return four fields of a bridge written as one string
+ */
 std::string Bridge::toString()
 {
     string temp = "";

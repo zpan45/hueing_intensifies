@@ -31,8 +31,6 @@ class Light {
         void setSat(int s);
         void setID(std::string i);
     private:
-        void convertHexcodeToCoords(std::string col);
-
         std::string name;
         bool isActive;
         int brightness;

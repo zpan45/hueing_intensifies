@@ -128,6 +128,10 @@ int User::getNumberOfBridges() {
     return bridges.size();
 }
 
+/**
+* Accessor method that returns a vector of all Bridges associated with the User
+* @return a vector of Bridges as an integer.
+*/
 std::vector<Bridge> User::getAllBridges()
 {
     std::vector<Bridge> bridgeList;
@@ -179,7 +183,6 @@ void User::setPassword(string pass) {
 
 /**
  * Method that constructs a string to greet the User in the form of "Hello, <username> (<first> <last>)".
-
  * @return a greeting in the specified form.
  */
 string User::constructGreetingString() {
@@ -188,7 +191,7 @@ string User::constructGreetingString() {
 
 
 /**
- * Returns user info in a singe string.
+ * Returns user info in a single string.
  * @return user as string
  */
 string User::infoToString()  {
@@ -210,6 +213,10 @@ string User::infoToString()  {
     return temp;
 }
 
+/**
+ * Returns all user's Bridges info in a single string.
+ * @return user bridges as string
+ */
 string User::bridgesToString()  {
     string temp = "";
     Bridge tempBridge;
