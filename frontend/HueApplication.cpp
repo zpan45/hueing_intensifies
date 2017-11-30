@@ -51,8 +51,9 @@ void HueApplication::initialize() {
 
 }
 
-/**
- *
+/** Method that is called when the app is closed before the destructor is called. Finalizes any remaining details. In our case, calls the signOut() method to serialize User data to file at the end of a session.
+ * @brief Finalize the application and serializes User data.
+ * @author Jacob Fryer (jfryer6)
  */
 void HueApplication::finalize() {
     if(curUser_->getUsername() != "") {

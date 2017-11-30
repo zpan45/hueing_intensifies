@@ -161,36 +161,14 @@ void IndivGroupManagerWidget::update() {
     this->addWidget(new Wt::WBreak());
     this->addWidget(new Wt::WBreak());
     
+    connectUpdateGroup();
+    
     // didn't want to call the variable "new" so we named the display of things that have changed, "changed"
     Wt::WContainerWidget *changed = new Wt::WContainerWidget();
     change->addWidget(changed);
     changed->addWidget(new Wt::WText("<b>New Stuff:</b>"));
     changed->addWidget(new Wt::WBreak());
     changed->addWidget(new Wt::WText(g->getName()));
-}
-
-/**
- * Update the Group attributes stored in bridge hardware (Group name and consisting LightIDs)
- * @brief Update Group
- * @param groupID the groupID of the group being updated
- * @return true on group updated successfully
- */
-bool IndivGroupManagerWidget::updateGroup(int groupID) {
-    //initialize request success flag
-    requestSuccess=false;
-    //connect to Bridge
-    connectUpdateGroup(groupID);
-    //if connection is successful, requestSuccess flag would be updated by handleHttpResponse()
-    for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
-        //check every 100ms for HTML_MESSAGE_CHECK times
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        //if flag's set then connected successfully
-        if(requestSuccess) {
-            return true;
-        }
-    }
-    //connection timeout, return false
-    return false;
 }
 
 /**
@@ -227,10 +205,10 @@ bool IndivGroupManagerWidget::updateState(int groupID, bool on, int bri, int hue
  * @brief Connect Update Group
  * @param groupID the groupID of the group being updated
  */
-void IndivGroupManagerWidget::connectUpdateGroup(int groupID) {
+void IndivGroupManagerWidget::connectUpdateGroup() {
     //construct URL
     stringstream url_;
-    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/"<<"newdeveloper"<<"/groups/"<<groupID;
+    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/"<<"newdeveloper"<<"/groups/"<<g->getID();
     Wt::Http::Client *client=new Wt::Http::Client(this);
     client->setTimeout(HTML_CLIENT_TIMEOUT);
     client->setMaximumResponseSize(10*1024);
@@ -244,7 +222,7 @@ void IndivGroupManagerWidget::connectUpdateGroup(int groupID) {
     //for each consisting light, add to message body
     body<<"\"lights\": [";
     for(int i=0; i<g->getNumberOfLights(); i++) {
-        body<<"\""<<g->getLight(i)<<"\"";
+        body<<"\""<<g->getLight(i)->getID()<<"\"";
         if(i<(g->getNumberOfLights()-1)) body<<",";
     }
     body<<"]}";
@@ -268,7 +246,7 @@ void IndivGroupManagerWidget::connectUpdateGroup(int groupID) {
 void IndivGroupManagerWidget::connectUpdateState(int groupID, bool on, int bri, int hue, int sat, int transTime) {
     //construct URL
     stringstream url_;
-    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/"<<"newdeveloper"<<"/groups/"<<groupID<<"/action";
+    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/"<<"newdeveloper"<<"/groups/"<<g->getID()<<"/action";
     Wt::Http::Client *client=new Wt::Http::Client(this);
     client->setTimeout(HTML_CLIENT_TIMEOUT);
     client->setMaximumResponseSize(10*1024);

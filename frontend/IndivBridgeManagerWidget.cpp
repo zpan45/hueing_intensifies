@@ -376,7 +376,7 @@ bool IndivBridgeManagerWidget::updateGroups() {
         Group newgroup;
         //set Group name
         newgroup.setName(groupJSON.get("name"));
-
+        newgroup.setID(*it);
 
         const Wt::Json::Array& lightsInGroupJSONArray = groupJSON.get("lights");
 

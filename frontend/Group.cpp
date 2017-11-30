@@ -20,19 +20,20 @@ using namespace std;
  * Default constructor for Group class. Initializes all fields to have no values.
  * Takes no parameters.
  */
-Group::Group(): name(""), act(NULL), groupState(NULL), type("LightGroup"), groupClass("Other") {
+Group::Group(): name(""), id(""), act(NULL), groupState(NULL), type("LightGroup"), groupClass("Other") {
 
 }
 
 /**
  * Overload constructor for Group class.
  * @param n for name.
+ * @param id for ID.
  * @param a pointer for act.
  * @param s pointer for state.
  * @param t for type.
  * @param c for groupClass.
  */
-Group::Group(string n, Action* a, State* s, string t, string c): name(n), act(a), groupState(s), type(t), groupClass(c) {
+Group::Group(string n, string id, Action* a, State* s, string t, string c): name(n), act(a), groupState(s), type(t), groupClass(c) {
 
 }
 
@@ -58,6 +59,15 @@ Action* Group::getAction() {
  */
 string Group::getName() {
     return name;
+}
+
+/**
+ * Getter for the ID of the Group.
+ * Takes no parameters.
+ * @return id as a string.
+ */
+string Group::getID() {
+    return id;
 }
 
 
@@ -125,6 +135,13 @@ void Group::setName(string n) {
     name = n;
 }
 
+/**
+ * Setter for the ID field.
+ * @param i A string of the group ID.
+ */
+void Group::setID(string i) {
+    id = i;
+}
 
 /**
  * Setter for the state field.
