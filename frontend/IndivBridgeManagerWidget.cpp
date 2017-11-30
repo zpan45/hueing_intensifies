@@ -126,6 +126,9 @@ void IndivBridgeManagerWidget::showInformation() {
     this->addWidget(new Wt::WBreak());
     Wt::WPushButton *showGroups_ = new Wt::WPushButton("Show Groups", this);
     
+    Wt::WPushButton *addGroupButton = new Wt::WPushButton("Add Group", this);
+    addGroupButton->clicked().connect(this, &IndivBridgeManagerWidget::addGroupToBridge);
+    
     // the update_ button is bound to a lambda function that calls the update()
     // method. Done this way because you cannot pass parameters through Wt's connect()
     // method.
@@ -203,8 +206,38 @@ void IndivBridgeManagerWidget::displayGroups() {
 
         groupbox->refresh();
     }));
-
 }
+
+void IndivBridgeManagerWidget::addGroupToBridge() {
+    Wt::WDialog dialogue("Add New Group...");
+
+    // set up the "Group Name" text entry field with a label
+    Wt::WLabel *nameLabel = new Wt::WLabel("Group Name: ", dialogue.contents());
+    Wt::WLineEdit *groupNameEdit_ = new Wt::WLineEdit(dialogue.contents());
+    nameLabel->setBuddy(groupNameEdit_);
+    dialogue.contents()->addWidget(new Wt::WBreak());
+    
+    Wt::WPushButton *confirm_ = new Wt::WPushButton( "Submit", dialogue.contents() );
+
+    confirm_->clicked().connect(&dialogue, &Wt::WDialog::accept);
+
+    dialogue.show();
+
+    // On successful close of the dialogue, do the following:
+    if (dialogue.exec() == Wt::WDialog::Accepted) {
+        Group g;
+
+        g.setName(groupNameEdit_->text().toUTF8());
+
+
+        cout << "Name " << g.getName() << endl;
+        
+        if(createGroup( g.getName() ) == true) {
+            b->addGroup(g);
+        }
+    }
+}
+
 
 /** Method to update the current Bridge object with any changes from the text boxes.
  *
@@ -386,11 +419,11 @@ bool IndivBridgeManagerWidget::updateGroups() {
  * @param lightIDs a vector of int containing the lightIDs in the group
  * @return true on group created successfully
  */
-bool IndivBridgeManagerWidget::createGroup(std::string name, std::vector<int> lightIDs) {
+bool IndivBridgeManagerWidget::createGroup(std::string name) {
     //initialize request success flag
     requestSuccess=false;
     //connect to Bridge
-    connectCreateGroup(name, lightIDs);
+    connectCreateGroup(name);
     //if connection is successful, requestSuccess flag would be updated by handleHttpResponseGroup()
     for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
         //check every 100ms for HTML_MESSAGE_CHECK times
@@ -435,7 +468,7 @@ bool IndivBridgeManagerWidget::deleteGroup(int groupID) {
  * @param name new group's name
  * @param lightIDs lightIDs a vector of int containing the lightIDs in the group
  */
-void IndivBridgeManagerWidget::connectCreateGroup(std::string name, std::vector<int> lightIDs) {
+void IndivBridgeManagerWidget::connectCreateGroup(std::string name) {
     //construct URL
     stringstream url_;
     url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/newdeveloper";
@@ -453,11 +486,13 @@ void IndivBridgeManagerWidget::connectCreateGroup(std::string name, std::vector<
     //set body
     body<< "{" <<"\"lights\":"<< "[";
     //for each lightID, add to message body
+    /*
     for (auto it=lightIDs.begin();it!=lightIDs.end();++it) {
         body<<"\""<<*it<<"\"";
         //if we haven't reached the last lightID, add "," in middle
         if(it!=lightIDs.end()) body<<",";
     }
+    */
     body<<"],"<<"\"name\":\""<<name<<"\"}";
 
     message.addBodyText(body.str());
