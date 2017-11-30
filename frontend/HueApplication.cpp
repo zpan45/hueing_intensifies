@@ -34,6 +34,12 @@ void HueApplication::initialize() {
     curUser_ = new User();
 
     setTitle("CS3307 - Team24 Hue Application");
+    
+    if(testLoggedInStatus() == false) {
+        setInternalPath( "/", true );
+    }
+    
+    
     showMainPage();
     Wt::WApplication *app = Wt::WApplication::instance();
     app->internalPathChanged().connect(std::bind([=] () {
