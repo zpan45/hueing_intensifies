@@ -20,12 +20,7 @@ using namespace std;
  * Default constructor for Bridge class. Initializes all fields to have no values.
  */
 Bridge::Bridge(): name(""), location(""), hostName(""), port(""), username(""), status("") {
-    // name = "";
-    // location = "";
-    // hostName = "";
-    // port = "";
-    // username = "";
-    // status = "";
+
 }
 
 
@@ -39,12 +34,7 @@ Bridge::Bridge(): name(""), location(""), hostName(""), port(""), username(""), 
  * @param s for status.
  */
 Bridge::Bridge(string n, string l, string h, string p, string u, string s): name(n), location(l), hostName(h), port(p), username(u), status(s) {
-    // name = "";
-    // location = "";
-    // hostName = "";
-    // port = "";
-    // username = "";
-    // status = "";
+
 }
 
 // --------------------------------------

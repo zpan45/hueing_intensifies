@@ -22,11 +22,7 @@ using namespace std;
  * Takes no parameters.
  */
 Group::Group(): name(""), act(NULL), groupState(NULL), type("LightGroup"), groupClass("Other") {
-    // name = "";
-    // act = NULL;
-    // state = NULL;
-    // type = "LightGroup"; //Default value
-    // groupClass = "Other"; //Default value
+
 }
 
 /**
@@ -38,11 +34,7 @@ Group::Group(): name(""), act(NULL), groupState(NULL), type("LightGroup"), group
  * @param c for groupClass.
  */
 Group::Group(string n, Action* a, State* s, string t, string c): name(n), act(a), groupState(s), type(t), groupClass(c) {
-    // name = "";
-    // act = NULL;
-    // state = NULL;
-    // type = "LightGroup"; //Default value
-    // groupClass = "Other"; //Default value
+
 }
 
 // --------------------------------------
