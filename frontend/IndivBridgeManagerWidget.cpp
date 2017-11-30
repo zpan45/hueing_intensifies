@@ -484,16 +484,7 @@ void IndivBridgeManagerWidget::connectCreateGroup(std::string name) {
     Wt::Http::Message message;
     stringstream body;
     //set body
-    body<< "{" <<"\"lights\":"<< "[";
-    //for each lightID, add to message body
-    /*
-    for (auto it=lightIDs.begin();it!=lightIDs.end();++it) {
-        body<<"\""<<*it<<"\"";
-        //if we haven't reached the last lightID, add "," in middle
-        if(it!=lightIDs.end()) body<<",";
-    }
-    */
-    body<<"],"<<"\"name\":\""<<name<<"\"}";
+    body<< "{"<<"\"name\":\""<<name<<"\"}";
 
     message.addBodyText(body.str());
     //set header
