@@ -1,5 +1,5 @@
 /**
- * @file User.cpp
+ * @class User
  * User Class.
  *
  * @brief User Class

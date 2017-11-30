@@ -1,5 +1,5 @@
 /**
- * @file IndivLightManagerWidget.cpp
+ * @class IndivLightManagerWidget
  * A widget for managing a Light object, allows user to display and edit properties of a Light.
  * It has methods to rename a Light and
  * update the Light's state (on/off, Brightness, Hue, Saturation, Transition Time for switching states).

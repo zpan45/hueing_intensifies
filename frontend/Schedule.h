@@ -18,7 +18,7 @@
 class Schedule {
     public:
         Schedule();
-        Schedule(std::string n, std::string d, Command* c, std::string st, std::string l, std::string s)
+        Schedule(std::string n, std::string d, Command* c, std::string st, std::string l, std::string s);
 
         std::string getName();
         std::string getDescription();
