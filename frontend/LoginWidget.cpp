@@ -21,7 +21,7 @@ using namespace std;
 LoginWidget::LoginWidget(const std::string &name, WContainerWidget *parent)
 : WContainerWidget(parent), name_(name) {
     setContentAlignment(AlignCenter);
-    
+
     // add the Username entry textbox
     this->addWidget(new Wt::WText("Username: "));
     usernameEdit = new WLineEdit(this);
@@ -105,9 +105,6 @@ void LoginWidget::login() {
     loginDisplay->addWidget(new Wt::WBreak());
 
     if(u.getUsername() != "") {
-            std::cout << "Stored password: " << u.getPassword() << std::endl;
-            std::cout << "Entered password: " << u.hashPassword(passwordEdit->text().toUTF8()) << std::endl;
-            std::cout << "Entered and hashed: " << u.hashPassword(passwordEdit->text().toUTF8()) << std::endl;
         if(checkPassword(u, passwordEdit->text()) == true) {
             loginDisplay->addWidget(new Wt::WText(u.constructGreetingString()));
             loggedInSignal_.emit(u);
