@@ -1,12 +1,11 @@
 /**
- * @file DBFileManager.cpp
- * Database file manager.
- *
- * @brief Database file manager
+ * @class DBFileManager
  * Database is implemented as a filesystem using Boost's filesystem library. Each user has a their own directory
  * containing two files, one for user info and one for bridge info. Both files are read to create a User object.
  * A user directory and info file are created on registration and never modified. Bridge files are created on
  * adding a new bridge and are modified whenever a bridge is updated or added.
+ *
+ * @brief Database file manager
  * @author Jacob Fryer (jfryer6), Anthony Tran (atran94), Omar Abdel-Qader (oabdelqa), Usant Kajendirarajah (ukajendi), Zhengyang Pan (zpan45)
  */
 
@@ -144,10 +143,17 @@ User DBFileManager::getUser(std::string username)
 */
 std::string DBFileManager::createDirPath(std::string username)
 {
+<<<<<<< HEAD
     std::hash<std::string> usr_hash;
     std::stringstream ss;
     ss << usr_hash(username);
     std::string newusername = ss.str(); //username is hashed for security purposes
+=======
+    std::hash<std::string> usr_hash;
+    std::stringstream ss;
+    ss << usr_hash(username);
+    std::string newusername = ss.str();
+>>>>>>> 0f4de2afb4aaaf99a2dcd97d77dcda43db5f47ac
 
     std::string dirPath = "HUE_USERS";
     dirPath.std::string::append("/");
@@ -163,10 +169,17 @@ std::string DBFileManager::createDirPath(std::string username)
 */
 std::string DBFileManager::createUserFilePath(std::string username)
 {
+<<<<<<< HEAD
     std::hash<std::string> usr_hash;
     std::stringstream ss;
     ss << usr_hash(username);
     std::string newusername = ss.str(); //username is hashed for security purposes
+=======
+    std::hash<std::string> usr_hash;
+    std::stringstream ss;
+    ss << usr_hash(username);
+    std::string newusername = ss.str();
+>>>>>>> 0f4de2afb4aaaf99a2dcd97d77dcda43db5f47ac
 
     std::string filepath = "HUE_USERS";
     filepath.std::string::append("/");

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['dbfilemanager',['DBFileManager',['../class_d_b_file_manager.html',1,'']]]
+  ['bridge',['Bridge',['../class_bridge.html',1,'']]]
 ];

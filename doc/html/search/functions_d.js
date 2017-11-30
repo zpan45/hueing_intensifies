@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['writetofile',['writeToFile',['../_d_b_file_manager_8cpp.html#a3d7c24f257d97402c6bd6c436260d64d',1,'DBFileManager.cpp']]]
+  ['tostring',['toString',['../class_bridge.html#aa8e24ee9cba815bcc8137d8b7868c741',1,'Bridge']]]
 ];
