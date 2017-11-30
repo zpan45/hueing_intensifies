@@ -1,11 +1,11 @@
 /**
- * @file IndivGroupManagerWidget.cpp
+ * @class IndivGroupManagerWidget
  * A widget for managing a Group object, allows user to display and edit properties of a Group.
  * It has methods to rename a Group; display and update the Lights in the Group and
  * update the Group's all containing Lights' state (on/off, Brightness, Hue, Saturation, Transition Time for switching states).
  *
- * @brief Individual Light Manager Widget
- * @author Zhengyang Pan (zpan45)
+ * @brief Individual Group Manager Widget
+ * @author Jacob Fryer (jfryer6)
  *
  */
 

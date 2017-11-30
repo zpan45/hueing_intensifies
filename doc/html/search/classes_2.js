@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['group',['Group',['../class_group.html',1,'']]]
+  ['command',['Command',['../class_command.html',1,'']]]
 ];

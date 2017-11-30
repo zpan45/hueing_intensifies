@@ -1,5 +1,5 @@
 /**
- * @file Action.cpp
+ * @class Action
  * Action Class.
  *
  * @brief Action Class

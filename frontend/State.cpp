@@ -1,5 +1,5 @@
 /**
- * @file State.cpp
+ * @class State
  * State Class.
  *
  * @brief State Class

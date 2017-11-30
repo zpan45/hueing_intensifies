@@ -30,7 +30,7 @@
   <td id="projectlogo"><img alt="Logo" src="175x175bb.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">[hueing intensifies]
-   &#160;<span id="projectnumber">v0.2</span>
+   &#160;<span id="projectnumber">v0.5</span>
    </div>
    <div id="projectbrief">UWO CS3307a Team 24</div>
   </td>
@@ -89,12 +89,16 @@ $(document).ready(function(){initNavTree('class_d_b_file_manager.html','');});
 
 <p>This is the complete list of members for <a class="el" href="class_d_b_file_manager.html">DBFileManager</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="class_d_b_file_manager.html#a6b7cb2205ab711c674a9c962a15fba66">addUser</a>(User newUser)</td><td class="entry"><a class="el" href="class_d_b_file_manager.html">DBFileManager</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_d_b_file_manager.html#a8975356da3a468cd1197d6021fe1b7fd">DBFileManager</a>()</td><td class="entry"><a class="el" href="class_d_b_file_manager.html">DBFileManager</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_d_b_file_manager.html#aec0855b28c63a50eb50ccd139c6edc96">getUser</a>(std::string userName)</td><td class="entry"><a class="el" href="class_d_b_file_manager.html">DBFileManager</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_d_b_file_manager.html#adca0039a5be2b7f04b0179c47bdf80fb">loadUsers</a>()</td><td class="entry"><a class="el" href="class_d_b_file_manager.html">DBFileManager</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_d_b_file_manager.html#aca1b0006d9e418d24739c94111fe98d2">removeUser</a>(User currentUser)</td><td class="entry"><a class="el" href="class_d_b_file_manager.html">DBFileManager</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_d_b_file_manager.html#a56c02d4291fa6a338cc7a01b0b0e0eec">saveUsers</a>()</td><td class="entry"><a class="el" href="class_d_b_file_manager.html">DBFileManager</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_d_b_file_manager.html#a19223d76c2b767b214b1743f4b46b9cf">addNewUser</a>(User newUser)</td><td class="entry"><a class="el" href="class_d_b_file_manager.html">DBFileManager</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_d_b_file_manager.html#aefd4dd5188c85d1757ac3ae8d66596c8">createBridgeFilePath</a>(std::string username)</td><td class="entry"><a class="el" href="class_d_b_file_manager.html">DBFileManager</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_d_b_file_manager.html#a7afaf4a6b8f4fa52779a95b07760b2e7">createDirPath</a>(std::string username)</td><td class="entry"><a class="el" href="class_d_b_file_manager.html">DBFileManager</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_d_b_file_manager.html#ac53235a99edfa553fd2c4d834f2808c7">createUserFilePath</a>(std::string username)</td><td class="entry"><a class="el" href="class_d_b_file_manager.html">DBFileManager</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_d_b_file_manager.html#a8975356da3a468cd1197d6021fe1b7fd">DBFileManager</a>()</td><td class="entry"><a class="el" href="class_d_b_file_manager.html">DBFileManager</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_d_b_file_manager.html#af1847e849cc82130a80bf8b60c55cb1c">getUser</a>(std::string username)</td><td class="entry"><a class="el" href="class_d_b_file_manager.html">DBFileManager</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_d_b_file_manager.html#a3fc8e50e06193a0b4622f6acd577ad00">readFromFile</a>(std::string userPath, std::string bridgePath)</td><td class="entry"><a class="el" href="class_d_b_file_manager.html">DBFileManager</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_d_b_file_manager.html#aca1b0006d9e418d24739c94111fe98d2">removeUser</a>(User currentUser)</td><td class="entry"><a class="el" href="class_d_b_file_manager.html">DBFileManager</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_d_b_file_manager.html#a6713a0a70afd7b6807a9775fdde3885e">saveBridges</a>(User *newUser)</td><td class="entry"><a class="el" href="class_d_b_file_manager.html">DBFileManager</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_d_b_file_manager.html#a94b63dd1e89c11b2019229e47a043f84">writeToFile</a>(User newUser, std::string userPath)</td><td class="entry"><a class="el" href="class_d_b_file_manager.html">DBFileManager</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

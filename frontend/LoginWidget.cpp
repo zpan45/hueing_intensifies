@@ -1,25 +1,22 @@
-#define _GLIBCXX_USE_CXX11_ABI 1
 /**
- * @file LoginWidget.cpp
- * Login Widget.
+ * @class LoginWidget
+ * Allows user to log in with his/her username and password.
  *
  * @brief Login Widget.
  * @author Team 24
  * @date November 09, 2017
  */
 
+#define _GLIBCXX_USE_CXX11_ABI 1
 #include "LoginWidget.h"
 
 using namespace Wt;
 using namespace std;
-/*
- * Login Widget
- */
-
 
 /**
- *Intializes and constructs the Login Widget to be called by
- *Hue main application.
+ * Initializes and constructs the Login Widget to be called by
+ * Hue main application.
+ * @brief Login Widget
  */
 LoginWidget::LoginWidget(const std::string &name, WContainerWidget *parent)
 : WContainerWidget(parent), name_(name) {
@@ -47,10 +44,21 @@ LoginWidget::LoginWidget(const std::string &name, WContainerWidget *parent)
     loginButton->clicked().connect(this, &LoginWidget::login);
 }
 
+/**
+ * Return LoggedIn signal
+ * @brief Logged In
+ * @return W::Signal<User>& LoggedIn Signal
+ */
 Wt::Signal<User>& LoginWidget::loggedIn(){
     return loggedInSignal_;
 }
 
+/**
+ * Gets a User object by its username.
+ * @brief Get User by Username
+ * @param username String username
+ * @return User object with this username
+ */
 User LoginWidget::getUserByUsername(Wt::WString username) {
     //User testUser("mkatchab@csd.uwo.ca", "testPW", "Mike", "Katchabaw");
     User currentUser = ::activeDB.DBFileManager::getUser(username.toUTF8());
@@ -66,13 +74,14 @@ User LoginWidget::getUserByUsername(Wt::WString username) {
     }
 }
 
-/** Method that takes an existing User object (as defined in getUserByUsername()) and a
-* password entered by the User and checks them (or rather, their hashes) against each other.
-*
-* @param u - A User object to test the password against.
-* @param passInput - A string that contains the password to check against the User's password.
-* @return boolean - Returns whether the input password is the same as the User's stored password.
-*/
+/**
+ * Method that takes an existing User object (as defined in getUserByUsername()) and a
+ * password entered by the User and checks them (or rather, their hashes) against each other.
+ * @brief Check Password
+ * @param u - A User object to test the password against.
+ * @param passInput - A string that contains the password to check against the User's password.
+ * @return boolean - Returns whether the input password is the same as the User's stored password.
+ */
 bool LoginWidget::checkPassword(User u, Wt::WString passInput) {
     if( u.hashPassword(passInput.toUTF8()) == u.getPassword() ) {
         return true;
@@ -82,8 +91,10 @@ bool LoginWidget::checkPassword(User u, Wt::WString passInput) {
     }
 }
 
-/**This method is to clear the widget after user has succesfully logged in.
-*/
+/**
+ * This method is to clear the widget after user has succesfully logged in.
+ * @brief Login
+ */
 void LoginWidget::login() {
     loginDisplay->clear();
 

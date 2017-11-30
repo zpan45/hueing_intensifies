@@ -1,10 +1,9 @@
 /**
- * @file Group.cpp
+ * @class Group
  * Group Class.
  *
  * @brief Group Class
- * @author Jacob Fryer (jfryer6), Anthony Tran (atran94)
- * @date November 04, 2017
+ * @author Jacob Fryer (jfryer6), Anthony Tran (atran94), Omar Abdel-Qader (oabdelqa), Usant Kajendirarajah (ukajendi), Zhengyang Pan (zpan45)
  */
 
 

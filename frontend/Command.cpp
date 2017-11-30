@@ -1,5 +1,5 @@
 /**
- * @file Command.cpp
+ * @class Command
  * Command Class.
  *
  * @brief Command Class

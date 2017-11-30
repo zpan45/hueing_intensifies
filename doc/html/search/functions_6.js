@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['light',['Light',['../class_light.html#aeb5df09a25a32f19fdffa761268ba24f',1,'Light::Light()'],['../class_light.html#aeb5df09a25a32f19fdffa761268ba24f',1,'Light::Light()']]],
-  ['loadusers',['loadUsers',['../class_d_b_file_manager.html#adca0039a5be2b7f04b0179c47bdf80fb',1,'DBFileManager']]],
-  ['loginwidget',['LoginWidget',['../class_login_widget.html#a06c77d57e0c1f44e7b336cba7dd62654',1,'LoginWidget']]]
+  ['hashpassword',['hashPassword',['../class_user.html#a45462081798559977b1d785a8f3a3af2',1,'User']]],
+  ['hueapplication',['HueApplication',['../class_hue_application.html#ad907b01d18c795c6672cffb63f121165',1,'HueApplication']]]
 ];

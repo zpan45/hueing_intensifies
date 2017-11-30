@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hueapplication',['HueApplication',['../class_hue_application.html',1,'']]]
+  ['dbfilemanager',['DBFileManager',['../class_d_b_file_manager.html',1,'']]]
 ];

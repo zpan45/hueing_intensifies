@@ -1,3 +1,11 @@
+/**
+ * @file HueApplication.h
+ * Head file for HueApplication.cpp
+ *
+ * @brief Head file for HueApplication.cpp
+ * @author Jacob Fryer (jfryer6)
+ */
+
 #ifndef _hueapp_h_included
 #define _hueapp_h_included
 
