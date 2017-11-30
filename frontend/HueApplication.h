@@ -46,6 +46,8 @@ private:
     void goToLogIn();
     void loggedIn_(User u);
     void goToRegister();
+    void signOut();
+    
     void displayBridges();
     void addBridge();
     void dialogueDone(Wt::WDialog::DialogCode code);
