@@ -5,6 +5,7 @@
  * @brief Head file for IndivGroupManagerWidget.cpp
  * @author Jacob Fryer (jfryer6)
  */
+
 #ifndef INDIVGROUPMANAGERWIDGET_H
 #define INDIVGROUPMANAGERWIDGET_H
 

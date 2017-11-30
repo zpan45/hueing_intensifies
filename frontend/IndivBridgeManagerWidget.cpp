@@ -1,5 +1,5 @@
 /**
- * @file IndivBridgeManagerWidget.cpp
+ * @class IndivBridgeManagerWidget
  * A widget for managing a Bridge object, allows user to display and edit properties of a Bridge.
  * It has methods to try to connect to a Bridge hardware and confirm it is reachable;
  * update the Lights and Groups stored in the Bridge object;

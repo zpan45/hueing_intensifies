@@ -1,3 +1,12 @@
+/**
+ * @class RegistrationWidget
+ * Allows user to register with his/her username and password.
+ *
+ * @brief Login Widget.
+ * @author Team 24
+ * @date November 09, 2017
+ */
+
 #define _GLIBCXX_USE_CXX11_ABI 1
 #include <Wt/WApplication>
 #include <Wt/WBreak>
@@ -12,12 +21,10 @@
 
 using namespace Wt;
 using namespace std;
-/*
- * Registration Widget
- */
 
 
-/** Initializes and constructs the Registration Widget to be called by
+/**
+ * Initializes and constructs the Registration Widget to be called by
  * Hue main application.
  */
 RegistrationWidget::RegistrationWidget(const std::string &name, User* current, WContainerWidget *parent)
@@ -48,13 +55,16 @@ RegistrationWidget::RegistrationWidget(const std::string &name, User* current, W
     registerButton->clicked().connect(this, &RegistrationWidget::createUser);
 }
 
-/** This method is to create User after the user of program enters
-* their information.
-* @todo - Validate that the User has filled out all four fields
-* @todo - Ensure that User has entered a valid email address as a username string
-* @todo - Hide password string
-* @todo - Return the User object somewhere for use in the rest of the app
-*/
+/**
+ * This method is to create User after the user of program enters
+ * their information.
+ * @brief Create User
+ *
+ * @todo - Validate that the User has filled out all four fields
+ * @todo - Ensure that User has entered a valid email address as a username string
+ * @todo - Hide password string
+ * @todo - Return the User object somewhere for use in the rest of the app
+ */
 void RegistrationWidget::createUser() {
     User newUser(usernameEdit->text().toUTF8(), passwordEdit->text().toUTF8(), firstNameEdit->text().toUTF8(), lastNameEdit->text().toUTF8());
 
@@ -71,8 +81,10 @@ void RegistrationWidget::createUser() {
     this->addWidget(new Wt::WText( newUser.constructGreetingString() ));
 }
 
-/** This method is to clear the widget after user has succesfully logged in.
-*/
+/**
+ * This method is to clear the widget after user has succesfully logged in.
+ * @brief Clear Registration
+ */
 void RegistrationWidget::clearRegistration()
 {
   std::cout << "Registration Widget Cleared" << std::endl;

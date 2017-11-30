@@ -1,5 +1,5 @@
 /**
- * @file Bridge.cpp
+ * @class Bridge
  * Bridge Class.
  *
  * @brief Bridge Class
