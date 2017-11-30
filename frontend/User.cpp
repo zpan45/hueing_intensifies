@@ -3,8 +3,7 @@
  * User Class.
  *
  * @brief User Class
- * @author Jacob Fryer (jfryer6)
- * @date November 03, 2017
+ * @author Jacob Fryer (jfryer6), Anthony Tran (atran94), Omar Abdel-Qader (oabdelqa), Usant Kajendirarajah (ukajendi), Zhengyang Pan (zpan45)
  */
 
 

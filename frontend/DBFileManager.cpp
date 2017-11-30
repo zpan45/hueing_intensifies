@@ -3,8 +3,11 @@
  * Database file manager.
  *
  * @brief Database file manager
- * @author Team 24
- * @date November 09, 2017
+ * Database is implemented as a filesystem using Boost's filesystem library. Each user has a their own directory
+ * containing two files, one for user info and one for bridge info. Both files are read to create a User object.
+ * A user directory and info file are created on registration and never modified. Bridge files are created on
+ * adding a new bridge and are modified whenever a bridge is updated or added.
+ * @author Jacob Fryer (jfryer6), Anthony Tran (atran94), Omar Abdel-Qader (oabdelqa), Usant Kajendirarajah (ukajendi), Zhengyang Pan (zpan45)
  */
 
 #include <cstddef>
@@ -12,7 +15,9 @@
 
 #include "DBFileManager.h"
 
-/* CONSTRUCTORS */
+// --------------------------------------
+// CONSTRUCTOR
+// --------------------------------------
 
 /**
  * Default constructor. Creates a HUE_USERS/ directory if none already exist.
@@ -25,12 +30,12 @@ DBFileManager::DBFileManager()
     }
 }
 
-/* PUBLIC METHODS */
-
-
+// --------------------------------------
+// PUBLIC METHODS
+// --------------------------------------
 
 /**
- * Creates a new directory for a newly-registered user. NOTE: actual user info file created here
+ * Creates a new directory for a newly registered user.
  * @param newUser a new user object
  */
 bool DBFileManager::addNewUser(User newUser)
@@ -65,27 +70,11 @@ bool DBFileManager::addNewUser(User newUser)
 }
 
 /**
- * Creates a new user info file within the user's directory, and can be used to save a user's info
- * at the end of the session, since the output file stream overwrites the file contents.
+ * Creates a new bridge info file within the user's directory, and can be used to save a user's info
+ * bridge info during or at the end of the session.
  * @param newUser a new user object
- *
-bool DBFileManager::saveUser(User* currentUser)
-{
-    std::string dirPath = DBFileManager::createDirPath(currentUser->User::getUsername());
-    std::string filepath = DBFileManager::createFilePath(currentUser->User::getUsername());
-
-    if(!boost::filesystem::exists(dirPath))
-    {
-        std::cout << "Error: could not find user." << std::endl;
-        return 1;
-    }
-    else
-    {
-        DBFileManager::writeToFile(*currentUser, filepath);
-        return 0;
-    }
-}*/
-
+ * @return a boolean indicating whether the operation was successful
+ */
 bool DBFileManager::saveBridges(User* currentUser)
 {
     std::string dirPath = DBFileManager::createDirPath(currentUser->User::getUsername());
@@ -103,6 +92,11 @@ bool DBFileManager::saveBridges(User* currentUser)
     }
 }
 
+/**
+ * Removes a user from the database by removing all associated directories and files
+ * @param newUser a user object to be removed
+ * @return a boolean indicating whether the operation was successful
+ */
 bool DBFileManager::removeUser(User currentUser)
 {
     std::string filepath = DBFileManager::createDirPath(currentUser.User::getUsername());
@@ -119,7 +113,12 @@ bool DBFileManager::removeUser(User currentUser)
     }
 }
 
-User DBFileManager::getUser(std::string username) //this depends on the toString() of user being updated with newline chars
+/**
+ * Creates a user object by calling readFromFile() method in User class
+ * @param username a username identifying the user in the DB
+ * @return a User object containing user info and bridges from file
+ */
+User DBFileManager::getUser(std::string username)
 {
     User currentUser;
     std::string userFile = DBFileManager::createUserFilePath(username);
@@ -137,6 +136,11 @@ User DBFileManager::getUser(std::string username) //this depends on the toString
     return currentUser;
 }
 
+/**
+* Creates a string indicating the path of the user's directory within the filesystem
+* @param username the username of the user to be found
+* @return a string indicating the path to the directory in the filesystem
+*/
 std::string DBFileManager::createDirPath(std::string username)
 {
     std::hash<std::string> usr_hash;
@@ -151,6 +155,11 @@ std::string DBFileManager::createDirPath(std::string username)
     return dirPath;
 }
 
+/**
+* Creates a string indicating the path of the user's information file within the filesystem
+* @param username the username of the user to be found
+* @return a string indicating the path to the user info file in the filesystem
+*/
 std::string DBFileManager::createUserFilePath(std::string username)
 {
     std::hash<std::string> usr_hash;
@@ -168,6 +177,11 @@ std::string DBFileManager::createUserFilePath(std::string username)
     return filepath;
 }
 
+/**
+* Creates a string indicating the path of the user's bridge information file within the filesystem
+* @param username the username of the user to be found
+* @return a string indicating the path to the user's bridge info file in the filesystem
+*/
 std::string DBFileManager::createBridgeFilePath(std::string username)
 {
     std::hash<std::string> usr_hash;
@@ -186,7 +200,9 @@ std::string DBFileManager::createBridgeFilePath(std::string username)
 }
 
 /**
- * Write bridge data to file.
+ * Write the user's bridge data to file on bridge update or app termination.
+ * @param newUser user who's bridge info is being saved
+ * @param bridgePath the path to the user's bridge file in the DB filesystem
  */
 void DBFileManager::writeToFile(User newUser, std::string bridgePath)
 {
@@ -206,6 +222,11 @@ void DBFileManager::writeToFile(User newUser, std::string bridgePath)
     }
 }
 
+/**
+ * Reads the user's bridge and info from files and create a user object.
+ * @param userPath path to user's information file
+ * @param bridgePath the path to the user's bridge file in the DB filesystem
+ */
 User DBFileManager::readFromFile(std::string userPath, std::string bridgePath)
 {
     User currentUser;
