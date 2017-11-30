@@ -66,19 +66,32 @@ RegistrationWidget::RegistrationWidget(const std::string &name, User* current, W
  * @todo - Return the User object somewhere for use in the rest of the app
  */
 void RegistrationWidget::createUser() {
-    User newUser(usernameEdit->text().toUTF8(), passwordEdit->text().toUTF8(), firstNameEdit->text().toUTF8(), lastNameEdit->text().toUTF8());
 
-    this->addWidget(new Wt::WBreak());
-    this->addWidget(new Wt::WBreak());
-    this->addWidget(new Wt::WBreak());
+    if (usernameEdit->text().toUTF8() == "" || passwordEdit->text().toUTF8() == "" || firstNameEdit->text().toUTF8() == "" || lastNameEdit->text().toUTF8() == "" )
+    {
+        this->addWidget(new Wt::WText("ERROR: Can't register with an empty field! Make sure all fields are filled in and try again."));
+        this->clearRegistration();
+    }
+    else
+    {
+        User newUser(usernameEdit->text().toUTF8(), passwordEdit->text().toUTF8(), firstNameEdit->text().toUTF8(), lastNameEdit->text().toUTF8());
 
-    ::activeDB.DBFileManager::addNewUser(newUser);
+        this->addWidget(new Wt::WBreak());
+        this->addWidget(new Wt::WBreak());
+        this->addWidget(new Wt::WBreak());
 
-    User *u;
+        bool result = ::activeDB.DBFileManager::addNewUser(newUser);
 
-    u = &newUser;
+        if(result)
+        {
+            this->addWidget(new Wt::WText("ERROR: User already exists. Please try with a different username."));
+        }
+        else
+        {
+            this->addWidget(new Wt::WText( newUser.constructGreetingString() ));
+        }
+    }
 
-    this->addWidget(new Wt::WText( newUser.constructGreetingString() ));
 }
 
 /**
