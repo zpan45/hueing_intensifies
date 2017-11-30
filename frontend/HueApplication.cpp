@@ -316,7 +316,8 @@ void HueApplication::handleRequest() {
                 }
                 // there is more in the current internal path, so we construct the Group widget
                 else {
-                    // update the workingURL_ to include variability of groupNum
+                    //cout << "working url: " << workingURL_ << "\nnext part: " << app->internalPathNextPart( workingURL_ ) << "\n\n\n" << endl;
+                    
                     workingURL_ += "/groups/";
                     int groupNum;
                     Group *g;
@@ -324,34 +325,36 @@ void HueApplication::handleRequest() {
                     s.clear();
                     s << app->internalPathNextPart(workingURL_); // strip the group number out of the string
                     
-                    if( app->internalPathNextPart(workingURL_) == "" ) {
-                    }
-                    else {
-                        
-                        s >> groupNum;
-                        g = b->getGroup(groupNum);
+                    // update the workingURL_ to include variability of groupNum
+                    workingURL_ += app->internalPathNextPart( workingURL_ );
+                    
+                    cout << "working url: " << workingURL_ << "\nnext part: " << app->internalPathNextPart( workingURL_ ) << "\n\n\n" << endl;
+                    
+                    s >> groupNum;
+                    g = b->getGroup(groupNum);
+                    
+                    if( app->internalPathNextPart(workingURL_ + "/") == "" ) {
                         root()->clear();
                         root()->addWidget(new IndivGroupManagerWidget("groupManager", b, g));
+                    }
+                    else {
+                        workingURL_ += "/lights/";
+                        int lightNum;
+                        Light *l;
                         
-                        if( app->internalPathNextPart( workingURL_ + "/" ) == "" ) {
-                        }
-                        else {
-                            workingURL_ += app->internalPathNextPart("/lights/");
-                            int lightNum;
-                            Light *l;
-                            
-                            s.clear();
-                            s << app->internalPathNextPart(workingURL_); // strip the light number out of the string
-                            
-                            s >> lightNum;
-                            l = g->getLight(lightNum);
-                            
-                            root()->clear();
-                            root()->addWidget( new IndivLightManagerWidget("lightManager", b, l) );
-                        }
+                        s.clear();
+                        s << app->internalPathNextPart(workingURL_); // strip the light number out of the string
+                        
+                        workingURL_ += app->internalPathNextPart("/lights/");
+                        
+                        s >> lightNum;
+                        l = g->getLight(lightNum);
+                        
+                        root()->clear();
+                        root()->addWidget( new IndivLightManagerWidget("lightManager", b, l) );
+
                     }
                 }
-                
             }
         }
         
