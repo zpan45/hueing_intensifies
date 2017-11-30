@@ -67,33 +67,12 @@ void HueApplication::showMainPage() {
 
         Wt::WPushButton *registerButton = new Wt::WPushButton("Register", cont);
         registerButton->setLink(Wt::WLink(Wt::WLink::InternalPath, "/register"));
-
-        /*
-        // ------------------------------ TESTING FOR INDIVBRIDGEMANAGERWIDGET
-        curUser_ = new User("jfryer6@uwo.ca", "pass123", "Jake", "Fryer");
-        Bridge br;
-        string bridgeString;
-
-        for(int i = 0; i < 5; i++) {
-            bridgeString = "bridge";
-            bridgeString.std::string::append(std::to_string(i));
-            br.setName(bridgeString);
-            br.setLocation("dummyLocation");
-            br.setHostName("127.0.0.1");
-            br.setPort("8000");
-
-            curUser_->addBridge(br);
-        }
-
-        for(int j = 0; j < 5; j++) {
-            cout << curUser_->getBridge(j)->getName() << endl;
-        }
-        */
     }
     else {
         // if the curUser_ pointer does point to a User, greet the User with a friendly hello!
-        cont->addWidget(new Wt::WText("Hello, "));
-        cont->addWidget(new Wt::WText( curUser_->getFirstName() ));
+        cont->addWidget(new Wt::WText( curUser_->constructGreetingString() ));
+        //cont->addWidget(new Wt::WText( curUser_->getFirstName() ));
+        cont->addWidget(new Wt::WBreak());
 
         Wt::WPushButton *dispBridgeButton = new Wt::WPushButton("Bridges", cont);
         dispBridgeButton->setLink(Wt::WLink(Wt::WLink::InternalPath, "/bridges"));
@@ -136,9 +115,7 @@ void HueApplication::loggedIn_(User u) {
     curUser_->setFirstName(u.getFirstName());
     curUser_->setLastName(u.getLastName());
 
-    // ! TODO -- need to extract all bridges from User u and attach them to curUser_
-    // MAYBE something like this??? untested code :
-
+    // extract all bridges from the User pulled from the database and attach them to curUser_
     for(int i = 0; i < u.getNumberOfBridges(); i++) {
         Bridge b( u.getBridge(i)->getName(), u.getBridge(i)->getLocation(), u.getBridge(i)->getHostName(), u.getBridge(i)->getPort(), u.getBridge(i)->getUsername(), u.getBridge(i)->getStatus() );
 
@@ -255,15 +232,7 @@ void HueApplication::addBridge() {
 
     // On successful close of the dialogue, do the following:
     if (dialogue.exec() == Wt::WDialog::Accepted) {
-        // ! TODO: Here is where we create the new Bridge object out of the details fed to the form.
-
-        /*
-        cout << "Name " << bridgeNameEdit_->text().toUTF8() << endl;
-        cout << "Location " << bridgeLocationEdit_->text().toUTF8() << endl;
-        cout << "Hostname " << hostNameEdit_->text().toUTF8() << endl;
-        cout << "Port " << portNumEdit_->text().toUTF8() << endl;
-        */
-
+        // create the new Bridge object out of the details fed to the form.
         Bridge b;
 
         b.setName(bridgeNameEdit_->text().toUTF8());
@@ -271,63 +240,133 @@ void HueApplication::addBridge() {
         b.setHostName(hostNameEdit_->text().toUTF8());
         b.setPort(portNumEdit_->text().toUTF8());
 
-
+        
+        /* ------------------------- TESTING 
+        Bridge br;
+        br.setName("bridgeString");
+        br.setLocation("dummyLocation");
+        br.setHostName("127.0.0.1");
+        br.setPort("8000");
+        
+        curUser_->addBridge(br);
+        */
+        
         cout << "Name " << b.getName() << endl;
         cout << "Location " << b.getLocation() << endl;
         cout << "Hostname " << b.getHostName() << endl;
         cout << "Port " << b.getPort() << endl;
 
         curUser_->addBridge(b);
-        ::activeDB.DBFileManager::saveBridges(curUser_);
+        ::activeDB.DBFileManager::saveBridges(curUser_); // save the bridges of the current user
     }
 }
 
 void HueApplication::handleRequest() {
     Wt::WApplication *app = Wt::WApplication::instance();
-
-    if(app->internalPath() == "/") {
+    
+    // internalPathNextPart returns the next "folder" of the URL if one exists
+    // or "" if not.
+    // If it doesn't return the empty string, we try to serve it the appropriate webpage
+    
+    //cout << "internalPathMatches(/login) = " << app->internalPathMatches( "/login" ) << "\n\nInternalPath = " << app->internalPath() << "\n\n\n";
+    
+    if(app->internalPathMatches("/") && app->internalPathNextPart( "/" ) == "") {
         root()->clear();
         showMainPage();
     }
-
-    else if(app->internalPath() == "/login") {
+    
+    else if(app->internalPathMatches("/login")) {
         goToLogIn();
     }
-    // "/bridges" is a string of length 8. If the internal path is at least 8 characters, try to resolve the link as follows:
-    else if (app->internalPath().size() >= 8) {
-        // cout << "We found that the path was >= 8\n" << app->internalPath() << "\nIt is " << app->internalPath().size() << " characters long" << endl << endl;
+    
+    // handle go to "/register" internal link
+    else if(app->internalPathMatches("/register")) {
+        goToRegister();
+    }
+    
+    // if the user is logged in and tries to navigate to the Bridges page
+    else if( app->internalPathMatches("/bridges") ) {
+        if(testLoggedInStatus() == true) {
+            // if the internal path is just "/bridges" (i.e. doesn't have a "Next Part"), 
+            // display a list of all bridges
+            if( app->internalPathNextPart( "/bridges/" ) == "" ) {
+                root()->clear();
+                displayBridges();
+            }
+            // otherwise, there IS a next part, so we process it
+            else {
+                // construct a working URL to handle variability in bridge numbers
+                // workingURL_ will contain "/bridges/#"
+                string workingURL_ =  "/bridges/" + app->internalPathNextPart("/bridges/");
+                
+                stringstream s;
+                int bridgeNum;
+                Bridge *b;
+                
+                s << app->internalPathNextPart("/bridges/"); // strip the bridge number out of the string
+                s >> bridgeNum;
 
-        // if the internal path is just "/bridges", display a list of all bridges
-        if(app->internalPath() == "/bridges") {
-            root()->clear();
-            displayBridges();
+                // !WARNING -- NEED to implement error handling here.
+                b = curUser_->getBridge(bridgeNum);
+                
+                // if there is nothing after the "bridges/#/" part
+                if( app->internalPathNextPart( workingURL_ + "/" ) == "" ) {
+                    root()->clear();
+                    root()->addWidget(new IndivBridgeManagerWidget("bmanager", b));
+                }
+                // there is more in the current internal path, so we construct the Group widget
+                else {
+                    //cout << "working url: " << workingURL_ << "\nnext part: " << app->internalPathNextPart( workingURL_ ) << "\n\n\n" << endl;
+                    
+                    workingURL_ += "/groups/";
+                    int groupNum;
+                    Group *g;
+                    
+                    s.clear();
+                    s << app->internalPathNextPart(workingURL_); // strip the group number out of the string
+                    
+                    // update the workingURL_ to include variability of groupNum
+                    workingURL_ += app->internalPathNextPart( workingURL_ );
+                    
+                    cout << "working url: " << workingURL_ << "\nnext part: " << app->internalPathNextPart( workingURL_ ) << "\n\n\n" << endl;
+                    
+                    s >> groupNum;
+                    g = b->getGroup(groupNum);
+                    
+                    if( app->internalPathNextPart(workingURL_ + "/") == "" ) {
+                        root()->clear();
+                        root()->addWidget(new IndivGroupManagerWidget("groupManager", b, g));
+                    }
+                    else {
+                        workingURL_ += "/lights/";
+                        int lightNum;
+                        Light *l;
+                        
+                        s.clear();
+                        s << app->internalPathNextPart(workingURL_); // strip the light number out of the string
+                        
+                        workingURL_ += app->internalPathNextPart("/lights/");
+                        
+                        s >> lightNum;
+                        l = g->getLight(lightNum);
+                        
+                        root()->clear();
+                        root()->addWidget( new IndivLightManagerWidget("lightManager", b, l) );
+
+                    }
+                }
+            }
         }
-        // handle go to "/register" internal link
-        else if(app->internalPath() == "/register") {
-            goToRegister();
-        }
-        // handle the case with an integer number 'i' following "/bridges/"
-        else if(app->internalPath().size() > 9 && app->internalPath().substr(0, 9) == "/bridges/") {
-            // cout << "We got to the substr stuff" << endl << endl;
-            stringstream s;
-            int bridgeNum;
-            Bridge *b;
-
-            //cout << "remaining curpath: " << app->internalPath().substr(9, app->internalPath().size()) << endl;
-
-            s << app->internalPath().substr(9, app->internalPath().size());
-            s >> bridgeNum;
-
-            // !WARNING -- NEED to implement error handling here.
-
-            b = curUser_->getBridge(bridgeNum);
-
-            root()->clear();
-            root()->addWidget(new IndivBridgeManagerWidget("bmanager", b));
+        
+        // if the User is not logged in, redirect them to the home page
+        else {
+            setInternalPath("/", true);
         }
     }
+    
     else {
         root()->clear();
+        showMainPage();
     }
 }
 

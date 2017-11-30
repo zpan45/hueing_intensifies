@@ -24,6 +24,7 @@
 #include <Wt/Json/Object>
 #include <Wt/Json/Parser>
 #include <Wt/Json/Serializer>
+#include <Wt/WComboBox>
 
 #include "Bridge.h"
 #include "Light.h"
@@ -43,6 +44,15 @@ private:
     Bridge *b;
     Light *l;
     bool requestSuccess;
+    Wt::WLineEdit *nameEdit_;
+    Wt::WComboBox *onOffSwitch_;
+    Wt::WLineEdit *brightnessEdit_;
+    Wt::WLineEdit *hueEdit_;
+    Wt::WLineEdit *satEdit_;
+    
+    
+    void showInformation();
+    
     bool rename(std::string newname);
     bool update();
     bool update(int transTime);
