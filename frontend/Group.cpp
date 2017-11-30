@@ -1,5 +1,5 @@
 /**
- * @file Group.cpp
+ * @class Group
  * Group Class.
  *
  * @brief Group Class

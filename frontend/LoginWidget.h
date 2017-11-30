@@ -1,3 +1,10 @@
+/**
+ * @file LoginWidget.h
+ * Head file for LoginWidget.cpp
+ *
+ * @brief Head file for LoginWidget.cpp
+ * @author Jacob Fryer (jfryer6)
+ */
 #ifndef LOGIN_WIDGET_H_
 #define LOGIN_WIDGET_H_
 

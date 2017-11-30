@@ -30,7 +30,7 @@
   <td id="projectlogo"><img alt="Logo" src="175x175bb.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">[hueing intensifies]
-   &#160;<span id="projectnumber">v0.2</span>
+   &#160;<span id="projectnumber">v0.5</span>
    </div>
    <div id="projectbrief">UWO CS3307a Team 24</div>
   </td>
@@ -90,24 +90,39 @@ $(document).ready(function(){initNavTree('class_d_b_file_manager.html','');});
 </div><!--header-->
 <div class="contents">
 
+<p>Database file manager.  
+ <a href="class_d_b_file_manager.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_d_b_file_manager_8h_source.html">DBFileManager.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a8975356da3a468cd1197d6021fe1b7fd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_b_file_manager.html#a8975356da3a468cd1197d6021fe1b7fd">DBFileManager</a> ()</td></tr>
 <tr class="separator:a8975356da3a468cd1197d6021fe1b7fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adca0039a5be2b7f04b0179c47bdf80fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_b_file_manager.html#adca0039a5be2b7f04b0179c47bdf80fb">loadUsers</a> ()</td></tr>
-<tr class="separator:adca0039a5be2b7f04b0179c47bdf80fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56c02d4291fa6a338cc7a01b0b0e0eec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_b_file_manager.html#a56c02d4291fa6a338cc7a01b0b0e0eec">saveUsers</a> ()</td></tr>
-<tr class="separator:a56c02d4291fa6a338cc7a01b0b0e0eec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec0855b28c63a50eb50ccd139c6edc96"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_user.html">User</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_b_file_manager.html#aec0855b28c63a50eb50ccd139c6edc96">getUser</a> (std::string userName)</td></tr>
-<tr class="separator:aec0855b28c63a50eb50ccd139c6edc96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b7cb2205ab711c674a9c962a15fba66"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_b_file_manager.html#a6b7cb2205ab711c674a9c962a15fba66">addUser</a> (<a class="el" href="class_user.html">User</a> newUser)</td></tr>
-<tr class="separator:a6b7cb2205ab711c674a9c962a15fba66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19223d76c2b767b214b1743f4b46b9cf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_b_file_manager.html#a19223d76c2b767b214b1743f4b46b9cf">addNewUser</a> (<a class="el" href="class_user.html">User</a> newUser)</td></tr>
+<tr class="separator:a19223d76c2b767b214b1743f4b46b9cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6713a0a70afd7b6807a9775fdde3885e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_b_file_manager.html#a6713a0a70afd7b6807a9775fdde3885e">saveBridges</a> (<a class="el" href="class_user.html">User</a> *newUser)</td></tr>
+<tr class="separator:a6713a0a70afd7b6807a9775fdde3885e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca1b0006d9e418d24739c94111fe98d2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_b_file_manager.html#aca1b0006d9e418d24739c94111fe98d2">removeUser</a> (<a class="el" href="class_user.html">User</a> currentUser)</td></tr>
 <tr class="separator:aca1b0006d9e418d24739c94111fe98d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1847e849cc82130a80bf8b60c55cb1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_user.html">User</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_b_file_manager.html#af1847e849cc82130a80bf8b60c55cb1c">getUser</a> (std::string username)</td></tr>
+<tr class="separator:af1847e849cc82130a80bf8b60c55cb1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7afaf4a6b8f4fa52779a95b07760b2e7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_b_file_manager.html#a7afaf4a6b8f4fa52779a95b07760b2e7">createDirPath</a> (std::string username)</td></tr>
+<tr class="separator:a7afaf4a6b8f4fa52779a95b07760b2e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac53235a99edfa553fd2c4d834f2808c7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_b_file_manager.html#ac53235a99edfa553fd2c4d834f2808c7">createUserFilePath</a> (std::string username)</td></tr>
+<tr class="separator:ac53235a99edfa553fd2c4d834f2808c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefd4dd5188c85d1757ac3ae8d66596c8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_b_file_manager.html#aefd4dd5188c85d1757ac3ae8d66596c8">createBridgeFilePath</a> (std::string username)</td></tr>
+<tr class="separator:aefd4dd5188c85d1757ac3ae8d66596c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94b63dd1e89c11b2019229e47a043f84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_b_file_manager.html#a94b63dd1e89c11b2019229e47a043f84">writeToFile</a> (<a class="el" href="class_user.html">User</a> newUser, std::string userPath)</td></tr>
+<tr class="separator:a94b63dd1e89c11b2019229e47a043f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fc8e50e06193a0b4622f6acd577ad00"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_user.html">User</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_d_b_file_manager.html#a3fc8e50e06193a0b4622f6acd577ad00">readFromFile</a> (std::string userPath, std::string bridgePath)</td></tr>
+<tr class="separator:a3fc8e50e06193a0b4622f6acd577ad00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Database file manager. </p>
+<p>Database is implemented as a filesystem using Boost's filesystem library. Each user has a their own directory containing two files, one for user info and one for bridge info. Both files are read to create a <a class="el" href="class_user.html" title="User Class. ">User</a> object. A user directory and info file are created on registration and never modified. <a class="el" href="class_bridge.html" title="Bridge Class. ">Bridge</a> files are created on adding a new bridge and are modified whenever a bridge is updated or added.</p>
+<dl class="section author"><dt>Author</dt><dd>Jacob Fryer (jfryer6), Anthony Tran (atran94), Omar Abdel-Qader (oabdelqa), Usant Kajendirarajah (ukajendi), Zhengyang Pan (zpan45) </dd></dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a8975356da3a468cd1197d6021fe1b7fd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8975356da3a468cd1197d6021fe1b7fd">&#9670;&nbsp;</a></span>DBFileManager()</h2>
 
@@ -122,19 +137,19 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Default constructor. Initializes output stream to database file. </p>
+<p>Default constructor. Creates a HUE_USERS/ directory if none already exist. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6b7cb2205ab711c674a9c962a15fba66"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b7cb2205ab711c674a9c962a15fba66">&#9670;&nbsp;</a></span>addUser()</h2>
+<a id="a19223d76c2b767b214b1743f4b46b9cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19223d76c2b767b214b1743f4b46b9cf">&#9670;&nbsp;</a></span>addNewUser()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool DBFileManager::addUser </td>
+          <td class="memname">bool DBFileManager::addNewUser </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_user.html">User</a>&#160;</td>
           <td class="paramname"><em>newUser</em></td><td>)</td>
@@ -142,11 +157,92 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Creates a new directory for a newly registered user. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newUser</td><td>a new user object </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="aec0855b28c63a50eb50ccd139c6edc96"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aec0855b28c63a50eb50ccd139c6edc96">&#9670;&nbsp;</a></span>getUser()</h2>
+<a id="aefd4dd5188c85d1757ac3ae8d66596c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefd4dd5188c85d1757ac3ae8d66596c8">&#9670;&nbsp;</a></span>createBridgeFilePath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string DBFileManager::createBridgeFilePath </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>username</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates a string indicating the path of the user's bridge information file within the filesystem </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">username</td><td>the username of the user to be found </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a string indicating the path to the user's bridge info file in the filesystem </dd></dl>
+
+</div>
+</div>
+<a id="a7afaf4a6b8f4fa52779a95b07760b2e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7afaf4a6b8f4fa52779a95b07760b2e7">&#9670;&nbsp;</a></span>createDirPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string DBFileManager::createDirPath </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>username</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates a string indicating the path of the user's directory within the filesystem </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">username</td><td>the username of the user to be found </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a string indicating the path to the directory in the filesystem </dd></dl>
+
+</div>
+</div>
+<a id="ac53235a99edfa553fd2c4d834f2808c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac53235a99edfa553fd2c4d834f2808c7">&#9670;&nbsp;</a></span>createUserFilePath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string DBFileManager::createUserFilePath </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>username</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates a string indicating the path of the user's information file within the filesystem </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">username</td><td>the username of the user to be found </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a string indicating the path to the user info file in the filesystem </dd></dl>
+
+</div>
+</div>
+<a id="af1847e849cc82130a80bf8b60c55cb1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1847e849cc82130a80bf8b60c55cb1c">&#9670;&nbsp;</a></span>getUser()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -155,28 +251,53 @@ Public Member Functions</h2></td></tr>
           <td class="memname"><a class="el" href="class_user.html">User</a> DBFileManager::getUser </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>userName</em></td><td>)</td>
+          <td class="paramname"><em>username</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Creates a user object by calling <a class="el" href="class_d_b_file_manager.html#a3fc8e50e06193a0b4622f6acd577ad00">readFromFile()</a> method in <a class="el" href="class_user.html" title="User Class. ">User</a> class </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">username</td><td>a username identifying the user in the DB </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a <a class="el" href="class_user.html" title="User Class. ">User</a> object containing user info and bridges from file </dd></dl>
 
 </div>
 </div>
-<a id="adca0039a5be2b7f04b0179c47bdf80fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adca0039a5be2b7f04b0179c47bdf80fb">&#9670;&nbsp;</a></span>loadUsers()</h2>
+<a id="a3fc8e50e06193a0b4622f6acd577ad00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fc8e50e06193a0b4622f6acd577ad00">&#9670;&nbsp;</a></span>readFromFile()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DBFileManager::loadUsers </td>
+          <td class="memname"><a class="el" href="class_user.html">User</a> DBFileManager::readFromFile </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>userPath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>bridgePath</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Reads the user's bridge and info from files and create a user object. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">userPath</td><td>path to user's information file </td></tr>
+    <tr><td class="paramname">bridgePath</td><td>the path to the user's bridge file in the DB filesystem </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -195,29 +316,79 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Removes a user from the database by removing all associated directories and files </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newUser</td><td>a user object to be removed </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a boolean indicating whether the operation was successful </dd></dl>
 
 </div>
 </div>
-<a id="a56c02d4291fa6a338cc7a01b0b0e0eec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a56c02d4291fa6a338cc7a01b0b0e0eec">&#9670;&nbsp;</a></span>saveUsers()</h2>
+<a id="a6713a0a70afd7b6807a9775fdde3885e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6713a0a70afd7b6807a9775fdde3885e">&#9670;&nbsp;</a></span>saveBridges()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DBFileManager::saveUsers </td>
+          <td class="memname">bool DBFileManager::saveBridges </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="class_user.html">User</a> *&#160;</td>
+          <td class="paramname"><em>currentUser</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Creates a new bridge info file within the user's directory, and can be used to save a user's info bridge info during or at the end of the session. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newUser</td><td>a new user object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a boolean indicating whether the operation was successful </dd></dl>
+
+</div>
+</div>
+<a id="a94b63dd1e89c11b2019229e47a043f84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94b63dd1e89c11b2019229e47a043f84">&#9670;&nbsp;</a></span>writeToFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DBFileManager::writeToFile </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_user.html">User</a>&#160;</td>
+          <td class="paramname"><em>newUser</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>bridgePath</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Write the user's bridge data to file on bridge update or app termination. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newUser</td><td>user who's bridge info is being saved </td></tr>
+    <tr><td class="paramname">bridgePath</td><td>the path to the user's bridge file in the DB filesystem </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>data/<a class="el" href="_d_b_file_manager_8h_source.html">DBFileManager.h</a></li>
-<li>data/<a class="el" href="_d_b_file_manager_8cpp.html">DBFileManager.cpp</a></li>
+<li>frontend/<a class="el" href="_d_b_file_manager_8h_source.html">DBFileManager.h</a></li>
+<li>frontend/<a class="el" href="_d_b_file_manager_8cpp.html">DBFileManager.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

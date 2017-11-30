@@ -1,5 +1,5 @@
 /**
- * @file HueApplication.cpp
+ * @class HueApplication
  * The HueApplication class is the backbone of our Application. It implements
  * the WApplication class. HueApplication functions as the landing page for the application.
  * It prompts the user to Log In or Register if they don't have an account.
@@ -16,9 +16,11 @@ DBFileManager activeDB;
 
 using namespace std;
 
-/** Default constructor that creates the user-facing Hue Application's landing page.
-* @param env - The WEnvironment variable.
-*/
+/**
+ * Default constructor that creates the user-facing Hue Application's landing page.
+ * @brief Hue Application
+ * @param env - The WEnvironment variable.
+ */
 HueApplication::HueApplication(const Wt::WEnvironment& env) : Wt::WApplication(env) {
 }
 
@@ -49,6 +51,9 @@ void HueApplication::initialize() {
 
 }
 
+/**
+ *
+ */
 void HueApplication::finalize() {
     User *u = HueApplication::getCurrentUser();
 
@@ -57,6 +62,9 @@ void HueApplication::finalize() {
     }
 }
 
+/**
+ *
+ */
 void HueApplication::showMainPage() {
     // add a new container widget for the "Logged In" dialogue / greeting
     Wt::WContainerWidget *cont = new Wt::WContainerWidget();
@@ -94,10 +102,12 @@ void HueApplication::showMainPage() {
 
 }
 
-/** Method that checks if the User is logged in by testing whether the curUser_ variable points
-* to the nullptr.
-* @return bool - The status of whether there is a User logged into this session.
-*/
+/**
+ * Method that checks if the User is logged in by testing whether the curUser_ variable points
+ * to the nullptr.
+ * @brief Test LoggedIn Status
+ * @return bool - The status of whether there is a User logged into this session.
+ */
 bool HueApplication::testLoggedInStatus() {
     if( curUser_->getUsername() == "" ) {
         return false; // Not logged in
@@ -107,8 +117,10 @@ bool HueApplication::testLoggedInStatus() {
     }
 }
 
-/** Method that displays the Log In Widget to the User.
-*/
+/**
+ * Method that displays the Log In Widget to the User.
+ * @brief Go To LogIn
+ */
 void HueApplication::goToLogIn() {
     root()->clear();
     LoginWidget *login = new LoginWidget("Login", root());
@@ -130,22 +142,26 @@ void HueApplication::loggedIn_(User u) {
     }
 }
 
-/** Method that displays the Registration Widget to the User.
-*/
+/**
+ * Method that displays the Registration Widget to the User.
+ * @brief Go To Register
+ */
 void HueApplication::goToRegister() {
     root()->clear();
     root()->addWidget(new RegistrationWidget("Registration", curUser_));
 }
 
-/** This method displays a list of ALL bridges associated with the current
-* User object if the User is logged in. It will propagate a list of all the
-* current bridges, and create a button next to each one that will take us
-* to that Bridge's page. For example...
-*
-*        1. Bridge1 @ dummyLocation  [ Click Here to Edit ]
-*        2. Bridge2 @ my house       [ Click Here to Edit ]
-*        3. ..
-*/
+/**
+ * This method displays a list of ALL bridges associated with the current
+ * User object if the User is logged in. It will propagate a list of all the
+ * current bridges, and create a button next to each one that will take us
+ * to that Bridge's page. For example...
+ *
+ *        1. Bridge1 @ dummyLocation  [ Click Here to Edit ]
+ *        2. Bridge2 @ my house       [ Click Here to Edit ]
+ *        3. ..
+ * @brief Display Bridges
+ */
 void HueApplication::displayBridges() {
     // Add a new groupbox to display all the Bridges associated with the current User
     Wt::WGroupBox *groupbox = new Wt::WGroupBox(curUser_->constructGreetingString(), root());
@@ -201,6 +217,10 @@ void HueApplication::displayBridges() {
     }));
 }
 
+/**
+ * Allow user to enter information and add a Bridge to the system
+ * @brief Add Bridge
+ */
 void HueApplication::addBridge() {
     Wt::WDialog dialogue("Add New Bridge...");
 
@@ -268,6 +288,9 @@ void HueApplication::addBridge() {
     }
 }
 
+/**
+ *
+ */
 void HueApplication::handleRequest() {
     Wt::WApplication *app = Wt::WApplication::instance();
     
@@ -378,19 +401,19 @@ void HueApplication::handleRequest() {
 }
 
 /** Function that is called in runRESTful() to create the HueApplication, which is made the
-* entry point for the website.
-*/
+ * entry point for the website.
+ */
 Wt::WApplication *createApplication(const Wt::WEnvironment& env) {
     return new HueApplication(env);
 }
 
 /** A replacement method for WRun()
-*
-* Code modified from tutorial examples
-* http://eduardo-lago.blogspot.ca/2013/05/creating-rest-web-service-using.html?m=1
-* https://stackoverflow.com/questions/15956947/can-multiple-wt-applications-run-on-same-port?rq=1
-* as listed in the Assignment 1 specifications
-*/
+ *
+ * Code modified from tutorial examples
+ * http://eduardo-lago.blogspot.ca/2013/05/creating-rest-web-service-using.html?m=1
+ * https://stackoverflow.com/questions/15956947/can-multiple-wt-applications-run-on-same-port?rq=1
+ * as listed in the Assignment 1 specifications
+ */
 int runRESTful(int argc, char *argv[], Wt::ApplicationCreator createApplication) {
     try {
         Wt::WServer server(argv[0]);
@@ -420,7 +443,7 @@ int runRESTful(int argc, char *argv[], Wt::ApplicationCreator createApplication)
 }
 
 /** Main method that passes control to the runRESTful() function on launch.
-*/
+ */
 int main(int argc, char **argv) {
     return runRESTful(argc, argv, &createApplication);
 }

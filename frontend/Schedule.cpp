@@ -1,5 +1,5 @@
 /**
- * @file Schedule.cpp
+ * @class Schedule
  * Schedule Class.
  *
  * @brief Schedule Class

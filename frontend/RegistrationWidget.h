@@ -1,8 +1,9 @@
-// This may look like C code, but it's really -*- C++ -*-
-/* 
- * Copyright (C) 2011 Emweb bvba, Heverlee, Belgium
+/**
+ * @file RegistrationWidget.h
+ * Head file for RegistrationWidget.cpp
  *
- * See the LICENSE file for terms of use.
+ * @brief Head file for RegistrationWidget.cpp
+ * @author Jacob Fryer (jfryer6)
  */
 
 #ifndef REGISTRATION_WIDGET_H_

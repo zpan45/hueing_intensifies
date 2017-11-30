@@ -1,5 +1,5 @@
 /**
- * @file Light.cpp
+ * @class Light
  * Light Class.
  *
  * @brief Light Class
