@@ -28,7 +28,7 @@ class Schedule {
         std::string getStatus();
         void setName(std::string n);
         void setDescription(std::string d);
-        void setCommand(Object c);
+        void setCommand(Command c);
         void setTime(std::string t);
         void setLocalTime(std::string lt);
         void setStatus(std::string s);
