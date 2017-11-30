@@ -380,14 +380,13 @@ bool IndivBridgeManagerWidget::updateGroups() {
 /**
  * Connect to the bridge hardware and create a new group; after creation, update groups vector
  * @param name new group's name
- * @param lightIDs a vector of int containing the lightIDs in the group
  * @return true on group created successfully
  */
-bool IndivBridgeManagerWidget::createGroup(std::string name, std::vector<int> lightIDs) {
+bool IndivBridgeManagerWidget::createGroup(std::string name) {
     //initialize request success flag
     requestSuccess=false;
     //connect to Bridge
-    connectCreateGroup(name, lightIDs);
+    connectCreateGroup(name);
     //if connection is successful, requestSuccess flag would be updated by handleHttpResponseGroup()
     for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
         //check every 100ms for HTML_MESSAGE_CHECK times
@@ -432,7 +431,7 @@ bool IndivBridgeManagerWidget::deleteGroup(int groupID) {
  * @param name new group's name
  * @param lightIDs lightIDs a vector of int containing the lightIDs in the group
  */
-void IndivBridgeManagerWidget::connectCreateGroup(std::string name, std::vector<int> lightIDs) {
+void IndivBridgeManagerWidget::connectCreateGroup(std::string name) {
     //construct URL
     stringstream url_;
     url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/newdeveloper";
@@ -448,14 +447,7 @@ void IndivBridgeManagerWidget::connectCreateGroup(std::string name, std::vector<
     Wt::Http::Message message;
     stringstream body;
     //set body
-    body<< "{" <<"\"lights\":"<< "[";
-    //for each lightID, add to message body
-    for (auto it=lightIDs.begin();it!=lightIDs.end();++it) {
-        body<<"\""<<*it<<"\"";
-        //if we haven't reached the last lightID, add "," in middle
-        if(it!=lightIDs.end()) body<<",";
-    }
-    body<<"],"<<"\"name\":\""<<name<<"\"}";
+    body<< "{"<<"\"name\":\""<<name<<"\"}";
 
     message.addBodyText(body.str());
     //set header
