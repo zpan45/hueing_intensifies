@@ -137,14 +137,13 @@ void HueApplication::loggedIn_(User u) {
     curUser_->setLastName(u.getLastName());
 
     // ! TODO -- need to extract all bridges from User u and attach them to curUser_
-    /* MAYBE something like this??? untested code :
+    // MAYBE something like this??? untested code :
 
-    for(int i = 0; i < u.getNumberOfBridges(); i++ {
-        curUser->addBridge( u.getBridge(i) );
+    for(int i = 0; i < u.getNumberOfBridges(); i++) {
+        Bridge b( u.getBridge(i)->getName(), u.getBridge(i)->getLocation(), u.getBridge(i)->getHostName(), u.getBridge(i)->getPort(), u.getBridge(i)->getUsername(), u.getBridge(i)->getStatus() );
+        
+        curUser_->addBridge( b );
     }
-
-    */
-
 }
 
 /** Method that displays the Registration Widget to the User.
