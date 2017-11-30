@@ -136,9 +136,7 @@ void HueApplication::loggedIn_(User u) {
     curUser_->setFirstName(u.getFirstName());
     curUser_->setLastName(u.getLastName());
 
-    // ! TODO -- need to extract all bridges from User u and attach them to curUser_
-    // MAYBE something like this??? untested code :
-
+    // extract all bridges from the User pulled from the database and attach them to curUser_
     for(int i = 0; i < u.getNumberOfBridges(); i++) {
         Bridge b( u.getBridge(i)->getName(), u.getBridge(i)->getLocation(), u.getBridge(i)->getHostName(), u.getBridge(i)->getPort(), u.getBridge(i)->getUsername(), u.getBridge(i)->getStatus() );
 

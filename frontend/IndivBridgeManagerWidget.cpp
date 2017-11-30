@@ -128,7 +128,7 @@ void IndivBridgeManagerWidget::displayGroups() {
         s = "/groups/" + to_string(i);
         //delete app;
 
-        button->setLink(Wt::WLink(Wt::WLink::InternalPath, s));
+        button->setLink(Wt::WLink(Wt::WLink::InternalPath, Wt::WApplication::instance()->internalPath() + s));
 
         groupbox->addWidget(new Wt::WBreak());
     }
