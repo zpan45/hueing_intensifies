@@ -17,28 +17,8 @@ IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Brid
     // It HAS to be a pointer because otherwise the changes from the update() method won't persist
     connect();
 
-    /* DEBUGGING STUFF -- CAN BE DELETED SAFELY
-    Group g;
-    g.setName("new group1");
-
-    b->addGroup(g);
-    g.setName("newG2");
-    b->addGroup(g);
-
-
-    for(int i = 0; i < b->getNumberOfGroups(); i++) {
-        cout << b->getGroup(i)->getName() << endl;
-    }
-    */
-    
+    groupbox = new Wt::WGroupBox(b->getName()); // initialize area to display the list of groups associated with this Bridge -- Widget gets added in showInformation();
     showInformation();
-
-    /* DEBUGGING STUFF -- CAN BE DELETED SAFELY
-    Group *group;
-    group = b->getGroup(0);
-
-    this->addWidget(new IndivGroupManagerWidget("gmanager", b, group));
-    */
 }
 
 
@@ -107,6 +87,8 @@ void IndivBridgeManagerWidget::showInformation() {
     Wt::WPushButton *addGroupButton = new Wt::WPushButton("Add Group", this);
     addGroupButton->clicked().connect(this, &IndivBridgeManagerWidget::addGroupToBridge);
     
+    this->addWidget(groupbox);
+    
     // the update_ button is bound to a lambda function that calls the update()
     // method. Done this way because you cannot pass parameters through Wt's connect()
     // method.
@@ -129,7 +111,7 @@ void IndivBridgeManagerWidget::displayGroups() {
     updateGroups();
 
     // Add a new groupbox to display all the Groups associated with the current Bridge
-    Wt::WGroupBox *groupbox = new Wt::WGroupBox(b->getName(), this);
+    groupbox->clear();
 
     for(int i = 0; i < b->getNumberOfGroups(); i++) {
         groupbox->addWidget(new Wt::WText(b->getGroup(i)->getName() + " (" + to_string(b->getGroup(i)->getNumberOfLights()) + " Lights) "));
@@ -175,6 +157,8 @@ void IndivBridgeManagerWidget::displayGroups() {
     // if the delete button is clicked, remove the option to remove the Group and the Group itself
     delButton_->clicked().connect(std::bind([=] () {
         b->removeGroup(cb->currentIndex()); // delete the Group with the current index
+        connectDeleteGroup(cb->currentIndex() + 1);
+        
         cb->removeItem(cb->currentIndex()); // remove the option to delete a button
         delButton_->setEnabled(false); // disable the delete button
 
@@ -182,7 +166,7 @@ void IndivBridgeManagerWidget::displayGroups() {
             cout << b->getGroup(i)->getName() << endl;
         }
 
-        groupbox->refresh();
+        displayGroups();
     }));
 }
 
@@ -204,21 +188,11 @@ void IndivBridgeManagerWidget::addGroupToBridge() {
     // On successful close of the dialogue, do the following:
     if (dialogue.exec() == Wt::WDialog::Accepted) {
         Group g;
-
         g.setName(groupNameEdit_->text().toUTF8());
-
-
-        cout << "Name " << g.getName() << endl;
         
         connectCreateGroup(g.getName());
-        
-        if(true) {
-            cout << "group added successfully \n\n\n\n" << endl;
-            b->addGroup(g);
-        }
-        else {
-            cout << "group add unsuccessful \n\n" << endl;
-        }
+        b->addGroup(g);
+        displayGroups();
     }
 }
 
@@ -508,17 +482,6 @@ void IndivBridgeManagerWidget::handleHttpResponseGroup(Wt::Http::Client *client,
             Wt::Json::Value val = result[0];
             
             Wt::Json::Object obj = val;
-            
-            //string val = result[0];
-            this->requestSuccess= obj.contains("success");
-            
-            cout << "\n\ntype = " << to_string(val.type()) << "\nREQUEST SUCCESS\t" << this->requestSuccess << endl;
-            if(this->requestSuccess == true) {
-                cout << "true"<< "\n\n\n" << endl;
-            }
-            else {
-                cout << "false"<< "\n\n\n" << endl;
-            }
         }
         catch ( Wt::Json::TypeException t) {
             cerr << "type exception" << endl;
@@ -528,11 +491,7 @@ void IndivBridgeManagerWidget::handleHttpResponseGroup(Wt::Http::Client *client,
             cout<<"JSON parse failure (inside handleHttpResponseGroup()).\n" << e.what() <<endl;
             return;
         }
-        //if response contains "success" then request was successful, set this->requestSuccess to true
-        //this->requestSuccess= obj.contains("success");
     }
-    
-    cout << "we at the bottom of httpresponse" << endl;
     
     delete client;
 }

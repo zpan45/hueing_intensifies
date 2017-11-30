@@ -50,7 +50,9 @@ private:
     Wt::WLineEdit *bridgeLocationEdit_;
     Wt::WLineEdit *hostNameEdit_;
     Wt::WLineEdit *portNumEdit_;
-    bool requestSuccess;
+    //bool requestSuccess;
+    Wt::WGroupBox *groupbox; // display area
+    
     
     void connect();
     void showInformation();
