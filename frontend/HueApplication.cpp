@@ -34,9 +34,16 @@ void HueApplication::initialize() {
     curUser_ = new User();
 
     setTitle("CS3307 - Team24 Hue Application");
+    
+    
+    // if the User is not logged in on session startup, force redirect to the root
+    if(testLoggedInStatus() == false) {
+        setInternalPath( "/", true );
+    }
+    
     showMainPage();
-    Wt::WApplication *app = Wt::WApplication::instance();
-    app->internalPathChanged().connect(std::bind([=] () {
+    
+    Wt::WApplication::instance()->internalPathChanged().connect(std::bind([=] () {
         handleRequest();
     }));
 
