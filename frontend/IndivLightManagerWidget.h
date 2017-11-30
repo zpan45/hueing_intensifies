@@ -1,6 +1,10 @@
-//
-// Created by peter on 11/27/17.
-//
+/**
+ * @file IndivLightManagerWidget.h
+ * Head file for IndivLightManagerWidget.cpp
+ *
+ * @brief Head file for IndivLightManagerWidget.cpp
+ * @author Zhengyang Pan (zpan45)
+ */
 
 #ifndef INDIVLIGHTMANAGERWIDGET_H
 #define INDIVLIGHTMANAGERWIDGET_H

@@ -1,13 +1,28 @@
+/**
+ * @file IndivGroupManagerWidget.cpp
+ * A widget for managing a Group object, allows user to display and edit properties of a Group.
+ * It has methods to rename a Group; display and update the Lights in the Group and
+ * update the Group's all containing Lights' state (on/off, Brightness, Hue, Saturation, Transition Time for switching states).
+ *
+ * @brief Individual Light Manager Widget
+ * @author Zhengyang Pan (zpan45)
+ *
+ */
+
 #define _GLIBCXX_USE_CXX11_ABI 1
 #include "IndivGroupManagerWidget.h"
 
 using namespace std;
 
-/** Constructor
-* @param name - 
-* @param parent -
-* @param g - The Group object whose properties this Widget will allow the user to display and edit.
-*/
+//constructor
+/**
+ * Constructor.
+ * @brief Constructor
+ * @param name String name of this widget
+ * @param parent WContainerWidget pointer to parent container widget
+ * @param bridge pointer to the Bridge object where the Light object belongs
+ * @param group pointer to the Group object whose properties this Widget will allow the user to display and edit.
+ */
 IndivGroupManagerWidget::IndivGroupManagerWidget(const std::string &name, Bridge *bridge, Group *group, Wt::WContainerWidget *parent) : Wt::WContainerWidget(parent){
     b = bridge; // b is a pointer to the current bridge object
     g = group; // g is a pointer to the current group object
@@ -43,13 +58,14 @@ IndivGroupManagerWidget::~IndivGroupManagerWidget() {
 
 
 //public methods
-/**
- */
+
 
 //private methods
 
 /**
-*/
+ * Show user and allow user to modify the properties of a Group.
+ * @brief Show Group Information
+ */
 void IndivGroupManagerWidget::showInformation() {
     // set up the "Group Name" text entry field with a label
     Wt::WLabel *nameLabel = new Wt::WLabel("Group Name: \t", this);
@@ -70,9 +86,11 @@ void IndivGroupManagerWidget::showInformation() {
     }));
 }
 
-/** Method that consults the current Bridge object for all associated groups, and displays them
-* in a list with buttons that will allow the user to modify an individual Group.
-*/
+/**
+ * Method that consults the current Bridge object for all associated groups, and displays them
+ * in a list with buttons that will allow the user to modify an individual Group.
+ * @brief Display Lights In Group
+ */
 void IndivGroupManagerWidget::displayLights() {
     // ! TODO -- implement method that displays all Groups associated with the current Bridge
     // use Bridge.cpp's "getGroup()" method?? Iterate from 0 - size of the vector?
@@ -131,8 +149,10 @@ void IndivGroupManagerWidget::displayLights() {
     
 }
 
-/** Method to update the current Bridge object with any changes from the text boxes.
-*/
+/**
+ * Method to update the current Bridge object with any changes from the text boxes.
+ * @brief Update Group Object
+ */
 void IndivGroupManagerWidget::update() {
     this->addWidget(new Wt::WBreak());
     
@@ -162,6 +182,7 @@ void IndivGroupManagerWidget::update() {
 
 /**
  * Update the Group attributes stored in bridge hardware (Group name and consisting LightIDs)
+ * @brief Update Group
  * @param groupID the groupID of the group being updated
  * @return true on group updated successfully
  */
@@ -185,6 +206,7 @@ bool IndivGroupManagerWidget::updateGroup(int groupID) {
 
 /**
  * Update the state of Lights belong to this Group. (on, bri, hue, sat, transTime)
+ * @brief Update State of Group
  * @param groupID the groupID of the group being updated
  * @param on bool state of Lights: on/off
  * @param bri int brightness of Lights
@@ -213,6 +235,7 @@ bool IndivGroupManagerWidget::updateState(int groupID, bool on, int bri, int hue
 
 /**
  * Send a PUT request to bridge to update the Group attributes (Group name and consisting LightIDs). Called by updateGroup().
+ * @brief Connect Update Group
  * @param groupID the groupID of the group being updated
  */
 void IndivGroupManagerWidget::connectUpdateGroup(int groupID) {
@@ -245,6 +268,7 @@ void IndivGroupManagerWidget::connectUpdateGroup(int groupID) {
 
 /**
  * Send a PUT request to bridge to update the state of Lights belong to this Group. Called by updateState().
+ * @brief Connect Update State
  * @param groupID the groupID of the group being updated
  * @param on bool state of Lights: on/off
  * @param bri int brightness of Lights
@@ -277,12 +301,13 @@ void IndivGroupManagerWidget::connectUpdateState(int groupID, bool on, int bri, 
 }
 
 /**
-* Handles Http Response from Bridge. Update requestSuccess flag upon receiving successful response.
-* @param client HTTP client
-* @param err Error code
-* @param response HTTP message received
-*
-*/
+ * Handles Http Response from Bridge. Update requestSuccess flag upon receiving successful response.
+ * @brief Handle HTTP Response
+ * @param client HTTP client
+ * @param err Error code
+ * @param response HTTP message received
+ *
+ */
 void IndivGroupManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message &response) {
     if(err||response.status()!=200) {
         cerr<<"Error: "<<err.message()<<" ,"<<response.status()<<endl;
