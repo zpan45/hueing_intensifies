@@ -155,16 +155,3 @@ void Light::setID(string i) {
     id = i;
 }
 
-// --------------------------------------
-// PRIVATE METHODS
-// --------------------------------------
-
-
-/**
- * WILL BE REMOVED: Method that converts a given, well-formed string representing a colour's hexcode into the associated colour space coordinates to be used with the Hue API.
- * @param col A well-formed hexcode string that represents a colour
- */
-void Light::convertHexcodeToCoords(string col) {
-    // TODO: Write method to convert a hexcode into valid colour coordinates for the Hue API to process if needed
-    // TODO: Return Type?
-}
