@@ -38,7 +38,6 @@ class Light {
         int brightness;
         int hue;
         int sat;
-        int schedule;
         std::string id;
 };
 
