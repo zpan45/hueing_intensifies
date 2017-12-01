@@ -41,6 +41,7 @@ private:
     User getUserByUsername(Wt::WString username);
     bool checkPassword(User u, Wt::WString passInput);
     void login();
+    void showError(bool isError, std::string errorMessage);
 };
 
 #endif

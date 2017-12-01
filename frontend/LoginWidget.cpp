@@ -106,14 +106,47 @@ void LoginWidget::login() {
 
     if(u.getUsername() != "") {
         if(checkPassword(u, passwordEdit->text()) == true) {
-            loginDisplay->addWidget(new Wt::WText(u.constructGreetingString()));
             loggedInSignal_.emit(u);
+            showError(false, u.constructGreetingString() + " You will be taken to the home page." );
         }
         else {
-            loginDisplay->addWidget(new Wt::WText("ERROR: The entered password did not match!"));
+            showError(true, "The entered password did not match!");
         }
     }
     else {
-        loginDisplay->addWidget(new Wt::WText("ERROR: The entered Username was invalid!"));
+        showError(true, "The entered Username was invalid!");
+    }
+}
+
+/** Method that displays a dialogue box for errors (or successful login).
+* @brief Display an error message to the user.
+* @param isError - a boolean to determine whether the message is an error or successful login
+* @param errorMessage - a string with which to construct the error message's body.
+*/
+void LoginWidget::showError(bool isError, string errorMessage) {
+    Wt::WDialog errorText_;
+    
+    if(isError == true) {
+        errorText_.setWindowTitle("ERROR");
+    }
+    else {
+        errorText_.setWindowTitle("Hello!");
+    }
+    
+    
+    Wt::WText errMessage_(errorMessage, errorText_.contents());
+    new Wt::WBreak(errorText_.contents());
+    new Wt::WBreak(errorText_.contents());
+    
+    Wt::WPushButton confirm("Okay", errorText_.contents());
+    
+    confirm.clicked().connect(&errorText_, &Wt::WDialog::accept);
+    
+    if(errorText_.exec() == Wt::WDialog::Accepted) {
+        
+        if(isError == false) {
+            Wt::WApplication::instance()->setInternalPath("/", true);
+        }
+        
     }
 }
