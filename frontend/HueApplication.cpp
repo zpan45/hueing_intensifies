@@ -47,15 +47,15 @@ void HueApplication::initialize() {
     curUser_ = new User();
 
     setTitle("CS3307 - Team24 Hue Application");
-    
-    
+
+
     // if the User is not logged in on session startup, force redirect to the root
     if(testLoggedInStatus() == false) {
         setInternalPath( "/", true );
     }
-    
+
     showMainPage();
-    
+
     Wt::WApplication::instance()->internalPathChanged().connect(std::bind([=] () {
         handleRequest();
     }));
@@ -99,7 +99,7 @@ void HueApplication::showMainPage() {
         cont->addWidget(new Wt::WBreak());
         cont->addWidget(new Wt::WBreak());
         cont->addWidget(new Wt::WBreak());
-        
+
         // if the curUser_ pointer does point to a User, greet the User with a friendly hello!
         cont->addWidget(new Wt::WText( curUser_->constructGreetingString() ));
         cont->addWidget(new Wt::WBreak());
@@ -155,11 +155,11 @@ void HueApplication::loggedIn_(User u) {
     curUser_->setLastName(u.getLastName());
 
     // extract all bridges from the User pulled from the database and attach them to curUser_
-    for(int i = 0; i < u.getNumberOfBridges(); i++) {
+    /*for(int i = 0; i < u.getNumberOfBridges(); i++) {
         Bridge b( u.getBridge(i)->getName(), u.getBridge(i)->getLocation(), u.getBridge(i)->getHostName(), u.getBridge(i)->getPort(), u.getBridge(i)->getUsername(), u.getBridge(i)->getStatus() );
 
         curUser_->addBridge( b );
-    }
+    }*/
 }
 
 /**
@@ -173,7 +173,7 @@ void HueApplication::goToRegister() {
 
 void HueApplication::signOut() {
     ::activeDB.DBFileManager::saveBridges(curUser_);
-    
+
     curUser_ = new User();
     setInternalPath("/#", true);
 }
@@ -294,17 +294,17 @@ void HueApplication::addBridge() {
         b.setHostName(hostNameEdit_->text().toUTF8());
         b.setPort(portNumEdit_->text().toUTF8());
 
-        
-        /* ------------------------- TESTING 
+
+        /* ------------------------- TESTING
         Bridge br;
         br.setName("bridgeString");
         br.setLocation("dummyLocation");
         br.setHostName("127.0.0.1");
         br.setPort("8000");
-        
+
         curUser_->addBridge(br);
         */
-        
+
         cout << "Name " << b.getName() << endl;
         cout << "Location " << b.getLocation() << endl;
         cout << "Hostname " << b.getHostName() << endl;
@@ -321,29 +321,29 @@ void HueApplication::addBridge() {
  */
 void HueApplication::handleRequest() {
     Wt::WApplication *app = Wt::WApplication::instance();
-    
+
     // internalPathNextPart returns the next "folder" of the URL if one exists
     // or "" if not.
     // If it doesn't return the empty string, we try to serve it the appropriate webpage
-    
+
     if(app->internalPathMatches("/") && app->internalPathNextPart( "/" ) == "") {
         root()->clear();
         showMainPage();
     }
-    
+
     else if(app->internalPathMatches("/login")) {
         goToLogIn();
     }
-    
+
     // handle go to "/register" internal link
     else if(app->internalPathMatches("/register")) {
         goToRegister();
     }
-    
+
     // if the user is logged in and tries to navigate to the Bridges page
     else if( app->internalPathMatches("/bridges") ) {
         if(testLoggedInStatus() == true) {
-            // if the internal path is just "/bridges" (i.e. doesn't have a "Next Part"), 
+            // if the internal path is just "/bridges" (i.e. doesn't have a "Next Part"),
             // display a list of all bridges
             if( app->internalPathNextPart( "/bridges/" ) == "" ) {
                 root()->clear();
@@ -354,17 +354,17 @@ void HueApplication::handleRequest() {
                 // construct a working URL to handle variability in bridge numbers
                 // workingURL_ will contain "/bridges/#"
                 string workingURL_ =  "/bridges/" + app->internalPathNextPart("/bridges/");
-                
+
                 stringstream s;
                 int bridgeNum;
                 Bridge *b;
-                
+
                 s << app->internalPathNextPart("/bridges/"); // strip the bridge number out of the string
                 s >> bridgeNum;
 
                 // !WARNING -- NEED to implement error handling here.
                 b = curUser_->getBridge(bridgeNum);
-                
+
                 // if there is nothing after the "bridges/#/" part
                 if( app->internalPathNextPart( workingURL_ + "/" ) == "" ) {
                     root()->clear();
@@ -375,17 +375,17 @@ void HueApplication::handleRequest() {
                     workingURL_ += "/groups/";
                     int groupNum;
                     Group *g;
-                    
+
                     s.clear();
                     s << app->internalPathNextPart(workingURL_); // strip the group number out of the string
-                    
+
                     // update the workingURL_ to include variability of groupNum
                     workingURL_ += app->internalPathNextPart( workingURL_ );
-                    
-                    
+
+
                     s >> groupNum;
                     g = b->getGroup(groupNum);
-                    
+
                     if( app->internalPathNextPart(workingURL_ + "/") == "" ) {
                         root()->clear();
                         root()->addWidget(new IndivGroupManagerWidget("groupManager", b, g));
@@ -394,15 +394,15 @@ void HueApplication::handleRequest() {
                         workingURL_ += "/lights/";
                         int lightNum;
                         Light *l;
-                        
+
                         s.clear();
                         s << app->internalPathNextPart(workingURL_); // strip the light number out of the string
-                        
+
                         workingURL_ += app->internalPathNextPart("/lights/");
-                        
+
                         s >> lightNum;
                         l = g->getLight(lightNum);
-                        
+
                         root()->clear();
                         root()->addWidget( new IndivLightManagerWidget("lightManager", b, l) );
 
@@ -410,13 +410,13 @@ void HueApplication::handleRequest() {
                 }
             }
         }
-        
+
         // if the User is not logged in, redirect them to the home page
         else {
             setInternalPath("/", true);
         }
     }
-    
+
     else {
         root()->clear();
         showMainPage();
