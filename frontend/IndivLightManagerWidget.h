@@ -26,10 +26,12 @@
 #include <Wt/WLabel>
 #include <Wt/WTemplate>
 #include <Wt/Json/Object>
+#include <Wt/Json/Array>
 #include <Wt/Json/Parser>
 #include <Wt/Json/Serializer>
 #include <Wt/WComboBox>
 #include <Wt/WHBoxLayout>
+#include <Wt/WDialog>
 
 #include "Bridge.h"
 #include "Light.h"

@@ -116,10 +116,10 @@ bool IndivLightManagerWidget::rename(std::string newname) {
  * @brief Update Light Object
  */
 void IndivLightManagerWidget::update() {
-    this->addWidget(new Wt::WBreak());
+    Wt::WDialog changedDialogue("Group Update");
+    changedDialogue.setClosable(true);
     
-    Wt::WHBoxLayout *change = new Wt::WHBoxLayout(this);
-    //this->addWidget(change);
+    Wt::WHBoxLayout *change = new Wt::WHBoxLayout(changedDialogue.contents());
     
     Wt::WContainerWidget *old = new Wt::WContainerWidget();
     change->addWidget(old);
@@ -179,9 +179,6 @@ void IndivLightManagerWidget::update() {
         convertToInt.clear();
     }
     
-    this->addWidget(new Wt::WBreak());
-    this->addWidget(new Wt::WBreak());
-    
     connectUpdate();
     
     // if we're turning the light off, we do it at the end so as not to interrupt the other requests
@@ -206,6 +203,16 @@ void IndivLightManagerWidget::update() {
     changed->addWidget(new Wt::WBreak());
     changed->addWidget(new Wt::WText( to_string( l->getSat()) ) );
     changed->addWidget(new Wt::WBreak());
+    
+    new Wt::WBreak(changedDialogue.contents());
+    new Wt::WBreak(changedDialogue.contents());
+    
+    Wt::WPushButton confirm("Okay", changedDialogue.contents());
+    
+    confirm.clicked().connect(&changedDialogue, &Wt::WDialog::accept);
+    
+    if(changedDialogue.exec() == Wt::WDialog::Accepted) {
+    }
 }
 
 /**
@@ -342,17 +349,32 @@ void IndivLightManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost
         cerr<<"Error: "<<err.message()<<" ,"<<response.status()<<endl;
 
     } else {
-        Wt::Json::Object result;
+        Wt::Json::Array result;
+        //cout << response.body() << endl;
         //try to parse response string to JSON object
         try {
+
             Wt::Json::parse(response.body(), result);
-        } catch (exception e)
-        {
-            cout<<"JSON parse failure."<<endl;
+            
+            int successCount = 0;
+            
+            for(int i = 0; i < result.size(); i++) {
+                Wt::Json::Value val = result[i];
+                Wt::Json::Object obj = val;
+                
+                if( !(obj.isNull("success")) ) {
+                    successCount++;
+                }
+            }
+        }
+        catch ( Wt::Json::TypeException t) {
+            cerr << "type exception" << endl;
             return;
         }
-        //if response contains "success" then request was successful, set requestSuccess to true
-        requestSuccess=result.contains("success");
+        catch (exception e) {
+            cerr<<"JSON parse failure (inside handleHttpResponseGroup()).\n" << e.what() <<endl;
+            return;
+        }
     }
     delete client;
 }

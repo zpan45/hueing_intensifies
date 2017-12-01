@@ -57,8 +57,6 @@ void IndivBridgeManagerWidget::connect() {
     client->done().connect(boost::bind(&IndivBridgeManagerWidget::handleHttpResponse, this, client, _1, _2));
     //send get request
     client->get(url_.str());
-
-    //cout << url_.str() << endl << endl;
 }
 
 /**
@@ -179,6 +177,7 @@ void IndivBridgeManagerWidget::displayGroups() {
         delButton_->setEnabled(false); // disable the delete button
 
         displayGroups();
+        displayGroups();
     }));
 }
 
@@ -210,6 +209,7 @@ void IndivBridgeManagerWidget::addGroupToBridge() {
         connectCreateGroup(g.getName());
         b->addGroup(g);
         displayGroups();
+        displayGroups();
     }
 }
 
@@ -219,10 +219,10 @@ void IndivBridgeManagerWidget::addGroupToBridge() {
  * @brief Update Bridge
  */
 void IndivBridgeManagerWidget::update() {
-    this->addWidget(new Wt::WBreak());
-
-    Wt::WHBoxLayout *change = new Wt::WHBoxLayout(this);
-    //this->addWidget(change);
+    Wt::WDialog changedDialogue("Bridge Update");
+    changedDialogue.setClosable(true);
+    
+    Wt::WHBoxLayout *change = new Wt::WHBoxLayout(changedDialogue.contents());
 
     Wt::WContainerWidget *old = new Wt::WContainerWidget();
     change->addWidget(old);
@@ -252,9 +252,6 @@ void IndivBridgeManagerWidget::update() {
         b->setPort(portNumEdit_->text().toUTF8());
     }
 
-    this->addWidget(new Wt::WBreak());
-    this->addWidget(new Wt::WBreak());
-
     // didn't want to call the variable "new" so we named the display of things that have changed, "changed"
     Wt::WContainerWidget *changed = new Wt::WContainerWidget();
     change->addWidget(changed);
@@ -267,7 +264,16 @@ void IndivBridgeManagerWidget::update() {
     changed->addWidget(new Wt::WText(b->getHostName()));
     changed->addWidget(new Wt::WBreak());
     changed->addWidget(new Wt::WText(b->getPort()));
-
+    
+    new Wt::WBreak(changedDialogue.contents());
+    new Wt::WBreak(changedDialogue.contents());
+    
+    Wt::WPushButton confirm("Okay", changedDialogue.contents());
+    
+    confirm.clicked().connect(&changedDialogue, &Wt::WDialog::accept);
+    
+    if(changedDialogue.exec() == Wt::WDialog::Accepted) {
+    }
 }
 
 /**
@@ -325,15 +331,7 @@ bool IndivBridgeManagerWidget::updateLights() {
         newlight.setBrightness(lightStateJSON.get("bri"));
         newlight.setHue(lightStateJSON.get("hue"));
         newlight.setSat(lightStateJSON.get("sat"));
-
-        //Wt::WString s = lightsJSON.get(*it);
-        //cout << s << endl;
-
-        //newlight.setName(lightsJSON.get(*it).get("name").toString().orIfNull("empty string");
-        //newlight.setIsActive(lightsJSON.get(*it).get("state").get("on").toBool().orIfNull(false));
-        //newlight.setBrightness(lightsJSON.get(*it).get("state").get("bri").toString().orIfNull(""));
-        //newlight.setHue(lightsJSON.get(*it).get("state").get("hue"));
-        //newlight.setSat(lightsJSON.get(*it).get("state").get("sat"));
+        
         b->addLight(newlight);
     }
     return true;
@@ -489,9 +487,17 @@ void IndivBridgeManagerWidget::handleHttpResponseGroup(Wt::Http::Client *client,
         try {
 
             Wt::Json::parse(response.body(), result);
-            Wt::Json::Value val = result[0];
-
-            Wt::Json::Object obj = val;
+            
+            int successCount = 0;
+            
+            for(int i = 0; i < result.size(); i++) {
+                Wt::Json::Value val = result[i];
+                Wt::Json::Object obj = val;
+                
+                if( !(obj.isNull("success")) ) {
+                    successCount++;
+                }
+            }
         }
         catch ( Wt::Json::TypeException t) {
             cerr << "type exception" << endl;
@@ -502,6 +508,6 @@ void IndivBridgeManagerWidget::handleHttpResponseGroup(Wt::Http::Client *client,
             return;
         }
     }
-
+    
     delete client;
 }
