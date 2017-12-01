@@ -14,5 +14,11 @@ var class_group =
     [ "setClass", "class_group.html#a01874912052b71ef6f4f61fa839f2b17", null ],
     [ "setName", "class_group.html#a9fd2761e7de2381649c3f29020b33f09", null ],
     [ "setState", "class_group.html#a3db592be933a8ee10b5afa677c34e1db", null ],
-    [ "setType", "class_group.html#aa7110cefec1da8c52335484250aeffce", null ]
+    [ "setType", "class_group.html#aa7110cefec1da8c52335484250aeffce", null ],
+    [ "act", "class_group.html#ad421f7fbc8b680c510f43ccfcd6f6526", null ],
+    [ "groupClass", "class_group.html#a89ee46ce30d5c293dbe5fe08b5296bde", null ],
+    [ "groupState", "class_group.html#a2bbabf587c25e929a536c8d8dbdca4d3", null ],
+    [ "lights", "class_group.html#a3c4e9d5e80f3d24a0aea1c3eae6675e8", null ],
+    [ "name", "class_group.html#abfa8bde619513cf0768c14f2e5beeca1", null ],
+    [ "type", "class_group.html#a280b25ffec186c67a1f535d989562456", null ]
 ];

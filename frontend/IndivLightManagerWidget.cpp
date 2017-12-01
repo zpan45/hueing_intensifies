@@ -40,7 +40,9 @@ IndivLightManagerWidget::~IndivLightManagerWidget() {
 //private methods
 
 /**
-*/
+ * Show the Light state attributes and allow user to update them
+ * @brief Show Light Information
+ */
 void IndivLightManagerWidget::showInformation() {
     // set up the "Light Name" text entry field with a label
     Wt::WLabel *nameLabel = new Wt::WLabel("Light Name: ", this);
