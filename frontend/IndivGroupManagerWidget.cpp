@@ -81,16 +81,12 @@ void IndivGroupManagerWidget::showInformation() {
  * @brief Display Lights In Group
  */
 void IndivGroupManagerWidget::displayLights() {
-    // ! TODO -- implement method that displays all Groups associated with the current Bridge
-    // use Bridge.cpp's "getGroup()" method?? Iterate from 0 - size of the vector?
-    
     // Add a new groupbox to display all the Lights associated with the current Group
     Wt::WGroupBox *groupbox = new Wt::WGroupBox(g->getName(), this);
     
     for(int i = 0; i < g->getNumberOfLights(); i++) {
         groupbox->addWidget(new Wt::WText(g->getLight(i)->getName() + " (ID: " + g->getLight(i)->getID() + ") "));
         
-        //IDEA: Add buttons as links; use internalpath handling for /bridges for the main bridges widget and then /bridges/# for the subsequent bridges. use connect() to connect each button to a link?
         string s = "Edit " + to_string(i);
         Wt::WPushButton *button = new Wt::WPushButton(s, groupbox);
         
@@ -104,7 +100,7 @@ void IndivGroupManagerWidget::displayLights() {
     // add a remove button
     Wt::WComboBox *cb = new Wt::WComboBox(groupbox);
     
-    // loop through all Groups associated with the current Bridge, adding them as selectable options
+    // loop through all Lights associated with the current Group, adding them as selectable options
     for(int i = 0; i < g->getNumberOfLights(); i++) {
         cb->addItem(g->getLight(i)->getName());
     }
@@ -123,10 +119,10 @@ void IndivGroupManagerWidget::displayLights() {
         delButton_->setEnabled(true);
     }));
     
-    // if the delete button is clicked, remove the option to remove the Group and the Group itself
+    // if the delete button is clicked, remove the option to remove the Light and the Light itself
     delButton_->clicked().connect(std::bind([=] () {
-        g->removeLight(cb->currentIndex()); // delete the Group with the current index 
-        cb->removeItem(cb->currentIndex()); // remove the option to delete a button
+        g->removeLight(cb->currentIndex()); // delete the Light with the current index
+        cb->removeItem(cb->currentIndex()); // remove the option to delete the current index
         delButton_->setEnabled(false); // disable the delete button
         
         for(int i = 0; i < g->getNumberOfLights(); i++) {
@@ -284,9 +280,16 @@ void IndivGroupManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost
         //try to parse response string to JSON object
         try {
             Wt::Json::parse(response.body(), result);
+            Wt::Json::Value val = result[0];
+
+            Wt::Json::Object obj = val;
+        }
+        catch ( Wt::Json::TypeException t) {
+            cerr << "type exception" << endl;
+            return;
         }
         catch (exception e) {
-            cout<<"JSON parse failure."<<endl;
+            cout<<"JSON parse failure (inside handleHttpResponseGroup()).\n" << e.what() <<endl;
             return;
         }
         //if response contains "success" then request was successful, set requestSuccess to true

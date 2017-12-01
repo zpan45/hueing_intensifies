@@ -29,6 +29,7 @@
 #include <Wt/Json/Parser>
 #include <Wt/Json/Serializer>
 #include <Wt/WComboBox>
+#include <Wt/WHBoxLayout>
 
 #include "Bridge.h"
 #include "Light.h"
@@ -58,9 +59,9 @@ private:
     void showInformation();
     
     bool rename(std::string newname);
-    bool update();
-    bool update(int transTime);
+    void update();
     void connectRename(std::string newname);
+    void connectSwitchOnOff(bool active);
     void connectUpdate();
     void connectUpdate(int transTime);
     void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response);
