@@ -3,7 +3,7 @@
  * Head file for IndivBridgeManagerWidget.cpp
  *
  * @brief Head file for IndivBridgeManagerWidget.cpp
- * @author Zhengyang Pan (zpan45)
+ * @author Jacob Fryer (jfryer6), Anthony Tran (atran94), Omar Abdel-Qader (oabdelqa), Usant Kajendirarajah (ukajendi), Zhengyang Pan (zpan45)
  */
 
 #ifndef INDIVBRIDGEMANAGERWIDGET_H

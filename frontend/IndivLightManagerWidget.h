@@ -3,7 +3,7 @@
  * Head file for IndivLightManagerWidget.cpp
  *
  * @brief Head file for IndivLightManagerWidget.cpp
- * @author Zhengyang Pan (zpan45)
+ * @author Jacob Fryer (jfryer6), Anthony Tran (atran94), Omar Abdel-Qader (oabdelqa), Usant Kajendirarajah (ukajendi), Zhengyang Pan (zpan45)
  */
 
 #ifndef INDIVLIGHTMANAGERWIDGET_H

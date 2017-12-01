@@ -3,7 +3,7 @@
  * Head file for IndivGroupManagerWidget.cpp
  *
  * @brief Head file for IndivGroupManagerWidget.cpp
- * @author Jacob Fryer (jfryer6)
+ * @author Jacob Fryer (jfryer6), Anthony Tran (atran94), Omar Abdel-Qader (oabdelqa), Usant Kajendirarajah (ukajendi), Zhengyang Pan (zpan45)
  */
 
 #ifndef INDIVGROUPMANAGERWIDGET_H

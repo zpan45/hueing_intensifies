@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['id',['id',['../class_light.html#a3aede2c7bf6a2e7596e3b93735470b6d',1,'Light']]],
+  ['id',['id',['../class_group.html#ade135fec88f463adb44f780cb476e7d3',1,'Group::id()'],['../class_light.html#a3aede2c7bf6a2e7596e3b93735470b6d',1,'Light::id()']]],
   ['indivbridgemanagerwidget',['IndivBridgeManagerWidget',['../class_indiv_bridge_manager_widget.html',1,'IndivBridgeManagerWidget'],['../class_indiv_bridge_manager_widget.html#aafa226bec20c9c45edf38fcda98ee0bd',1,'IndivBridgeManagerWidget::IndivBridgeManagerWidget()']]],
   ['indivbridgemanagerwidget_2ecpp',['IndivBridgeManagerWidget.cpp',['../_indiv_bridge_manager_widget_8cpp.html',1,'']]],
   ['indivbridgemanagerwidget_2eh',['IndivBridgeManagerWidget.h',['../_indiv_bridge_manager_widget_8h.html',1,'']]],

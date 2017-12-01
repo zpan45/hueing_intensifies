@@ -2,7 +2,7 @@
  * @file Group.h
  * Group Class head file.
  * @brief Group Class head file.
- * @author Jacob Fryer (jfryer6), Anthony Tran (atran94)
+ * @author Jacob Fryer (jfryer6), Anthony Tran (atran94), Omar Abdel-Qader (oabdelqa), Usant Kajendirarajah (ukajendi), Zhengyang Pan (zpan45)
  * @date November 04, 2017
  */
 

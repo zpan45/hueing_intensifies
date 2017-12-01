@@ -3,7 +3,7 @@
  * Light Class head file.
  *
  * @brief Light Class head file
- * @author Jacob Fryer (jfryer6)
+ * @author Jacob Fryer (jfryer6), Anthony Tran (atran94), Omar Abdel-Qader (oabdelqa), Usant Kajendirarajah (ukajendi), Zhengyang Pan (zpan45)
  * @date November 05, 2017
  */
 

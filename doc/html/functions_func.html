@@ -30,7 +30,7 @@
   <td id="projectlogo"><img alt="Logo" src="175x175bb.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">[hueing intensifies]
-   &#160;<span id="projectnumber">v0.5</span>
+   &#160;<span id="projectnumber">v0.7</span>
    </div>
    <div id="projectbrief">UWO CS3307a Team 24</div>
   </td>
@@ -146,11 +146,14 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <li>connectRename()
 : <a class="el" href="class_indiv_light_manager_widget.html#a52f41e00b845cf5582eb2c5a7234c804">IndivLightManagerWidget</a>
 </li>
+<li>connectSwitchOnOff()
+: <a class="el" href="class_indiv_light_manager_widget.html#ad36e9487658b1aed3e7007bd3049a66c">IndivLightManagerWidget</a>
+</li>
 <li>connectUpdate()
 : <a class="el" href="class_indiv_light_manager_widget.html#a6572a98f9537ba1872ba2ae5b6986e8f">IndivLightManagerWidget</a>
 </li>
 <li>connectUpdateGroup()
-: <a class="el" href="class_indiv_group_manager_widget.html#a7bac6c9aedc5d1904e169f554a136253">IndivGroupManagerWidget</a>
+: <a class="el" href="class_indiv_group_manager_widget.html#a43bb6043985d4edc11c7255f66d5f2be">IndivGroupManagerWidget</a>
 </li>
 <li>connectUpdateState()
 : <a class="el" href="class_indiv_group_manager_widget.html#ac37f9e1248f238c630af220f86c534c4">IndivGroupManagerWidget</a>
@@ -234,6 +237,9 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <li>getCurrentUser()
 : <a class="el" href="class_hue_application.html#aef1b28b4f270dcf514b56e83a7390bc8">HueApplication</a>
 </li>
+<li>getDescription()
+: <a class="el" href="class_schedule.html#a07dedbb231b9743f7a6f5797ef86ffed">Schedule</a>
+</li>
 <li>getFirstName()
 : <a class="el" href="class_user.html#a916b23414c3e97507a5b0a1ece77aede">User</a>
 </li>
@@ -248,7 +254,8 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 , <a class="el" href="class_light.html#a231f7c7f3af266a8546cfa1eafa18742">Light</a>
 </li>
 <li>getID()
-: <a class="el" href="class_light.html#ada4633cf1b0a53e8b82dcd73006d3aa7">Light</a>
+: <a class="el" href="class_group.html#abff6bf086bf4abf99cfefd67890b2a02">Group</a>
+, <a class="el" href="class_light.html#ada4633cf1b0a53e8b82dcd73006d3aa7">Light</a>
 </li>
 <li>getIsActive()
 : <a class="el" href="class_action.html#a64db8c775d534262611679315e270fa1">Action</a>
@@ -274,6 +281,7 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 : <a class="el" href="class_bridge.html#ac64bf3cf4afb888d67bd9f2ff361de3a">Bridge</a>
 , <a class="el" href="class_group.html#a98f0d57aa0acac724991ced372a385ce">Group</a>
 , <a class="el" href="class_light.html#a5d421846f0491d87a0054bd0dbd0936e">Light</a>
+, <a class="el" href="class_schedule.html#aa0011439e776b48ebcf19a2e134d5234">Schedule</a>
 </li>
 <li>getNumberOfBridges()
 : <a class="el" href="class_user.html#abda1b35ba9ab9e63deecf426bc1364ca">User</a>
@@ -282,7 +290,8 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 : <a class="el" href="class_bridge.html#acd92725ef9980f2c8cd0f149deb0f24b">Bridge</a>
 </li>
 <li>getNumberOfLights()
-: <a class="el" href="class_group.html#a2761bae08ec0727aa10383c2c7d575ff">Group</a>
+: <a class="el" href="class_bridge.html#a2c6e9e244b89ecdeb9c746b24bbc4ca1">Bridge</a>
+, <a class="el" href="class_group.html#a2761bae08ec0727aa10383c2c7d575ff">Group</a>
 </li>
 <li>getPassword()
 : <a class="el" href="class_user.html#a090eb9ee354cc25b2e8240b714b39d64">User</a>
@@ -448,7 +457,7 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 : <a class="el" href="class_group.html#a01874912052b71ef6f4f61fa839f2b17">Group</a>
 </li>
 <li>setCommand()
-: <a class="el" href="class_schedule.html#a76e3bd059d90a2cabcbb20c0850654db">Schedule</a>
+: <a class="el" href="class_schedule.html#a41280b0eed1b545c66b15aa53530a69c">Schedule</a>
 </li>
 <li>setCurrentUser()
 : <a class="el" href="class_hue_application.html#a14cd790fd6a80f0a549669bbfbafbf1f">HueApplication</a>
@@ -467,7 +476,8 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 , <a class="el" href="class_light.html#ae9094561a67bd7058a4c368999d12874">Light</a>
 </li>
 <li>setID()
-: <a class="el" href="class_light.html#a7ebc57ff2455628bdac25551b7217f46">Light</a>
+: <a class="el" href="class_group.html#a9bcacb203026e2d0e672b25c55bdc507">Group</a>
+, <a class="el" href="class_light.html#a7ebc57ff2455628bdac25551b7217f46">Light</a>
 </li>
 <li>setIsActive()
 : <a class="el" href="class_action.html#a6222a6bcc7ef469e622787e8e6fa6481">Action</a>
@@ -518,6 +528,10 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 : <a class="el" href="class_bridge.html#a8deb280d22863b954dc3242f98a79b4e">Bridge</a>
 , <a class="el" href="class_user.html#a0b8bcd12a47812b44cba0d868578bdaa">User</a>
 </li>
+<li>showError()
+: <a class="el" href="class_login_widget.html#a44436d5868a1724672c57440c3505a15">LoginWidget</a>
+, <a class="el" href="class_registration_widget.html#a5d8742c1fc05494072ee049a27999c94">RegistrationWidget</a>
+</li>
 <li>showInformation()
 : <a class="el" href="class_indiv_bridge_manager_widget.html#ac93e187ce6ec5662842b58ff5f4c1303">IndivBridgeManagerWidget</a>
 , <a class="el" href="class_indiv_group_manager_widget.html#a82e75ec701707884e940b8603d17604f">IndivGroupManagerWidget</a>
@@ -525,6 +539,9 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 </li>
 <li>showMainPage()
 : <a class="el" href="class_hue_application.html#ae3ec1adc037a8cca95662ee3e233c8ec">HueApplication</a>
+</li>
+<li>signOut()
+: <a class="el" href="class_hue_application.html#af14e698b5db4d7e40f15aa29c60027f5">HueApplication</a>
 </li>
 <li>State()
 : <a class="el" href="class_state.html#ab91bb1dd5aa6260ab2a456581daf9ec2">State</a>
@@ -546,10 +563,7 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <li>update()
 : <a class="el" href="class_indiv_bridge_manager_widget.html#ac799df4511d111a12ba66d9cc0d4b12b">IndivBridgeManagerWidget</a>
 , <a class="el" href="class_indiv_group_manager_widget.html#a55b95cb58f16ee94d53ccc9a9f8e5511">IndivGroupManagerWidget</a>
-, <a class="el" href="class_indiv_light_manager_widget.html#af4814443bff956d29a04c3102d1d981c">IndivLightManagerWidget</a>
-</li>
-<li>updateGroup()
-: <a class="el" href="class_indiv_group_manager_widget.html#afd22999b5876b8f024b70e4017450162">IndivGroupManagerWidget</a>
+, <a class="el" href="class_indiv_light_manager_widget.html#ae02d208dd5cc040f61c25ac906400dbe">IndivLightManagerWidget</a>
 </li>
 <li>updateGroups()
 : <a class="el" href="class_indiv_bridge_manager_widget.html#a3d12698600baedce7e94929833deb75e">IndivBridgeManagerWidget</a>

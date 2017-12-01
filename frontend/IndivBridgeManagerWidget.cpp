@@ -6,7 +6,7 @@
  * create/delete Groups stored in the Bridge object and send API calls to the hardware for this purpose.
  *
  * @brief Individual Bridge Manager Widget
- * @author Zhengyang Pan (zpan45)
+ * @author Jacob Fryer (jfryer6), Anthony Tran (atran94), Omar Abdel-Qader (oabdelqa), Usant Kajendirarajah (ukajendi), Zhengyang Pan (zpan45)
  *
  */
 #define _GLIBCXX_USE_CXX11_ABI 1
@@ -44,6 +44,7 @@ IndivBridgeManagerWidget::~IndivBridgeManagerWidget() {
 /**
  * Try to connect to provided Bridge.
  * @brief Connect to Bridge
+ * @author Zhengyang Pan (zpan45)
  */
 void IndivBridgeManagerWidget::connect() {
     //construct URL
@@ -321,6 +322,7 @@ void IndivBridgeManagerWidget::update() {
  * @param client HTTP client
  * @param err Error code
  * @param response HTTP message received
+ * @author Zhengyang Pan (zpan45)
  *
  */
 void IndivBridgeManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message &response) const {
@@ -338,6 +340,7 @@ void IndivBridgeManagerWidget::handleHttpResponse(Wt::Http::Client *client, boos
  * Connect to the bridge hardware and update the Lights objects stored in the bridge.
  * @brief Update Bridge Lights
  * @return false if Bridge cannot be reached
+ * @author Zhengyang Pan (zpan45)
  */
 bool IndivBridgeManagerWidget::updateLights() {
     //drop all saved lights in the bridge
@@ -384,6 +387,7 @@ bool IndivBridgeManagerWidget::updateLights() {
  * Connect to the bridge hardware and update the Group objects stored in the bridge's vector.
  * @brief Update Bridge Groups
  * @return false if Bridge cannot be reached
+ * @author Zhengyang Pan (zpan45)
  */
 bool IndivBridgeManagerWidget::updateGroups() {
     //drop all saved groups in the bridge
@@ -458,6 +462,7 @@ bool IndivBridgeManagerWidget::updateGroups() {
  * @brief Connect Create Group
  * @param name new group's name
  * @param lightIDs lightIDs a vector of int containing the lightIDs in the group
+ * @author Zhengyang Pan (zpan45)
  */
 void IndivBridgeManagerWidget::connectCreateGroup(std::string name) {
     //construct URL
@@ -491,6 +496,7 @@ void IndivBridgeManagerWidget::connectCreateGroup(std::string name) {
  * Send a DELETE message to the bridge hardware to delete a specified group. Called by deleteGroup().
  * @brief Connect Delete Group
  * @param groupID the groupID of the group we want to delete as an int
+ * @author Zhengyang Pan (zpan45)
  */
 void IndivBridgeManagerWidget::connectDeleteGroup(int groupID) {
     //construct URL
@@ -515,6 +521,7 @@ void IndivBridgeManagerWidget::connectDeleteGroup(int groupID) {
  * @param client HTTP client
  * @param err Error code
  * @param response HTTP message received
+ * @author Zhengyang Pan (zpan45)
  *
  */
 void IndivBridgeManagerWidget::handleHttpResponseGroup(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message &response) {

@@ -5,7 +5,7 @@
  * update the Light's state (on/off, Brightness, Hue, Saturation, Transition Time for switching states).
  *
  * @brief Individual Light Manager Widget
- * @author Zhengyang Pan (zpan45)
+ * @author Jacob Fryer (jfryer6), Anthony Tran (atran94), Omar Abdel-Qader (oabdelqa), Usant Kajendirarajah (ukajendi), Zhengyang Pan (zpan45)
  *
  */
 #define _GLIBCXX_USE_CXX11_ABI 1
@@ -91,6 +91,7 @@ void IndivLightManagerWidget::showInformation() {
  * @brief Rename Light
  * @param newname new name for the Light.
  * @return true if renamed successfully
+ * @author Zhengyang Pan (zpan45)
  */
 bool IndivLightManagerWidget::rename(std::string newname) {
     //initialize request success flag
@@ -219,6 +220,7 @@ void IndivLightManagerWidget::update() {
  * Send a PUT request to bridge to rename the Light
  * @brief Connect Rename
  * @param newname new name for the Light
+ * @author Zhengyang Pan (zpan45)
  */
 void IndivLightManagerWidget::connectRename(std::string newname) {
     //construct URL
@@ -245,6 +247,7 @@ void IndivLightManagerWidget::connectRename(std::string newname) {
  * Send a PUT request to bridge to update the Light status to On or Off
  * @brief Connect Update for On/Off
  * @param active, boolean of whether the Light is on (true) or off (false)
+ * @author Zhengyang Pan (zpan45)
  */
 void IndivLightManagerWidget::connectSwitchOnOff(bool active) {
     //construct URL
@@ -279,6 +282,7 @@ void IndivLightManagerWidget::connectSwitchOnOff(bool active) {
 /**
  * Send a PUT request to bridge to update the Light status using default transition time (bri, hue, sat)
  * @brief Connect Update
+ * @author Zhengyang Pan (zpan45)
  */
 void IndivLightManagerWidget::connectUpdate() {
     //construct URL
@@ -309,6 +313,7 @@ void IndivLightManagerWidget::connectUpdate() {
  * Send a PUT request to bridge to update the Light status with specified transition time (on, bri, hue, sat)
  * @brief Connect Update with TransTime
  * @param transTime * 100ms = transition time
+ * @author Zhengyang Pan (zpan45)
  */
 void IndivLightManagerWidget::connectUpdate(int transTime) {
     //construct URL
@@ -342,6 +347,7 @@ void IndivLightManagerWidget::connectUpdate(int transTime) {
  * @param client HTTP client
  * @param err Error code
  * @param response HTTP message received
+ * @author Zhengyang Pan (zpan45)
  *
  */
 void IndivLightManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message &response) {

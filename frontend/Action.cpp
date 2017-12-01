@@ -3,7 +3,7 @@
  * Action Class.
  *
  * @brief Action Class
- * @author Anthony Tran (atran94)
+ * @author Jacob Fryer (jfryer6), Anthony Tran (atran94), Omar Abdel-Qader (oabdelqa), Usant Kajendirarajah (ukajendi), Zhengyang Pan (zpan45)
  * @date November 28, 2017
  */
 

@@ -12,6 +12,7 @@ var class_bridge =
     [ "getLocation", "class_bridge.html#a9a29a809110d39245ad743734ccb1b0b", null ],
     [ "getName", "class_bridge.html#ac64bf3cf4afb888d67bd9f2ff361de3a", null ],
     [ "getNumberOfGroups", "class_bridge.html#acd92725ef9980f2c8cd0f149deb0f24b", null ],
+    [ "getNumberOfLights", "class_bridge.html#a2c6e9e244b89ecdeb9c746b24bbc4ca1", null ],
     [ "getPort", "class_bridge.html#a08de5f59536d2f960da9bbd986a6ea0c", null ],
     [ "getStatus", "class_bridge.html#af350dcf86a9fc2d81bb7624f377f626b", null ],
     [ "getUsername", "class_bridge.html#ac7cf6c4fbce9d0409a204e6647722106", null ],

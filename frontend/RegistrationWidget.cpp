@@ -3,7 +3,7 @@
  * Allows user to register with his/her username and password.
  *
  * @brief Login Widget.
- * @author Team 24
+ * @author Jacob Fryer (jfryer6), Anthony Tran (atran94), Omar Abdel-Qader (oabdelqa), Usant Kajendirarajah (ukajendi), Zhengyang Pan (zpan45)
  * @date November 09, 2017
  */
 

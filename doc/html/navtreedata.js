@@ -1,7 +1,6 @@
 var NAVTREE =
 [
   [ "[hueing intensifies]", "index.html", [
-    [ "Todo List", "todo.html", null ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -27,7 +26,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_action_8cpp.html",
-"class_light.html#aeb5df09a25a32f19fdffa761268ba24f"
+"class_light.html#acd36cc5de77a20fb9e5598eda6115d1c"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

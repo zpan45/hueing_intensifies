@@ -1,20 +1,20 @@
 var searchData=
 [
   ['savebridges',['saveBridges',['../class_d_b_file_manager.html#a6713a0a70afd7b6807a9775fdde3885e',1,'DBFileManager']]],
-  ['schedule',['Schedule',['../class_schedule.html#a878716f4043a016224a14f78974edf1d',1,'Schedule']]],
+  ['schedule',['Schedule',['../class_schedule.html#a878716f4043a016224a14f78974edf1d',1,'Schedule::Schedule()'],['../class_schedule.html#abf2495c44157e7408c334a49216120d4',1,'Schedule::Schedule(std::string n, std::string d, Command *c, std::string st, std::string l, std::string s)']]],
   ['setaddress',['setAddress',['../class_command.html#a4fb6b0b21e8a5dfcf7255775d2f37e29',1,'Command']]],
   ['setall_5fon',['setAll_On',['../class_state.html#aa74f234e119c78887dc8f13ea9645f6b',1,'State']]],
   ['setany_5fon',['setAny_On',['../class_state.html#a60f7363a7098f0a59a4971194049533b',1,'State']]],
   ['setbody',['setBody',['../class_command.html#ac3fe2294f865caae54a8170e3130e363',1,'Command']]],
   ['setbrightness',['setBrightness',['../class_action.html#a65974fcda1e9b8dbc42b829c786bd04b',1,'Action::setBrightness()'],['../class_light.html#a287e880add902d7da1fbcc6bb6e41195',1,'Light::setBrightness()']]],
   ['setclass',['setClass',['../class_group.html#a01874912052b71ef6f4f61fa839f2b17',1,'Group']]],
-  ['setcommand',['setCommand',['../class_schedule.html#a76e3bd059d90a2cabcbb20c0850654db',1,'Schedule']]],
+  ['setcommand',['setCommand',['../class_schedule.html#a41280b0eed1b545c66b15aa53530a69c',1,'Schedule']]],
   ['setcurrentuser',['setCurrentUser',['../class_hue_application.html#a14cd790fd6a80f0a549669bbfbafbf1f',1,'HueApplication']]],
   ['setdescription',['setDescription',['../class_schedule.html#a702e9c349bb9c88ec5ca189ce5145c17',1,'Schedule']]],
   ['setfirstname',['setFirstName',['../class_user.html#a1901bed2feb751c029d07546f303b2bc',1,'User']]],
   ['sethostname',['setHostName',['../class_bridge.html#a9c7d21c5962c31f9a5e2c3c8f10ac7e0',1,'Bridge']]],
   ['sethue',['setHue',['../class_action.html#a7083b00fd3c18e3d2c24b3231afe13e3',1,'Action::setHue()'],['../class_light.html#ae9094561a67bd7058a4c368999d12874',1,'Light::setHue()']]],
-  ['setid',['setID',['../class_light.html#a7ebc57ff2455628bdac25551b7217f46',1,'Light']]],
+  ['setid',['setID',['../class_group.html#a9bcacb203026e2d0e672b25c55bdc507',1,'Group::setID()'],['../class_light.html#a7ebc57ff2455628bdac25551b7217f46',1,'Light::setID()']]],
   ['setisactive',['setIsActive',['../class_action.html#a6222a6bcc7ef469e622787e8e6fa6481',1,'Action::setIsActive()'],['../class_light.html#a26084ed41e8751a51e04529820e7cc86',1,'Light::setIsActive()']]],
   ['setlastname',['setLastName',['../class_user.html#aa6dae2f4cb7f3b4e2782f222715e1b95',1,'User']]],
   ['setlocaltime',['setLocalTime',['../class_schedule.html#a6245257642bb4c3e0d34d85e8a4deefa',1,'Schedule']]],
@@ -31,7 +31,9 @@ var searchData=
   ['settimeout',['setTimeout',['../_api_stuff_8cpp.html#a5d6bc8f4ea42c0da276d6a64acc32556',1,'ApiStuff.cpp']]],
   ['settype',['setType',['../class_group.html#aa7110cefec1da8c52335484250aeffce',1,'Group']]],
   ['setusername',['setUsername',['../class_bridge.html#a8deb280d22863b954dc3242f98a79b4e',1,'Bridge::setUsername()'],['../class_user.html#a0b8bcd12a47812b44cba0d868578bdaa',1,'User::setUsername()']]],
+  ['showerror',['showError',['../class_login_widget.html#a44436d5868a1724672c57440c3505a15',1,'LoginWidget::showError()'],['../class_registration_widget.html#a5d8742c1fc05494072ee049a27999c94',1,'RegistrationWidget::showError()']]],
   ['showinformation',['showInformation',['../class_indiv_bridge_manager_widget.html#ac93e187ce6ec5662842b58ff5f4c1303',1,'IndivBridgeManagerWidget::showInformation()'],['../class_indiv_group_manager_widget.html#a82e75ec701707884e940b8603d17604f',1,'IndivGroupManagerWidget::showInformation()'],['../class_indiv_light_manager_widget.html#a0d84d2ff2e70b5b4fde3b2956eaa067a',1,'IndivLightManagerWidget::showInformation()']]],
   ['showmainpage',['showMainPage',['../class_hue_application.html#ae3ec1adc037a8cca95662ee3e233c8ec',1,'HueApplication']]],
+  ['signout',['signOut',['../class_hue_application.html#af14e698b5db4d7e40f15aa29c60027f5',1,'HueApplication']]],
   ['state',['State',['../class_state.html#ab91bb1dd5aa6260ab2a456581daf9ec2',1,'State::State()'],['../class_state.html#acf5adf9a49d971d2f299e7dbec3fe6d3',1,'State::State(bool any, bool all)']]]
 ];

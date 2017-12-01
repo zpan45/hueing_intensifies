@@ -5,7 +5,7 @@
  * It prompts the user to Log In or Register if they don't have an account.
  *
  * @brief HueApplication class functions as the backbone of the app.
- * @author Jacob Fryer (jfryer6)
+ * @author Jacob Fryer (jfryer6), Anthony Tran (atran94), Omar Abdel-Qader (oabdelqa), Usant Kajendirarajah (ukajendi), Zhengyang Pan (zpan45)
  * @date November 09, 2017
  */
 

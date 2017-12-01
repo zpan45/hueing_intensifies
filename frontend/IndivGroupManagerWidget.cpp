@@ -5,7 +5,7 @@
  * update the Group's all containing Lights' state (on/off, Brightness, Hue, Saturation, Transition Time for switching states).
  *
  * @brief Individual Group Manager Widget
- * @author Jacob Fryer (jfryer6)
+ * @author Jacob Fryer (jfryer6), Anthony Tran (atran94), Omar Abdel-Qader (oabdelqa), Usant Kajendirarajah (ukajendi), Zhengyang Pan (zpan45)
  *
  */
 
@@ -183,6 +183,7 @@ void IndivGroupManagerWidget::update() {
  * @param sat int sat of Lights
  * @param transTime int transition time specified (*100ms)
  * @return true on state successfully set
+ * @author Zhengyang Pan (zpan45)
  */
 bool IndivGroupManagerWidget::updateState(int groupID, bool on, int bri, int hue, int sat, int transTime) {
     //initialize request success flag
@@ -206,6 +207,7 @@ bool IndivGroupManagerWidget::updateState(int groupID, bool on, int bri, int hue
  * Send a PUT request to bridge to update the Group attributes (Group name and consisting LightIDs). Called by updateGroup().
  * @brief Connect Update Group
  * @param groupID the groupID of the group being updated
+ * @author Zhengyang Pan (zpan45)
  */
 void IndivGroupManagerWidget::connectUpdateGroup() {
     //construct URL
@@ -244,6 +246,7 @@ void IndivGroupManagerWidget::connectUpdateGroup() {
  * @param hue int hue of Lights
  * @param sat int sat of Lights
  * @param transTime int transition time specified (*100ms)
+ * @author Zhengyang Pan (zpan45)
  */
 void IndivGroupManagerWidget::connectUpdateState(int groupID, bool on, int bri, int hue, int sat, int transTime) {
     //construct URL
@@ -275,6 +278,7 @@ void IndivGroupManagerWidget::connectUpdateState(int groupID, bool on, int bri, 
  * @param client HTTP client
  * @param err Error code
  * @param response HTTP message received
+ * @author Zhengyang Pan (zpan45)
  *
  */
 void IndivGroupManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message &response) {
