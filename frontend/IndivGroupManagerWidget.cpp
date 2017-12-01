@@ -28,17 +28,6 @@ IndivGroupManagerWidget::IndivGroupManagerWidget(const std::string &name, Bridge
     g = group; // g is a pointer to the current group object
     // It HAS to be a pointer because otherwise the changes from the update() method won't persist
     
-    Light l;
-    l.setName("new light1");
-    
-    g->addLight(l);
-    l.setName("newL2");
-    g->addLight(l);
-    
-    for(int i = 0; i < g->getNumberOfLights(); i++) {
-        cout << g->getLight(i)->getName() << endl;
-    }
-    
     showInformation();
     
     // for testing purposes only -- in the future, the Bridge b will already have details associated with it when passed in
@@ -92,16 +81,12 @@ void IndivGroupManagerWidget::showInformation() {
  * @brief Display Lights In Group
  */
 void IndivGroupManagerWidget::displayLights() {
-    // ! TODO -- implement method that displays all Groups associated with the current Bridge
-    // use Bridge.cpp's "getGroup()" method?? Iterate from 0 - size of the vector?
-    
     // Add a new groupbox to display all the Lights associated with the current Group
     Wt::WGroupBox *groupbox = new Wt::WGroupBox(g->getName(), this);
     
     for(int i = 0; i < g->getNumberOfLights(); i++) {
         groupbox->addWidget(new Wt::WText(g->getLight(i)->getName() + " (ID: " + g->getLight(i)->getID() + ") "));
         
-        //IDEA: Add buttons as links; use internalpath handling for /bridges for the main bridges widget and then /bridges/# for the subsequent bridges. use connect() to connect each button to a link?
         string s = "Edit " + to_string(i);
         Wt::WPushButton *button = new Wt::WPushButton(s, groupbox);
         
@@ -115,7 +100,7 @@ void IndivGroupManagerWidget::displayLights() {
     // add a remove button
     Wt::WComboBox *cb = new Wt::WComboBox(groupbox);
     
-    // loop through all Groups associated with the current Bridge, adding them as selectable options
+    // loop through all Lights associated with the current Group, adding them as selectable options
     for(int i = 0; i < g->getNumberOfLights(); i++) {
         cb->addItem(g->getLight(i)->getName());
     }
@@ -134,10 +119,10 @@ void IndivGroupManagerWidget::displayLights() {
         delButton_->setEnabled(true);
     }));
     
-    // if the delete button is clicked, remove the option to remove the Group and the Group itself
+    // if the delete button is clicked, remove the option to remove the Light and the Light itself
     delButton_->clicked().connect(std::bind([=] () {
-        g->removeLight(cb->currentIndex()); // delete the Group with the current index 
-        cb->removeItem(cb->currentIndex()); // remove the option to delete a button
+        g->removeLight(cb->currentIndex()); // delete the Light with the current index
+        cb->removeItem(cb->currentIndex()); // remove the option to delete the current index
         delButton_->setEnabled(false); // disable the delete button
         
         for(int i = 0; i < g->getNumberOfLights(); i++) {
@@ -172,36 +157,14 @@ void IndivGroupManagerWidget::update() {
     this->addWidget(new Wt::WBreak());
     this->addWidget(new Wt::WBreak());
     
+    connectUpdateGroup();
+    
     // didn't want to call the variable "new" so we named the display of things that have changed, "changed"
     Wt::WContainerWidget *changed = new Wt::WContainerWidget();
     change->addWidget(changed);
     changed->addWidget(new Wt::WText("<b>New Stuff:</b>"));
     changed->addWidget(new Wt::WBreak());
     changed->addWidget(new Wt::WText(g->getName()));
-}
-
-/**
- * Update the Group attributes stored in bridge hardware (Group name and consisting LightIDs)
- * @brief Update Group
- * @param groupID the groupID of the group being updated
- * @return true on group updated successfully
- */
-bool IndivGroupManagerWidget::updateGroup(int groupID) {
-    //initialize request success flag
-    requestSuccess=false;
-    //connect to Bridge
-    connectUpdateGroup(groupID);
-    //if connection is successful, requestSuccess flag would be updated by handleHttpResponse()
-    for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
-        //check every 100ms for HTML_MESSAGE_CHECK times
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        //if flag's set then connected successfully
-        if(requestSuccess) {
-            return true;
-        }
-    }
-    //connection timeout, return false
-    return false;
 }
 
 /**
@@ -238,10 +201,10 @@ bool IndivGroupManagerWidget::updateState(int groupID, bool on, int bri, int hue
  * @brief Connect Update Group
  * @param groupID the groupID of the group being updated
  */
-void IndivGroupManagerWidget::connectUpdateGroup(int groupID) {
+void IndivGroupManagerWidget::connectUpdateGroup() {
     //construct URL
     stringstream url_;
-    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/"<<"newdeveloper"<<"/groups/"<<groupID;
+    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/"<<"newdeveloper"<<"/groups/"<<g->getID();
     Wt::Http::Client *client=new Wt::Http::Client(this);
     client->setTimeout(HTML_CLIENT_TIMEOUT);
     client->setMaximumResponseSize(10*1024);
@@ -255,7 +218,7 @@ void IndivGroupManagerWidget::connectUpdateGroup(int groupID) {
     //for each consisting light, add to message body
     body<<"\"lights\": [";
     for(int i=0; i<g->getNumberOfLights(); i++) {
-        body<<"\""<<g->getLight(i)<<"\"";
+        body<<"\""<<g->getLight(i)->getID()<<"\"";
         if(i<(g->getNumberOfLights()-1)) body<<",";
     }
     body<<"]}";
@@ -279,7 +242,7 @@ void IndivGroupManagerWidget::connectUpdateGroup(int groupID) {
 void IndivGroupManagerWidget::connectUpdateState(int groupID, bool on, int bri, int hue, int sat, int transTime) {
     //construct URL
     stringstream url_;
-    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/"<<"newdeveloper"<<"/groups/"<<groupID<<"/action";
+    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/"<<"newdeveloper"<<"/groups/"<<g->getID()<<"/action";
     Wt::Http::Client *client=new Wt::Http::Client(this);
     client->setTimeout(HTML_CLIENT_TIMEOUT);
     client->setMaximumResponseSize(10*1024);
@@ -317,9 +280,16 @@ void IndivGroupManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost
         //try to parse response string to JSON object
         try {
             Wt::Json::parse(response.body(), result);
+            Wt::Json::Value val = result[0];
+
+            Wt::Json::Object obj = val;
+        }
+        catch ( Wt::Json::TypeException t) {
+            cerr << "type exception" << endl;
+            return;
         }
         catch (exception e) {
-            cout<<"JSON parse failure."<<endl;
+            cout<<"JSON parse failure (inside handleHttpResponseGroup()).\n" << e.what() <<endl;
             return;
         }
         //if response contains "success" then request was successful, set requestSuccess to true

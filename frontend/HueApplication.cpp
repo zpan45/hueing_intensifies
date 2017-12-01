@@ -51,14 +51,13 @@ void HueApplication::initialize() {
 
 }
 
-/**
- *
+/** Method that is called when the app is closed before the destructor is called. Finalizes any remaining details. In our case, calls the signOut() method to serialize User data to file at the end of a session.
+ * @brief Finalize the application and serializes User data.
+ * @author Jacob Fryer (jfryer6)
  */
 void HueApplication::finalize() {
-    User *u = HueApplication::getCurrentUser();
-
-    if(u->getUsername() != "") {
-        ::activeDB.DBFileManager::saveBridges(u);
+    if(curUser_->getUsername() != "") {
+        signOut();
     }
 }
 
@@ -84,9 +83,14 @@ void HueApplication::showMainPage() {
         registerButton->setLink(Wt::WLink(Wt::WLink::InternalPath, "/register"));
     }
     else {
+        Wt::WPushButton *signOut_ = new Wt::WPushButton("Sign Out", cont);
+        signOut_->clicked().connect(this, &HueApplication::signOut);
+        cont->addWidget(new Wt::WBreak());
+        cont->addWidget(new Wt::WBreak());
+        cont->addWidget(new Wt::WBreak());
+        
         // if the curUser_ pointer does point to a User, greet the User with a friendly hello!
         cont->addWidget(new Wt::WText( curUser_->constructGreetingString() ));
-        //cont->addWidget(new Wt::WText( curUser_->getFirstName() ));
         cont->addWidget(new Wt::WBreak());
 
         Wt::WPushButton *dispBridgeButton = new Wt::WPushButton("Bridges", cont);
@@ -149,6 +153,13 @@ void HueApplication::loggedIn_(User u) {
 void HueApplication::goToRegister() {
     root()->clear();
     root()->addWidget(new RegistrationWidget("Registration", curUser_));
+}
+
+void HueApplication::signOut() {
+    ::activeDB.DBFileManager::saveBridges(curUser_);
+    
+    curUser_ = new User();
+    setInternalPath("/#", true);
 }
 
 /**

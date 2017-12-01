@@ -57,9 +57,8 @@ private:
     void showInformation();
     void displayLights();
     void update();
-    bool updateGroup(int groupID);
     bool updateState(int groupID, bool on, int bri, int hue, int sat, int transTime);
-    void connectUpdateGroup(int groupID);
+    void connectUpdateGroup();
     void connectUpdateState(int groupID, bool on, int bri, int hue, int sat, int transTime);
     void handleHttpResponse(Wt::Http::Client *client, boost::system::error_code err, const Wt::Http::Message& response);
 

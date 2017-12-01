@@ -19,9 +19,10 @@
 class Group {
     public:
         Group();
-        Group(std::string n, Action* a, State* s, std::string t, std::string c);
+        Group(std::string n, std::string i, Action* a, State* s, std::string t, std::string c);
 
         Action* getAction();
+        std::string getID();
         std::string getName();
         State* getState();
         std::string getType();
@@ -31,6 +32,7 @@ class Group {
 
         int getNumberOfLights();
         void setName(std::string n);
+        void setID(std::string i);
         void setState(State* s);
         void setType(std::string t);
         void setClass(std::string c);
@@ -39,6 +41,7 @@ class Group {
         bool removeLight(int element);
     private:
         std::string name;
+        std::string id;
         Action* act;
         std::vector<Light> lights;
         State* groupState;
