@@ -23,5 +23,13 @@ var class_bridge =
     [ "setPort", "class_bridge.html#ad6c48fefc4208c1c70d9c53216da9909", null ],
     [ "setStatus", "class_bridge.html#a09f47ca25ef88455852c8def644908d6", null ],
     [ "setUsername", "class_bridge.html#a8deb280d22863b954dc3242f98a79b4e", null ],
-    [ "toString", "class_bridge.html#aa8e24ee9cba815bcc8137d8b7868c741", null ]
+    [ "toString", "class_bridge.html#aa8e24ee9cba815bcc8137d8b7868c741", null ],
+    [ "groups", "class_bridge.html#ad7556a39155a23c691d97633ac7d9a89", null ],
+    [ "hostName", "class_bridge.html#a6a1ca8cc945fcd364e8147188930b304", null ],
+    [ "lights", "class_bridge.html#aaece7a1943acdf257c7b3f956715155c", null ],
+    [ "location", "class_bridge.html#a04f9fec6433cadffde5fda71a004af96", null ],
+    [ "name", "class_bridge.html#ab637783a4122c0423c513dfc03b314f6", null ],
+    [ "port", "class_bridge.html#a68fbd2985367915e475d2c16884c9a30", null ],
+    [ "status", "class_bridge.html#aafaa2b2433dd73511c739b8d65d2fb65", null ],
+    [ "username", "class_bridge.html#a6ba8cd7488502bc6317099c66d34ee7a", null ]
 ];

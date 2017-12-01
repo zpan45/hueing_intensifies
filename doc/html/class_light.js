@@ -13,5 +13,11 @@ var class_light =
     [ "setID", "class_light.html#a7ebc57ff2455628bdac25551b7217f46", null ],
     [ "setIsActive", "class_light.html#a26084ed41e8751a51e04529820e7cc86", null ],
     [ "setName", "class_light.html#a220fa5bf8ac9db5a8ba87267faf9e0db", null ],
-    [ "setSat", "class_light.html#a2ebfb59747ad501fc6878b75fe28ab26", null ]
+    [ "setSat", "class_light.html#a2ebfb59747ad501fc6878b75fe28ab26", null ],
+    [ "brightness", "class_light.html#af4413a217eebcf24639918a7632bf9b6", null ],
+    [ "hue", "class_light.html#ae488614d58a7f0dec6ed59b59c6c37e9", null ],
+    [ "id", "class_light.html#a3aede2c7bf6a2e7596e3b93735470b6d", null ],
+    [ "isActive", "class_light.html#aecca4954ea7954bff5dec49fbbfe4875", null ],
+    [ "name", "class_light.html#aed2e518d1e739c50c31ae77a865f51ed", null ],
+    [ "sat", "class_light.html#afbfb00988ab1c1e0a07fa20941c6f2bf", null ]
 ];

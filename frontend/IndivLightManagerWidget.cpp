@@ -27,11 +27,6 @@ IndivLightManagerWidget::IndivLightManagerWidget(const std::string &name, Bridge
     l = light;
     
     showInformation();
-    
-    Wt::WPushButton *update = new Wt::WPushButton("Update", this);
-    update->clicked().connect(std::bind([=] () {
-        rename("new string");
-    }));
 }
 
 //destructor
@@ -45,7 +40,9 @@ IndivLightManagerWidget::~IndivLightManagerWidget() {
 //private methods
 
 /**
-*/
+ * Show the Light state attributes and allow user to update them
+ * @brief Show Light Information
+ */
 void IndivLightManagerWidget::showInformation() {
     // set up the "Light Name" text entry field with a label
     Wt::WLabel *nameLabel = new Wt::WLabel("Light Name: ", this);
@@ -78,6 +75,15 @@ void IndivLightManagerWidget::showInformation() {
     satEdit_ = new Wt::WLineEdit(to_string(l->getSat()), this);
     satLabel->setBuddy(satEdit_);
     this->addWidget(new Wt::WBreak());
+    
+    Wt::WPushButton *update_ = new Wt::WPushButton("Update", this);
+    
+    // the update_ button is bound to a lambda function that calls the update()
+    // method. Done this way because you cannot pass parameters through Wt's connect()
+    // method.
+    update_->clicked().connect(bind([&]() {
+        update();
+    }));
 }
 
 /**
@@ -106,52 +112,101 @@ bool IndivLightManagerWidget::rename(std::string newname) {
 }
 
 /**
- * Update the Light status using default transition time(4). (on, bri, hue, sat)
- * @brief Update Light State
- * @return true if updated successfully
+ * Method to update the current Light object with any changes from the text boxes.
+ * @brief Update Light Object
  */
-bool IndivLightManagerWidget::update() {
-    //initialize request success flag
-    requestSuccess=false;
-    //connect to Bridge
+void IndivLightManagerWidget::update() {
+    this->addWidget(new Wt::WBreak());
+    
+    Wt::WHBoxLayout *change = new Wt::WHBoxLayout(this);
+    //this->addWidget(change);
+    
+    Wt::WContainerWidget *old = new Wt::WContainerWidget();
+    change->addWidget(old);
+    old->addWidget(new Wt::WText("<b>Old Stuff:</b>"));
+    old->addWidget(new Wt::WBreak());
+    old->addWidget(new Wt::WText(l->getName()));
+    old->addWidget(new Wt::WBreak());
+    old->addWidget(new Wt::WText( to_string( l->getIsActive()) ) );
+    old->addWidget(new Wt::WBreak());
+    old->addWidget(new Wt::WText( to_string( l->getBrightness() ) ) );
+    old->addWidget(new Wt::WBreak());
+    old->addWidget(new Wt::WText( to_string( l->getHue()) ) );
+    old->addWidget(new Wt::WBreak());
+    old->addWidget(new Wt::WText( to_string( l->getSat()) ) );
+    old->addWidget(new Wt::WBreak());
+    
+    stringstream convertToInt;
+    
+    // call to turn the light on right away if needed in case the light is off (otherwise other update requests won't work)
+    
+    // off == false, but off == currentIndex of 1, so we flip it with a !
+    if( !(bool)onOffSwitch_->currentIndex() == true ) {
+        //cout << "onoff is: ON (" << !(bool)onOffSwitch_->currentIndex() << ")" << endl;
+        l->setIsActive(true);
+        connectSwitchOnOff(l->getIsActive());
+    }
+    
+    if( l->getName() != nameEdit_->text().toUTF8() ) {
+        l->setName(nameEdit_->text().toUTF8());
+        connectRename(l->getName());
+    }
+    
+    if( to_string(l->getBrightness()) != brightnessEdit_->text().toUTF8() ) {
+        convertToInt << brightnessEdit_->text().toUTF8();
+        int bri;
+        convertToInt >> bri;
+        
+        l->setBrightness(bri);
+        convertToInt.clear();
+    }    
+    
+    if( to_string(l->getHue()) != hueEdit_->text().toUTF8() ) {
+        convertToInt << hueEdit_->text().toUTF8();
+        int hue;
+        convertToInt >> hue;
+        
+        l->setHue(hue);
+        convertToInt.clear();
+    }
+    
+    if( to_string(l->getSat()) != satEdit_->text().toUTF8() ) {
+        convertToInt << satEdit_->text().toUTF8();
+        int sat;
+        convertToInt >> sat;
+        
+        l->setSat(sat);
+        convertToInt.clear();
+    }
+    
+    this->addWidget(new Wt::WBreak());
+    this->addWidget(new Wt::WBreak());
+    
     connectUpdate();
-    //if connection is successful, requestSuccess flag would be updated by handleHttpResponse()
-    for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
-        //check every 100ms for HTML_MESSAGE_CHECK times
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        //if flag's set then connected successfully, change local Light name
-        if(requestSuccess) {
-            return true;
-        }
+    
+    // if we're turning the light off, we do it at the end so as not to interrupt the other requests
+    if( !(bool)onOffSwitch_->currentIndex() == false ) {
+        //cout << "onoff is: OFF (" << (bool)onOffSwitch_->currentIndex() << ")" << endl;
+        l->setIsActive(false);
+        connectSwitchOnOff(l->getIsActive());
     }
-    //connection timeout, return false
-    return false;
+    
+    // didn't want to call the variable "new" so we named the display of things that have changed, "changed"
+    Wt::WContainerWidget *changed = new Wt::WContainerWidget();
+    change->addWidget(changed);
+    changed->addWidget(new Wt::WText("<b>New Stuff:</b>"));
+    changed->addWidget(new Wt::WBreak());
+    changed->addWidget(new Wt::WText(l->getName()));
+    changed->addWidget(new Wt::WBreak());
+    changed->addWidget(new Wt::WText( to_string( l->getIsActive()) ) );
+    changed->addWidget(new Wt::WBreak());
+    changed->addWidget(new Wt::WText( to_string( l->getBrightness() ) ) );
+    changed->addWidget(new Wt::WBreak());
+    changed->addWidget(new Wt::WText( to_string( l->getHue()) ) );
+    changed->addWidget(new Wt::WBreak());
+    changed->addWidget(new Wt::WText( to_string( l->getSat()) ) );
+    changed->addWidget(new Wt::WBreak());
 }
-
-/**
- * Update the Light status with specified transition time. (on, bri, hue, sat)
- * Update Light State with TransTime
- * @param transTime * 100ms = transition time
- * @return true if updated successfully
- */
-bool IndivLightManagerWidget::update(int transTime) {
-    //initialize request success flag
-    requestSuccess=false;
-    //connect to Bridge
-    connectUpdate(transTime);
-    //if connection is successful, requestSuccess flag would be updated by handleHttpResponse()
-    for(int i=0; i<HTML_MESSAGE_CHECK; i++) {
-        //check every 100ms for HTML_MESSAGE_CHECK times
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        //if flag's set then connected successfully, change local Light name
-        if(requestSuccess) {
-            return true;
-        }
-    }
-    //connection timeout, return false
-    return false;
-}
-
 
 /**
  * Send a PUT request to bridge to rename the Light
@@ -179,15 +234,15 @@ void IndivLightManagerWidget::connectRename(std::string newname) {
 
 }
 
-
 /**
- * Send a PUT request to bridge to update the Light status using default transition time (on, bri, hue, sat)
- * @brief Connect Update
+ * Send a PUT request to bridge to update the Light status to On or Off
+ * @brief Connect Update for On/Off
+ * @param active, boolean of whether the Light is on (true) or off (false)
  */
-void IndivLightManagerWidget::connectUpdate() {
+void IndivLightManagerWidget::connectSwitchOnOff(bool active) {
     //construct URL
     stringstream url_;
-    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/"<<b->getUsername()<<"/lights/"<<l->getID()<<"/state";
+    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/"<<"newdeveloper"<<"/lights/"<<l->getID()<<"/state";
     Wt::Http::Client *client=new Wt::Http::Client(this);
     client->setTimeout(HTML_CLIENT_TIMEOUT);
     client->setMaximumResponseSize(10*1024);
@@ -197,7 +252,41 @@ void IndivLightManagerWidget::connectUpdate() {
     Wt::Http::Message message;
     stringstream body;
     //set on
-    body<< "{" <<"\"on\":"<<boost::lexical_cast<std::string>(l->getIsActive())<< ",";
+    body<< "{" <<"\"on\":";
+    
+    if(l->getIsActive() == true) {
+        body << "true";
+    }
+    else {
+        body << "false";
+    }
+    body << "}";
+    message.addBodyText(body.str());
+    //set header
+    message.setHeader("Content-Type", "application/json");
+    //send request
+    client->put(url_.str(), message);
+}
+
+
+/**
+ * Send a PUT request to bridge to update the Light status using default transition time (bri, hue, sat)
+ * @brief Connect Update
+ */
+void IndivLightManagerWidget::connectUpdate() {
+    //construct URL
+    stringstream url_;
+    url_<< "http://" <<b->getHostName()<<":"<<b->getPort()<<"/api/"<<"newdeveloper"<<"/lights/"<<l->getID()<<"/state";
+    Wt::Http::Client *client=new Wt::Http::Client(this);
+    client->setTimeout(HTML_CLIENT_TIMEOUT);
+    client->setMaximumResponseSize(10*1024);
+    //bind done signal with handling method
+    client->done().connect(boost::bind(&IndivLightManagerWidget::handleHttpResponse, this, client, _1, _2));
+    //build PUT message
+    Wt::Http::Message message;
+    stringstream body;
+    //set on
+    body<< "{";
     body<<"\"bri\":"<<l->getBrightness()<<",";
     body<<"\"hue\":"<<l->getHue()<<",";
     body<<"\"sat\":"<<l->getSat()<<"}";

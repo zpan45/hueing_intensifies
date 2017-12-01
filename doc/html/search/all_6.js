@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['g',['g',['../class_indiv_group_manager_widget.html#aff3369aeeacfa384bc5bb14d6970c27d',1,'IndivGroupManagerWidget']]],
   ['getaction',['getAction',['../class_group.html#a95ff1eff7de66affc698d274524a2c57',1,'Group']]],
   ['getaddress',['getAddress',['../class_command.html#a954679a47649bceaad18468468d6edb5',1,'Command']]],
   ['getall_5fon',['getAll_On',['../class_state.html#a4ddd47a0237cff1af5378ed4daeccab7',1,'State']]],
@@ -35,8 +36,16 @@ var searchData=
   ['gettime',['getTime',['../class_schedule.html#ac1f1a75ab262d038aeb33bc740467062',1,'Schedule']]],
   ['gettype',['getType',['../class_group.html#a3dca5133cd7c1660ffe2609cfaeb21d4',1,'Group']]],
   ['getuser',['getUser',['../class_d_b_file_manager.html#af1847e849cc82130a80bf8b60c55cb1c',1,'DBFileManager']]],
+  ['getuserbyusername',['getUserByUsername',['../class_login_widget.html#a5cc83b05c01bde983a7a072bccc770eb',1,'LoginWidget']]],
   ['getusername',['getUsername',['../class_bridge.html#ac7cf6c4fbce9d0409a204e6647722106',1,'Bridge::getUsername()'],['../class_user.html#a5705c32c347050449ba6d72f32f18482',1,'User::getUsername()']]],
+  ['gotologin',['goToLogIn',['../class_hue_application.html#a7a60b1aeda43cf56290d131389041319',1,'HueApplication']]],
+  ['gotoregister',['goToRegister',['../class_hue_application.html#ab790d78a8f35edaf35436a9b9422b0f7',1,'HueApplication']]],
   ['group',['Group',['../class_group.html',1,'Group'],['../class_group.html#a7b74f9ac68e0504ccf2e2854b7355ff1',1,'Group::Group()'],['../class_group.html#a5b94e5775274d3c4c0c1027d133a95bf',1,'Group::Group(std::string n, Action *a, State *s, std::string t, std::string c)']]],
   ['group_2ecpp',['Group.cpp',['../_group_8cpp.html',1,'']]],
-  ['group_2eh',['Group.h',['../_group_8h.html',1,'']]]
+  ['group_2eh',['Group.h',['../_group_8h.html',1,'']]],
+  ['groupbox',['groupbox',['../class_indiv_bridge_manager_widget.html#adbf306f82c19003d6c2973d154c681f4',1,'IndivBridgeManagerWidget']]],
+  ['groupclass',['groupClass',['../class_group.html#a89ee46ce30d5c293dbe5fe08b5296bde',1,'Group']]],
+  ['groupnameedit_5f',['groupNameEdit_',['../class_indiv_group_manager_widget.html#ae28679856422f042d6248b59371eb5de',1,'IndivGroupManagerWidget']]],
+  ['groups',['groups',['../class_bridge.html#ad7556a39155a23c691d97633ac7d9a89',1,'Bridge']]],
+  ['groupstate',['groupState',['../class_group.html#a2bbabf587c25e929a536c8d8dbdca4d3',1,'Group']]]
 ];

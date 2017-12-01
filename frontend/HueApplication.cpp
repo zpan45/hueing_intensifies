@@ -24,14 +24,25 @@ using namespace std;
 HueApplication::HueApplication(const Wt::WEnvironment& env) : Wt::WApplication(env) {
 }
 
+/**
+ * Getter method for the current user pointer
+ * @return User* current user pointer
+ */
 User* HueApplication::getCurrentUser() {
     return curUser_;
 }
 
+/**
+ * Setter method for the current user pointer
+ * @param u current user pointer
+ */
 void HueApplication::setCurrentUser(User *u) {
     curUser_ = u;
 }
 
+/**
+ * Initialize the application and check if the user has logged in.
+ */
 void HueApplication::initialize() {
     curUser_ = new User();
 
@@ -51,19 +62,18 @@ void HueApplication::initialize() {
 
 }
 
-/**
- *
+/** Method that is called when the app is closed before the destructor is called. Finalizes any remaining details. In our case, calls the signOut() method to serialize User data to file at the end of a session.
+ * @brief Finalize the application and serializes User data.
+ * @author Jacob Fryer (jfryer6)
  */
 void HueApplication::finalize() {
-    User *u = HueApplication::getCurrentUser();
-
-    if(u->getUsername() != "") {
-        ::activeDB.DBFileManager::saveBridges(u);
+    if(curUser_->getUsername() != "") {
+        signOut();
     }
 }
 
 /**
- *
+ * Present the Main Page to user, where a user can sign out, see the Bridges and add a new Bridge
  */
 void HueApplication::showMainPage() {
     // add a new container widget for the "Logged In" dialogue / greeting
@@ -84,9 +94,14 @@ void HueApplication::showMainPage() {
         registerButton->setLink(Wt::WLink(Wt::WLink::InternalPath, "/register"));
     }
     else {
+        Wt::WPushButton *signOut_ = new Wt::WPushButton("Sign Out", cont);
+        signOut_->clicked().connect(this, &HueApplication::signOut);
+        cont->addWidget(new Wt::WBreak());
+        cont->addWidget(new Wt::WBreak());
+        cont->addWidget(new Wt::WBreak());
+        
         // if the curUser_ pointer does point to a User, greet the User with a friendly hello!
         cont->addWidget(new Wt::WText( curUser_->constructGreetingString() ));
-        //cont->addWidget(new Wt::WText( curUser_->getFirstName() ));
         cont->addWidget(new Wt::WBreak());
 
         Wt::WPushButton *dispBridgeButton = new Wt::WPushButton("Bridges", cont);
@@ -128,6 +143,11 @@ void HueApplication::goToLogIn() {
     login->loggedIn().connect( this, &HueApplication::loggedIn_ );
 }
 
+/**
+ * Log in User
+ * @brief Logged In
+ * @param u User the User object trying to log in
+ */
 void HueApplication::loggedIn_(User u) {
     curUser_->setUsername(u.getUsername());
     curUser_->setPassword(u.getPassword());
@@ -149,6 +169,13 @@ void HueApplication::loggedIn_(User u) {
 void HueApplication::goToRegister() {
     root()->clear();
     root()->addWidget(new RegistrationWidget("Registration", curUser_));
+}
+
+void HueApplication::signOut() {
+    ::activeDB.DBFileManager::saveBridges(curUser_);
+    
+    curUser_ = new User();
+    setInternalPath("/#", true);
 }
 
 /**
@@ -289,7 +316,8 @@ void HueApplication::addBridge() {
 }
 
 /**
- *
+ * Handles user's internal path requests.
+ * @brief Handle Request
  */
 void HueApplication::handleRequest() {
     Wt::WApplication *app = Wt::WApplication::instance();
@@ -297,8 +325,6 @@ void HueApplication::handleRequest() {
     // internalPathNextPart returns the next "folder" of the URL if one exists
     // or "" if not.
     // If it doesn't return the empty string, we try to serve it the appropriate webpage
-    
-    //cout << "internalPathMatches(/login) = " << app->internalPathMatches( "/login" ) << "\n\nInternalPath = " << app->internalPath() << "\n\n\n";
     
     if(app->internalPathMatches("/") && app->internalPathNextPart( "/" ) == "") {
         root()->clear();
@@ -346,8 +372,6 @@ void HueApplication::handleRequest() {
                 }
                 // there is more in the current internal path, so we construct the Group widget
                 else {
-                    //cout << "working url: " << workingURL_ << "\nnext part: " << app->internalPathNextPart( workingURL_ ) << "\n\n\n" << endl;
-                    
                     workingURL_ += "/groups/";
                     int groupNum;
                     Group *g;
@@ -358,7 +382,6 @@ void HueApplication::handleRequest() {
                     // update the workingURL_ to include variability of groupNum
                     workingURL_ += app->internalPathNextPart( workingURL_ );
                     
-                    cout << "working url: " << workingURL_ << "\nnext part: " << app->internalPathNextPart( workingURL_ ) << "\n\n\n" << endl;
                     
                     s >> groupNum;
                     g = b->getGroup(groupNum);

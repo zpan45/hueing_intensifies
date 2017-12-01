@@ -58,7 +58,7 @@ void IndivBridgeManagerWidget::connect() {
     //send get request
     client->get(url_.str());
 
-    cout << url_.str() << endl << endl;
+    //cout << url_.str() << endl << endl;
 }
 
 /**
@@ -175,12 +175,8 @@ void IndivBridgeManagerWidget::displayGroups() {
         b->removeGroup(cb->currentIndex()); // delete the Group with the current index
         connectDeleteGroup(cb->currentIndex() + 1);
         
-        cb->removeItem(cb->currentIndex()); // remove the option to delete a button
+        cb->removeItem(cb->currentIndex()); // remove the option to delete the current item
         delButton_->setEnabled(false); // disable the delete button
-
-        for(int i = 0; i < b->getNumberOfGroups(); i++) {
-            cout << b->getGroup(i)->getName() << endl;
-        }
 
         displayGroups();
     }));
@@ -288,7 +284,6 @@ void IndivBridgeManagerWidget::handleHttpResponse(Wt::Http::Client *client, boos
 
     } else {
         b->setStatus(response.body());
-        cout<< "current status:\t\t" << b->getStatus() <<endl;
     }
 
     delete client;
@@ -360,7 +355,7 @@ bool IndivBridgeManagerWidget::updateGroups() {
         Wt::Json::parse(b->getStatus(), result);
     } catch (exception e)
     {
-        cout<<"JSON parse failure (inside updateGroups())"<<endl;
+        cerr<<"JSON parse failure (inside updateGroups())"<<endl;
         return false;
     }
     //JSON object groupsJSON contains all the groups JSON
@@ -380,9 +375,11 @@ bool IndivBridgeManagerWidget::updateGroups() {
         Group newgroup;
         //set Group name
         newgroup.setName(groupJSON.get("name"));
-
-
-        const Wt::Json::Array& lightsInGroupJSONArray = groupJSON.get("lights");
+        newgroup.setID(*it);
+        
+        const Wt::Json::Array& n = {};
+        
+        const Wt::Json::Array& lightsInGroupJSONArray = groupJSON.get("lights").orIfNull(n);
 
         int i = 0; // loop counter
         vector<string> ary;
@@ -402,13 +399,10 @@ bool IndivBridgeManagerWidget::updateGroups() {
             newlight.setBrightness(lightStateJSON.get("bri"));
             newlight.setHue(lightStateJSON.get("hue"));
             newlight.setSat(lightStateJSON.get("sat"));
+            
+            newlight.setID( ary[j] ); // set the id to match what was retrieved from the API
 
             newgroup.addLight(newlight);
-
-            Wt::Json::Value val = l.get("name");
-            string valStr = val.toString();
-            cout << valStr << endl;
-
         }
 
         //add newgroup to Bridge
@@ -448,7 +442,6 @@ void IndivBridgeManagerWidget::connectCreateGroup(std::string name) {
     clientPost->done().connect(boost::bind(&IndivBridgeManagerWidget::handleHttpResponseGroup, this, clientPost, _1, _2));
     //send request
     if(clientPost->post(url_.str(), message)) {
-        cout << "posted" << endl;
         Wt::WApplication::instance()->deferRendering();
     }
 }
@@ -491,7 +484,7 @@ void IndivBridgeManagerWidget::handleHttpResponseGroup(Wt::Http::Client *client,
 
     } else {
         Wt::Json::Array result;
-        cout << response.body() << endl;
+        //cout << response.body() << endl;
         //try to parse response string to JSON object
         try {
 
@@ -505,7 +498,7 @@ void IndivBridgeManagerWidget::handleHttpResponseGroup(Wt::Http::Client *client,
             return;
         }
         catch (exception e) {
-            cout<<"JSON parse failure (inside handleHttpResponseGroup()).\n" << e.what() <<endl;
+            cerr<<"JSON parse failure (inside handleHttpResponseGroup()).\n" << e.what() <<endl;
             return;
         }
     }
