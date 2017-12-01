@@ -31,5 +31,7 @@ var searchData=
   ['settimeout',['setTimeout',['../_api_stuff_8cpp.html#a5d6bc8f4ea42c0da276d6a64acc32556',1,'ApiStuff.cpp']]],
   ['settype',['setType',['../class_group.html#aa7110cefec1da8c52335484250aeffce',1,'Group']]],
   ['setusername',['setUsername',['../class_bridge.html#a8deb280d22863b954dc3242f98a79b4e',1,'Bridge::setUsername()'],['../class_user.html#a0b8bcd12a47812b44cba0d868578bdaa',1,'User::setUsername()']]],
+  ['showinformation',['showInformation',['../class_indiv_bridge_manager_widget.html#ac93e187ce6ec5662842b58ff5f4c1303',1,'IndivBridgeManagerWidget::showInformation()'],['../class_indiv_group_manager_widget.html#a82e75ec701707884e940b8603d17604f',1,'IndivGroupManagerWidget::showInformation()'],['../class_indiv_light_manager_widget.html#a0d84d2ff2e70b5b4fde3b2956eaa067a',1,'IndivLightManagerWidget::showInformation()']]],
+  ['showmainpage',['showMainPage',['../class_hue_application.html#ae3ec1adc037a8cca95662ee3e233c8ec',1,'HueApplication']]],
   ['state',['State',['../class_state.html#ab91bb1dd5aa6260ab2a456581daf9ec2',1,'State::State()'],['../class_state.html#acf5adf9a49d971d2f299e7dbec3fe6d3',1,'State::State(bool any, bool all)']]]
 ];

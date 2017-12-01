@@ -6,5 +6,6 @@ var searchData=
   ['removegroup',['removeGroup',['../class_bridge.html#a4ab4774b493cf4f9b4318aabab50eed0',1,'Bridge']]],
   ['removelight',['removeLight',['../class_bridge.html#ace23c4f7d0b97b45329c9f846a1111b3',1,'Bridge::removeLight()'],['../class_group.html#a47cace73e2ec1f8a53ad64f2b630f74a',1,'Group::removeLight()']]],
   ['removeuser',['removeUser',['../class_d_b_file_manager.html#aca1b0006d9e418d24739c94111fe98d2',1,'DBFileManager']]],
+  ['rename',['rename',['../class_indiv_light_manager_widget.html#a4d32b7d2bcd83b8b96e110a45d86a253',1,'IndivLightManagerWidget']]],
   ['runrestful',['runRESTful',['../_hue_application_8cpp.html#ae850e3972fe5c35fc0513b21ec26d94e',1,'HueApplication.cpp']]]
 ];

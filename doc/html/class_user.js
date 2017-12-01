@@ -19,5 +19,10 @@ var class_user =
     [ "setFirstName", "class_user.html#a1901bed2feb751c029d07546f303b2bc", null ],
     [ "setLastName", "class_user.html#aa6dae2f4cb7f3b4e2782f222715e1b95", null ],
     [ "setPassword", "class_user.html#a10190c75f7d96c7cdc01969d217f2d68", null ],
-    [ "setUsername", "class_user.html#a0b8bcd12a47812b44cba0d868578bdaa", null ]
+    [ "setUsername", "class_user.html#a0b8bcd12a47812b44cba0d868578bdaa", null ],
+    [ "bridges", "class_user.html#a8e7cd9f3ceab831bc0f2751aa677f3f0", null ],
+    [ "firstName", "class_user.html#aa845739b31aaf9d2e7bdedf829447191", null ],
+    [ "lastName", "class_user.html#a10abe0efedb0a600a7be16593a448b12", null ],
+    [ "password", "class_user.html#ac2f2e75b15e8eb6cbb030fc85a6cd59f", null ],
+    [ "username", "class_user.html#aacbb807e514280f69e00bec7d71f3aee", null ]
 ];

@@ -24,14 +24,25 @@ using namespace std;
 HueApplication::HueApplication(const Wt::WEnvironment& env) : Wt::WApplication(env) {
 }
 
+/**
+ * Getter method for the current user pointer
+ * @return User* current user pointer
+ */
 User* HueApplication::getCurrentUser() {
     return curUser_;
 }
 
+/**
+ * Setter method for the current user pointer
+ * @param u current user pointer
+ */
 void HueApplication::setCurrentUser(User *u) {
     curUser_ = u;
 }
 
+/**
+ * Initialize the application and check if the user has logged in.
+ */
 void HueApplication::initialize() {
     curUser_ = new User();
 
@@ -62,7 +73,7 @@ void HueApplication::finalize() {
 }
 
 /**
- *
+ * Present the Main Page to user, where a user can sign out, see the Bridges and add a new Bridge
  */
 void HueApplication::showMainPage() {
     // add a new container widget for the "Logged In" dialogue / greeting
@@ -132,6 +143,11 @@ void HueApplication::goToLogIn() {
     login->loggedIn().connect( this, &HueApplication::loggedIn_ );
 }
 
+/**
+ * Log in User
+ * @brief Logged In
+ * @param u User the User object trying to log in
+ */
 void HueApplication::loggedIn_(User u) {
     curUser_->setUsername(u.getUsername());
     curUser_->setPassword(u.getPassword());
@@ -300,7 +316,8 @@ void HueApplication::addBridge() {
 }
 
 /**
- *
+ * Handles user's internal path requests.
+ * @brief Handle Request
  */
 void HueApplication::handleRequest() {
     Wt::WApplication *app = Wt::WApplication::instance();
