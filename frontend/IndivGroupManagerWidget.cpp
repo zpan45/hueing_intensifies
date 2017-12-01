@@ -134,14 +134,14 @@ void IndivGroupManagerWidget::displayLights() {
 }
 
 /**
- * Method to update the current Bridge object with any changes from the text boxes.
+ * Method to update the current Group object with any changes from the text boxes.
  * @brief Update Group Object
  */
 void IndivGroupManagerWidget::update() {
-    this->addWidget(new Wt::WBreak());
+    Wt::WDialog changedDialogue("Group Update");
+    changedDialogue.setClosable(true);
     
-    Wt::WHBoxLayout *change = new Wt::WHBoxLayout(this);
-    //this->addWidget(change);
+    Wt::WHBoxLayout *change = new Wt::WHBoxLayout(changedDialogue.contents());
     
     Wt::WContainerWidget *old = new Wt::WContainerWidget();
     change->addWidget(old);
@@ -153,9 +153,6 @@ void IndivGroupManagerWidget::update() {
         g->setName(groupNameEdit_->text().toUTF8());
     }
     
-    this->addWidget(new Wt::WBreak());
-    this->addWidget(new Wt::WBreak());
-    
     connectUpdateGroup();
     
     // didn't want to call the variable "new" so we named the display of things that have changed, "changed"
@@ -164,6 +161,16 @@ void IndivGroupManagerWidget::update() {
     changed->addWidget(new Wt::WText("<b>New Stuff:</b>"));
     changed->addWidget(new Wt::WBreak());
     changed->addWidget(new Wt::WText(g->getName()));
+    
+    new Wt::WBreak(changedDialogue.contents());
+    new Wt::WBreak(changedDialogue.contents());
+    
+    Wt::WPushButton confirm("Okay", changedDialogue.contents());
+    
+    confirm.clicked().connect(&changedDialogue, &Wt::WDialog::accept);
+    
+    if(changedDialogue.exec() == Wt::WDialog::Accepted) {
+    }
 }
 
 /**
@@ -275,13 +282,23 @@ void IndivGroupManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost
         cerr<<"Error: "<<err.message()<<" ,"<<response.status()<<endl;
 
     } else {
-        Wt::Json::Object result;
+        Wt::Json::Array result;
+        //cout << response.body() << endl;
         //try to parse response string to JSON object
         try {
-            Wt::Json::parse(response.body(), result);
-            Wt::Json::Value val = result[0];
 
-            Wt::Json::Object obj = val;
+            Wt::Json::parse(response.body(), result);
+            
+            int successCount = 0;
+            
+            for(int i = 0; i < result.size(); i++) {
+                Wt::Json::Value val = result[i];
+                Wt::Json::Object obj = val;
+                
+                if( !(obj.isNull("success")) ) {
+                    successCount++;
+                }
+            }
         }
         catch ( Wt::Json::TypeException t) {
             cerr << "type exception" << endl;
@@ -291,8 +308,6 @@ void IndivGroupManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost
             cerr<<"JSON parse failure (inside handleHttpResponseGroup()).\n" << e.what() <<endl;
             return;
         }
-        //if response contains "success" then request was successful, set requestSuccess to true
-        requestSuccess=result.contains("success");
     }
     delete client;
 }

@@ -32,6 +32,7 @@
 #include <Wt/Json/Parser>
 #include <Wt/Json/Serializer>
 #include <Wt/Json/Array>
+#include <Wt/WDialog>
 
 #include "Bridge.h"
 #include "Group.h"
