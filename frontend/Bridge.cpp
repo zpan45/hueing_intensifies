@@ -128,11 +128,19 @@ Light* Bridge::getLight(int element) {
 }
 
 /**
-* Accessor method that returns the number of Lights associated with the Group, which is the length of the vector.
-* @return the number of Lights as an integer.
+* Accessor method that returns the number of Groups associated with the Bridge, which is the length of the vector.
+* @return the number of Groups as an integer.
 */
 int Bridge::getNumberOfGroups() {
     return groups.size();
+}
+
+/**
+* Accessor method that returns the number of Lights associated with the Bridge, which is the length of the vector.
+* @return the number of Lights as an integer.
+*/
+int Bridge::getNumberOfLights() {
+    return lights.size();
 }
 
 /**
