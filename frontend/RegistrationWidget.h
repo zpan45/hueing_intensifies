@@ -12,6 +12,7 @@
 #include <vector>
 
 #include <Wt/WContainerWidget>
+#include <Wt/WDialog>
 #include "User.h"
 #include "DBFileManager.h"
 #include "HueApplication.h"
@@ -27,11 +28,12 @@ private:
     std::string 		name_;
     Wt::WLineEdit *usernameEdit;
     Wt::WLineEdit *passwordEdit;
+    Wt::WLineEdit *passwordConf;
     Wt::WLineEdit *firstNameEdit;
     Wt::WLineEdit *lastNameEdit;
-    
 
     void createUser();
+    void showError(bool isError, std::string errorMessage);
     void clearRegistration();
 };
 
