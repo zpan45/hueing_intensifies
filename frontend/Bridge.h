@@ -30,6 +30,7 @@ class Bridge {
         Group* getGroup(int element);
         Light* getLight(int element);
         int getNumberOfGroups();
+        int getNumberOfLights();
 
         void setName(std::string n);
         void setLocation(std::string l);

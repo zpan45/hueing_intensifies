@@ -29,7 +29,7 @@ IndivBridgeManagerWidget::IndivBridgeManagerWidget(const std::string &name, Brid
     connect();
 
     groupbox = new Wt::WGroupBox(b->getName()); // initialize area to display the list of groups associated with this Bridge -- Widget gets added in showInformation();
-    
+
     showInformation();
 }
 
@@ -102,6 +102,15 @@ void IndivBridgeManagerWidget::showInformation() {
     
     this->addWidget(groupbox);
     
+    /* Didn't get this done for the deadline
+    Wt::WPushButton *push = new Wt::WPushButton("Show All Lights", this);
+    this->addWidget(new Wt::WBreak());
+    
+    push->clicked().connect(bind([=]() {
+        showAllLights();
+    }));
+    */
+    
     // the update_ button is bound to a lambda function that calls the update()
     // method. Done this way because you cannot pass parameters through Wt's connect()
     // method.
@@ -120,7 +129,7 @@ void IndivBridgeManagerWidget::showInformation() {
  * @brief Show Bridge Groups
  */
 void IndivBridgeManagerWidget::displayGroups() {
-    // ! TODO -- implement method that displays all Groups associated with the current Bridge
+    //method that displays all Groups associated with the current Bridge
     // use Bridge.cpp's "getGroup()" method?? Iterate from 0 - size of the vector?
     updateGroups();
 
@@ -136,8 +145,6 @@ void IndivBridgeManagerWidget::displayGroups() {
         string s = "Edit " + to_string(i);
         Wt::WPushButton *button = new Wt::WPushButton(s, groupbox);
 
-        //Wt::WApplication *app = Wt::WApplication::instance();
-        //s = app->internalPath() + "/groups/" + to_string(i);
         s = "/groups/" + to_string(i);
         //delete app;
 
@@ -180,6 +187,38 @@ void IndivBridgeManagerWidget::displayGroups() {
         displayGroups();
     }));
 }
+
+/* Didn't get done in time for the deadline
+void IndivBridgeManagerWidget::showAllLights() {
+    Wt::WSelectionBox *selBox = new Wt::WSelectionBox(this);
+    
+    selBox->setSelectionMode(Wt::ExtendedSelection);
+    std::set<int> selection;
+    updateLights();
+    
+    for(int i = 0; i < b->getNumberOfLights(); i++) {
+        selBox->addItem(b->getLight(i)->getName());
+    }
+    selBox->setSelectedIndexes(selection);
+    
+    this->addWidget(new Wt::WBreak());
+    this->addWidget(new Wt::WText("Add Lights to Group: "));
+    Wt::WComboBox *com = new Wt::WComboBox(this);
+    for(int j = 0; j < b->getNumberOfGroups(); j++) {
+        com->addItem( b->getGroup(j)->getName() );
+    }
+    this->addWidget(new Wt::WBreak());
+    
+    Wt::WPushButton *p = new Wt::WPushButton("Add Lights", this);
+    
+    p->clicked().connect(bind([=]() {
+        for(auto it=selection.begin();it!=selection.end();++it) {
+            //cout << b->getLight(*it) << endl;
+            //b->getGroup(com->currentIndex())->addLight( b->getLight(*it) );
+        }
+    }));
+}
+*/
 
 /**
  * Method that shows a dialogue box and allows user to add a new Group to the Bridge
@@ -307,11 +346,15 @@ bool IndivBridgeManagerWidget::updateLights() {
     connect();
     Wt::Json::Object result;
     //try to parse bridge status string to JSON object
+    //cout << "status\t" << b->getStatus() << endl;
+    
     try {
         Wt::Json::parse(b->getStatus(), result);
+        
     } catch (exception e)
     {
-        cout<<"JSON parse failure."<<endl;
+        cerr<<"JSON parse failure. (updateLights())"<<endl;
+        
         return false;
     }
     //JSON object lightsJSON contains all the lights JSON

@@ -33,6 +33,7 @@
 #include <Wt/Json/Parser>
 #include <Wt/Json/Serializer>
 #include <Wt/Json/Array>
+#include <Wt/WSelectionBox>
 
 #include "Bridge.h"
 #include "IndivGroupManagerWidget.h"
@@ -61,6 +62,7 @@ private:
     void connect();
     void showInformation();
     void displayGroups();
+    //void showAllLights();
     void addGroupToBridge();
     
     void update();
