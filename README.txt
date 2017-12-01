@@ -40,4 +40,4 @@ frontend/ Directory
     To run, we have been using the command:
         ./frontend --docroot usr/local/share/Wt --http-address 0.0.0.0 --http-port 8080
 
-    Calling the command clean will remove all objet files as well as the HUE_USERS database.
+    Calling the command clean will remove all object files as well as the HUE_USERS database.
