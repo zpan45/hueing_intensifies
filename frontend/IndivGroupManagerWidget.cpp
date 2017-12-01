@@ -113,10 +113,13 @@ void IndivGroupManagerWidget::displayLights() {
     Wt::WPushButton *delButton_ = new Wt::WPushButton("Delete", groupbox);
     delButton_->setEnabled(false);
     
+    Wt::WText *error = new Wt::WText(groupbox);
+    
     // if the selected Group was changed:
     cb->changed().connect(std::bind([=] () {
         out->setText(Wt::WString::fromUTF8("Delete {1}?").arg(cb->currentText()));
-        delButton_->setEnabled(true);
+        delButton_->setEnabled(false);
+        error->setText(Wt::WString::fromUTF8("<b>ERROR:</b> Deleting Lights is not supported by the emulator. This function has been disabled."));
     }));
     
     // if the delete button is clicked, remove the option to remove the Light and the Light itself
@@ -124,10 +127,6 @@ void IndivGroupManagerWidget::displayLights() {
         g->removeLight(cb->currentIndex()); // delete the Light with the current index
         cb->removeItem(cb->currentIndex()); // remove the option to delete the current index
         delButton_->setEnabled(false); // disable the delete button
-        
-        for(int i = 0; i < g->getNumberOfLights(); i++) {
-            cout << g->getLight(i)->getName() << endl;
-        }
         
         groupbox->refresh();
     }));
@@ -289,7 +288,7 @@ void IndivGroupManagerWidget::handleHttpResponse(Wt::Http::Client *client, boost
             return;
         }
         catch (exception e) {
-            cout<<"JSON parse failure (inside handleHttpResponseGroup()).\n" << e.what() <<endl;
+            cerr<<"JSON parse failure (inside handleHttpResponseGroup()).\n" << e.what() <<endl;
             return;
         }
         //if response contains "success" then request was successful, set requestSuccess to true

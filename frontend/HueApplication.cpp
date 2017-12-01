@@ -326,8 +326,6 @@ void HueApplication::handleRequest() {
     // or "" if not.
     // If it doesn't return the empty string, we try to serve it the appropriate webpage
     
-    //cout << "internalPathMatches(/login) = " << app->internalPathMatches( "/login" ) << "\n\nInternalPath = " << app->internalPath() << "\n\n\n";
-    
     if(app->internalPathMatches("/") && app->internalPathNextPart( "/" ) == "") {
         root()->clear();
         showMainPage();
@@ -374,8 +372,6 @@ void HueApplication::handleRequest() {
                 }
                 // there is more in the current internal path, so we construct the Group widget
                 else {
-                    //cout << "working url: " << workingURL_ << "\nnext part: " << app->internalPathNextPart( workingURL_ ) << "\n\n\n" << endl;
-                    
                     workingURL_ += "/groups/";
                     int groupNum;
                     Group *g;
@@ -386,7 +382,6 @@ void HueApplication::handleRequest() {
                     // update the workingURL_ to include variability of groupNum
                     workingURL_ += app->internalPathNextPart( workingURL_ );
                     
-                    cout << "working url: " << workingURL_ << "\nnext part: " << app->internalPathNextPart( workingURL_ ) << "\n\n\n" << endl;
                     
                     s >> groupNum;
                     g = b->getGroup(groupNum);
